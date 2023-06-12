@@ -1,4 +1,5 @@
-const {HomeSlider} = require('../models/slider')
+const HomeSlider = require("../models/slider.model");
+
 const SliderController = {
     GetAll: async (req, res) => {
         const GetAllSliders = await HomeSlider.find();

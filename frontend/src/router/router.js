@@ -1,9 +1,12 @@
 import AboutAdmin from "../pages/Admin/AboutAdmin";
+import ChooseAdmin from "../pages/Admin/AboutAdmin/ChooseAdmin";
 import AdminRoot from "../pages/Admin/AdminRoot";
 import BlogAdmin from "../pages/Admin/BlogAdmin";
 import ContactAdmin from "../pages/Admin/ContactAdmin";
+import Dashboard from "../pages/Admin/Deshboard";
 import GaleryAdmin from "../pages/Admin/GaleryAdmin";
 import HomeAdmin from "../pages/Admin/HomeAdmin";
+import AddSlider from "../pages/Admin/HomeAdmin/addSlider";
 import About from "../pages/User/About";
 import Blog from "../pages/User/Blog";
 import Contact from "../pages/User/Contact";
@@ -44,7 +47,15 @@ export const ROUTES = [
         children: [
             {
                 path: '',
+                element: <Dashboard />
+            },
+            {
+                path: 'home',
                 element: <HomeAdmin />
+            },
+            {
+                path: 'choose',
+                element: <ChooseAdmin/>
             },
             {
                 path: 'about',
@@ -61,6 +72,10 @@ export const ROUTES = [
             {
                 path: 'contact',
                 element: <ContactAdmin />
+            },
+            {
+                path: 'addSlider',
+                element: <AddSlider/>
             }
         ]
     }

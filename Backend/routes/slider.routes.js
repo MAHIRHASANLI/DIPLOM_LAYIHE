@@ -1,14 +1,14 @@
 const express = require('express');
 const sliders_router = express.Router();
 const SliderController = require('../controllers/slider.controller');
-const SlidersSchema = require('../validation/slider.validation');
+const SliderPostMiddleware = require('../middlewares/slider.middlewares');
 
 sliders_router.get('/', SliderController.GetAll);
 
-sliders_router.post('/', SlidersSchema,SliderController.PostById);
+sliders_router.post('/',SliderPostMiddleware, SliderController.PostById);
 
 sliders_router.put('/:id', SliderController.PutById);
 
 sliders_router.delete('/:id', SliderController.DeleteById);
 
-module.exports = sliders_router
+module.exports = sliders_router;

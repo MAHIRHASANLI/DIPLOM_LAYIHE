@@ -1,8 +1,13 @@
 import React from 'react'
+import ChooseUser from './Choose.section'
+import HomeGlobalSection from './Home.section'
 
 const About = () => {
   return (
-    <div>About</div>
+   <>
+    <HomeGlobalSection/>
+    <ChooseUser/>
+   </>
   )
 }
 

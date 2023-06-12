@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const SlidersSchema = Joi.object({
+const OurteamSchema = Joi.object({
     name: Joi.string()
         .min(3)
         .max(30)
@@ -9,8 +9,6 @@ const SlidersSchema = Joi.object({
         .max(100)
         .required(),
     url: Joi.string()
-        .required(),
-    email: Joi.string()
-        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+        .required()
 });
-module.exports = SlidersSchema;
+module.exports = OurteamSchema;

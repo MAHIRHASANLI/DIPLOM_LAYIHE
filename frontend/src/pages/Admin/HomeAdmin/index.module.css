@@ -1,0 +1,26 @@
+.Table{
+    width: 100%;
+    height: 100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+.Table__item{
+    width: 85%;
+    height: 100%;
+    margin-top:20px;
+    background-color:white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.modal{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.inputs{
+    margin-left:10px
+}
+.input{
+     margin-top:10px
+}
