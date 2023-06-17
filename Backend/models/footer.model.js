@@ -5,6 +5,11 @@ const FooterModel = new mongoose.model('Footer', new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
+    },
+    name: {
+        type: String,
+        trim: true,
+        required: true,
     }
 }))
 

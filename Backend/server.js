@@ -12,6 +12,8 @@ const home_router = require('./routes/home.routes');
 const choose_router = require('./routes/choose.routes');
 const ourteam_router = require('./routes/ourteam.routes');
 const footer_router = require('./routes/footer.routes');
+const possion_router = require('./routes/position.routes');
+const blog_router = require('./routes/blog.routes');
 
 //SLIDERD KRUD
 app.use('/api/sliders', sliders_router)
@@ -19,11 +21,17 @@ app.use('/api/sliders', sliders_router)
 //HOME IMAGE
 app.use('/api/homeimg', home_router)
 
+//OURTEAM
+app.use('/api/possion', possion_router)
+
 //CHOOSE
 app.use('/api/choose', choose_router)
 
 //OURTEAM
 app.use('/api/team', ourteam_router)
+
+// blog_router
+app.use('/api/blog', blog_router)
 
 //FOOTER
 app.use('/api/footer', footer_router)

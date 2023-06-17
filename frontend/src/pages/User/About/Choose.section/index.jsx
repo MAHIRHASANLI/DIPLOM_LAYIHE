@@ -13,6 +13,7 @@ import "swiper/css/pagination";
 import { FreeMode, Pagination } from "swiper";
 import { useGlobalChoose } from "../../../../global";
 
+
 const ChooseUser = () => {
   const [globalChoose] =useGlobalChoose();
   return (

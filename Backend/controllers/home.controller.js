@@ -15,7 +15,7 @@ const HomeController = {
         const UpdateObject = {
             url: req.body.url,
         }
-        await HomeModels.findByIdAndUpdate(UpdateObject, req.params.id);
+        await HomeModels.findByIdAndUpdate( req.params.id, UpdateObject);
         res.status(200).send(UpdateObject)
     },
     DeleteById: async (req, res) => {

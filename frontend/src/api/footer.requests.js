@@ -1,9 +1,15 @@
 import { BASE_URL } from "./base_URL";
 import axios from "axios";
 
-export const GetAllFooter = async()=>{
+export const GetAllFooter = async(name)=>{
+    let URL;
     let GlobalData;
-    await axios.get(`${BASE_URL}/footer`).then((res)=>{
+    if(!name){
+        URL = BASE_URL + '/footer'
+    }else{
+        URL = BASE_URL + `/footer/?name=${name}`
+    }
+    await axios.get(URL).then((res)=>{
         GlobalData = res.data;
     })
     return GlobalData;

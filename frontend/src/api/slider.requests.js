@@ -1,9 +1,24 @@
 import { BASE_URL } from "./base_URL";
 import axios from "axios";
 
-export const GetAllSlider = async()=>{
+export const GetAllSlider = async(name)=>{
+    let URL;
     let GlobalData;
-    await axios.get(`${BASE_URL}/sliders`).then((res)=>{
+    if(!name){
+    URL = BASE_URL + '/sliders'
+    }
+    else{
+        URL = BASE_URL + `/sliders/?name=${name}`
+    }
+    await axios.get(URL).then((res)=>{
+        GlobalData = res.data;
+    })
+    return GlobalData;
+} 
+
+export const GetByIdSlider = async(id)=>{
+    let GlobalData;
+    await axios.get(`${BASE_URL}/sliders/${id}`).then((res)=>{
         GlobalData = res.data;
     })
     return GlobalData;

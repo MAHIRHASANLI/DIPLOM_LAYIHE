@@ -11,4 +11,5 @@ const ChooseSchema = Joi.object({
     url: Joi.string()
         .required()
 });
+
 module.exports = ChooseSchema;

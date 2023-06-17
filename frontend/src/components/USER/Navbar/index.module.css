@@ -1,39 +1,33 @@
 .navbar{
-    width: 85%;
+    width: 80%;
     display:flex;
     align-items:center;
-justify-content:space-between
+    justify-content:space-between
 }
 
-@media screen and (min-width: 800px) {
-    .Link{
-        width: 50%;
-        display:flex;
-        align-items:center;
-    justify-content:space-between
+
+@media screen and (min-width: 700px) {
+    .navbar_nav_link{
+    text-decoration:none;
+    font-size:17x;
+    transition:.3s linear;
+    font-family: "Poppins", sans-serif;
+    text-transform: capitalize; 
+    margin: 0 20px;
     }
-    .link{
-        text-decoration:none;
-        color:white;
-        font-size:17px;
-        transition:.3s linear;
-        font-family: "Poppins", sans-serif;
-        text-transform: capitalize; 
-        font-weight: 500;
-        padding: 0 20px;
+    .navbar_nav_link:hover{
+        color:rgb(252,96,96);
     }
-    .link:hover{
-      color:rgb(252,96,96);
-    }
+   
     .icons{
         color:white;
     }
   }
-  @media screen and (max-width: 800px) {
-    .Link{
-        display:none;
-    }
+  @media screen and (max-width: 700px) {
+    .navbar_nav_link{
+       display: none;
+        }
     .icons{
-display:none;   
+   display:none;   
  }
   }

@@ -1,4 +1,3 @@
-import React, { useEffect} from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -25,10 +24,10 @@ const Slider = () => {
     loop= {true}
     speed= {8000}
     keyboard={true}
-    // autoplay={{
-    //   delay: 4000,
-    //   enabled: true,
-    // }}
+    autoplay={{
+      delay: 4000,
+      enabled: true,
+    }}
     modules={[Navigation, Pagination, Mousewheel, Keyboard,Autoplay]}
     className="mySwiper"
   >

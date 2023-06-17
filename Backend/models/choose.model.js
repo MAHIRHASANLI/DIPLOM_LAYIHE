@@ -18,4 +18,4 @@ const ChooseModel = new mongoose.model('Choose', new mongoose.Schema({
     }
 }))
 
-module.exports = ChooseModel
+module.exports = ChooseModel;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGlobalDatahomeimg } from '../../../global'
+import { useGlobalDatahomeimg } from '../../../../global'
 
 const AboutAdmin = () => {
   const [globalImage, setGlobalImage]=useGlobalDatahomeimg()

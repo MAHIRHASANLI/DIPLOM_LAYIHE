@@ -2,16 +2,21 @@ const FooterModel = require("../models/footer.model");
 
 const FooterController = {
     GetAll: async (req, res) => {
+        const {name} = req.query
         const GetAllFooter = await FooterModel.find();
-        res.status(200).send(GetAllFooter)
+        if(!name){
+            res.status(200).send(GetAllFooter)
+        }else{
+            const SearchName = GetAllFooter.filter((m)=>m.name.toLowerCase().trim().includes(name.toLowerCase().trim()))
+            res.status(200).send(SearchName)
+        }
     },
     PostById: async (req, res) => {
         const NewFooterObject = new FooterModel({
-            name: req.body.name,
-            title: req.body.title,
             url: req.body.url,
+            name: req.body.name
         })
-        await NewFooterObject.save()
+        await NewFooterObject.save();
         res.status(200).send(NewFooterObject)
     },
     DeleteById: async (req, res) => {

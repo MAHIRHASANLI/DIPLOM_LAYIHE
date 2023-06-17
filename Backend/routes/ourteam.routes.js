@@ -5,6 +5,8 @@ const OurteamPostMiddleware = require('../middlewares/ourteam.middlewares');
 
 ourteam_router.get('/', OurteamController.GetAll);
 
+ourteam_router.get('/:id', OurteamController.GetById);
+
 ourteam_router.post('/',OurteamPostMiddleware, OurteamController.PostById);
 
 ourteam_router.put('/:id', OurteamController.PutById);

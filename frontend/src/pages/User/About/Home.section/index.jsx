@@ -6,7 +6,7 @@ import OtherHousesIcon from '@mui/icons-material/OtherHouses';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const HomeGlobalSection = () => {
-  const [globalChoose, setGlobalChoose] = useGlobalChoose();
+  const [globalChoose] = useGlobalChoose();
   return (
     <div className={style.HomeImg}>
       <div className={style.HomeImg_content}>

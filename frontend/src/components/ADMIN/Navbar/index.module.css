@@ -1,5 +1,10 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Moon+Dance&family=Oswald:wght@200;300;400;500;600;700&family=Oxygen:wght@300;400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Satisfy&display=swap'); */
+.link .active{
+  color:black
+}
+
 .Navbar{
-    box-shadow: 7px 25px 8px -6px rgba(0,0,0,0.1);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 @media screen and (min-width: 800px) {
     .Link{
@@ -8,6 +13,9 @@
         display:flex;
         align-items:center;
         justify-content:space-between
+    }
+    .link:active{
+      color:black
     }
     .link{
         text-decoration:none;
@@ -20,6 +28,7 @@
         padding: 0 20px;
         position: relative;
         display: block;
+        
     }
     .link:hover{
       color:rgb(252,96,96);
@@ -44,24 +53,34 @@ display:none;
   .home_dropdown{
     display: none;
     position: absolute;
-    top:100px;
-    left:-100px;
-    background-color: rgba(0,0,0,0.2);
-    width: 120px;
-    height: 100px;
+    top:20px;
+    left:-30px;
+    background-color:rgba(0,0,0,0.5);
+    background-color:white;
+    width: 140px;
+    height: 0px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 12px 22px;
     border-radius:15px;
     z-index: 19;
+    color:black;
+    transition:4s ;
+  }
+  .home_dropdown a{
+    font-size:14px;
+    font-family: "Poppins", sans-serif;
+    display: block;
+    padding:1px 0 1px ;
     color:white;
-    transition:.15s linear;
+    color:black;
   }
   .link:hover .home_dropdown{
     display: block;
+    color:black;
     top:20px;
-    left:-30px;
+    left:-20px;
+    width: 120px;
+    height: 120px;
   }
   
-  /* .dropdown:hover .dropdown_content {
-    display: block;
-  } */
+ 

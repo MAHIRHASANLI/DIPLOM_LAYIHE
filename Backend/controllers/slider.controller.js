@@ -2,8 +2,19 @@ const HomeSlider = require("../models/slider.model");
 
 const SliderController = {
     GetAll: async (req, res) => {
+        const { name } = req.query;
         const GetAllSliders = await HomeSlider.find();
-        res.status(200).send(GetAllSliders)
+        if (!name) {
+          res.status(200).send(GetAllSliders);
+        } else {
+          const SearchName = GetAllSliders.filter((m) =>m.name.toLowerCase().trim().includes(name.toLowerCase().trim())
+          );
+          res.status(200).send(SearchName);
+        }
+    },
+    GetById: async (req, res) => {
+        const GetbyidSliders = await HomeSlider.findById(req.params.id);
+        res.status(200).send(GetbyidSliders)
     },
     PostById: async (req, res) => {
         const NewSliderObject = new HomeSlider({
@@ -12,8 +23,8 @@ const SliderController = {
             url: req.body.url,
             email: req.body.email
         })
-        await NewSliderObject.save()
-        res.status(200).send(NewSliderObject)
+      const newobj =  await NewSliderObject.save()
+        res.status(200).send(newobj)
     },
     PutById: async (req, res) => {
         const UpdateObject = {
@@ -22,7 +33,7 @@ const SliderController = {
             url: req.body.url,
             email: req.body.email,
         }
-        await HomeSlider.findByIdAndUpdate(UpdateObject, req.params.id);
+        await HomeSlider.findByIdAndUpdate( req.params.id, UpdateObject);
         res.status(200).send(UpdateObject)
     },
     DeleteById: async (req, res) => {

@@ -1,9 +1,25 @@
 import { BASE_URL } from "./base_URL";
 import axios from "axios";
 
-export const GetAllChoose = async()=>{
+
+export const GetAllChoose = async(name)=>{
+    let URL;
     let GlobalData;
-    await axios.get(`${BASE_URL}/choose`).then((res)=>{
+    if(!name){
+    URL = BASE_URL + '/choose'
+    }
+    else{
+        URL = BASE_URL + `/choose/?name=${name}`
+    }
+    await axios.get(URL).then((res)=>{
+        GlobalData = res.data;
+    })
+    return GlobalData;
+} 
+
+export const GetByIdChoose = async(id)=>{
+    let GlobalData;
+    await axios.get(`${BASE_URL}/choose/${id}`).then((res)=>{
         GlobalData = res.data;
     })
     return GlobalData;

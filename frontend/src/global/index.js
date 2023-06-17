@@ -2,6 +2,7 @@ import { useState,createContext,useContext, useEffect } from "react";
 import { GetAllSlider } from "../api/slider.requests";
 import { GetAllHome } from "../api/home.requests";
 import { GetAllChoose } from "../api/choose.requests";
+import { GetAllTeam } from "../api/ourteam.requests";
 
 /////SLIDER///
 const GlobalData = createContext()
@@ -11,7 +12,7 @@ export const GlobalDataProvider = ({ children }) => {
         GetAllSlider().then((res)=>{
             setGlobalSlider(res)
         })
-    },[globalSlider])
+    },[])
     return (
         <GlobalData.Provider value={[globalSlider, setGlobalSlider]}>
             {children}
@@ -53,3 +54,22 @@ export const GlobalChooseProvider = ({ children }) => {
     )
 }
 export const useGlobalChoose = () => useContext(GlobalChoose)
+
+////OURTEAM///
+const GlobalTeam = createContext()
+export const GlobalTeamProvider = ({ children }) => {
+    const [globalTeam, setGlobalTeam] = useState([])
+    useEffect(()=>{
+        GetAllTeam().then((res)=>{
+            setGlobalTeam(res)
+        })
+    },[])
+    return (
+        <GlobalTeam.Provider value={[globalTeam, setGlobalTeam]}>
+            {children}
+        </GlobalTeam.Provider>
+    )
+}
+export const useGlobalTeam = () => useContext(GlobalTeam)
+
+

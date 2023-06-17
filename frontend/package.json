@@ -10,9 +10,12 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "add": "^2.0.6",
     "antd": "^5.6.1",
     "axios": "^1.4.0",
+    "bootstrap": "^5.3.0",
     "formik": "^2.4.1",
+    "framer-motion": "^10.12.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-pro-sidebar": "^1.1.0-alpha.1",
@@ -21,6 +24,7 @@
     "sweetalert2": "^11.7.12",
     "swiper": "^9.3.2",
     "web-vitals": "^2.1.4",
+    "yarn": "^1.22.19",
     "yup": "^1.2.0"
   },
   "scripts": {

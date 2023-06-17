@@ -2,8 +2,18 @@ const ChooseModel = require("../models/choose.model");
 
 const ChooseController = {
     GetAll: async (req, res) => {
+        const {name} = req.query;
         const GetAllChoose = await ChooseModel.find();
-        res.status(200).send(GetAllChoose)
+        if(!name){
+            res.status(200).send(GetAllChoose)
+        }else{
+        const SearchName = GetAllChoose.filter((m)=>m.name.toLowerCase().trim().includes(name.toLowerCase().trim()))
+        res.status(200).send(SearchName)
+        }
+    },
+    GetById: async (req, res) => {
+        const GetByIdChoose = await ChooseModel.findById(req.params.id);
+        res.status(200).send(GetByIdChoose);
     },
     PostById: async (req, res) => {
         const NewChooseObject = new ChooseModel({
@@ -20,12 +30,11 @@ const ChooseController = {
             title: req.body.title,
             url: req.body.url,
         }
-        await ChooseModel.findByIdAndUpdate(UpdateObject, req.params.id);
+        await ChooseModel.findByIdAndUpdate( req.params.id,UpdateObject);
         res.status(200).send(UpdateObject)
     },
     DeleteById: async (req, res) => {
-        const id = req.params.id
-        const DeleteChoose = await ChooseModel.findByIdAndDelete(id);
+        const DeleteChoose = await ChooseModel.findByIdAndDelete(req.params.id);
         res.status(200).send(DeleteChoose);
     }
 }

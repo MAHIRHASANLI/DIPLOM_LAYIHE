@@ -5,6 +5,8 @@ const ChoosePostMiddleware = require('../middlewares/choose.middlewares');
 
 choose_router.get('/', ChooseController.GetAll);
 
+choose_router.get('/:id', ChooseController.GetById);
+
 choose_router.post('/',ChoosePostMiddleware, ChooseController.PostById);
 
 choose_router.put('/:id', ChooseController.PutById);

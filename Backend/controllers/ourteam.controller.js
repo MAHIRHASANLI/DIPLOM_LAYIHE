@@ -2,8 +2,19 @@ const OurteamModel = require("../models/ourteam.model");
 
 const OurteamController = {
     GetAll: async (req, res) => {
+        const {name} = req.query;
         const GetAllOurteam = await OurteamModel.find();
+    if(!name){
         res.status(200).send(GetAllOurteam)
+    }else{
+        const SearchName = GetAllOurteam.filter((m)=>m.name.toLowerCase().trim().includes(name.toLowerCase().trim()))
+        res.status(200).send(SearchName)
+    }
+
+    },
+    GetById: async (req, res) => {
+        const GetById = await OurteamModel.findById(req.params.id);
+        res.status(200).send(GetById)
     },
     PostById: async (req, res) => {
         const NewTeamObject = new OurteamModel({
@@ -20,7 +31,7 @@ const OurteamController = {
             title: req.body.title,
             url: req.body.url,
         }
-        await OurteamModel.findByIdAndUpdate(UpdateObject, req.params.id);
+        await OurteamModel.findByIdAndUpdate( req.params.id, UpdateObject);
         res.status(200).send(UpdateObject)
     },
     DeleteById: async (req, res) => {
