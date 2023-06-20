@@ -1,12 +1,12 @@
 const HomeModels = require('../models/home.model');
 const HomeController = {
     GetAll: async (req, res) => {
-        const GetAllSliders = await HomeModels.find();
-        res.status(200).send(GetAllSliders)
+        const GetAllHomeimg = await HomeModels.find();
+        res.status(200).send(GetAllHomeimg)
     },
     PostById: async(req,res)=>{
         const nevdata = new HomeModels({
-            url: req.body.url
+            url: req.body.url,
         })
         await nevdata.save();
         res.send(nevdata)
@@ -15,13 +15,13 @@ const HomeController = {
         const UpdateObject = {
             url: req.body.url,
         }
-        await HomeModels.findByIdAndUpdate( req.params.id, UpdateObject);
-        res.status(200).send(UpdateObject)
+      const updObj =  await HomeModels.findByIdAndUpdate( req.params.id, UpdateObject);
+        res.status(200).send(updObj)
     },
     DeleteById: async (req, res) => {
         const id = req.params.id
-        const DeleteTeam = await HomeModels.findByIdAndDelete(id);
-        res.status(200).send(DeleteTeam);
+        const DeleteIMG = await HomeModels.findByIdAndDelete(id);
+        res.status(200).send(DeleteIMG);
     }
 }
 

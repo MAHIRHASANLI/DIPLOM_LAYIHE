@@ -9,7 +9,7 @@ ourteam_router.get('/:id', OurteamController.GetById);
 
 ourteam_router.post('/',OurteamPostMiddleware, OurteamController.PostById);
 
-ourteam_router.put('/:id', OurteamController.PutById);
+ourteam_router.put('/:id',OurteamPostMiddleware, OurteamController.PutById);
 
 ourteam_router.delete('/:id', OurteamController.DeleteById);
 

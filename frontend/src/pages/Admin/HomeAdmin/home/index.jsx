@@ -19,11 +19,10 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { useGlobalData } from "../../../../global";
 import { TableHead } from "@mui/material";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Link } from "react-router-dom";
 import MoreIcon from "@mui/icons-material/More";
 import CreateIcon from "@mui/icons-material/Create";
-
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -126,7 +125,7 @@ export default function HomeAdmin() {
         <div className={style.Table_companent}>
            <div className={style.companent_left}>
             <button onClick={sortedChange} className={style.companent_left__item}>
-              Sorted name
+            <FilterListIcon style={{color:"blue"}}/>
             </button>
            <Link to="/admin/adslider">
               <div className={style.companent_left__item}>
@@ -166,16 +165,16 @@ export default function HomeAdmin() {
                   )
                 : globalSlider
               ).map((row) => (
-                <TableRow key={row.name}>
+                <TableRow key={row._id}>
                   <TableCell>
                     <img className={style.image} src={row.url} alt="" />
                   </TableCell>
-                  <TableCell style={{ fontSize: "14px" }}><span>{row.name}</span></TableCell>
+                  <TableCell><span style={{ fontSize: "14px" }}>{row.name}</span></TableCell>
                   <TableCell
                     className={style.container}
                     style={{ fontSize: "14px",textAlign:"start" }}
                   >
-                    <div className={style.ellipsis}><span>{row.title}</span></div>
+                    <div className={style.ellipsis}><span style={{ fontSize: "14px" }}>{row.title}</span></div>
                   </TableCell>
                   <TableCell style={{ fontSize: "14px",textAlign:"start" }} >
                     <Link to={`${row}`?`/admin/detailslider/${row._id}`:""}> 

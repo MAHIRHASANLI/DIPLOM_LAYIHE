@@ -22,7 +22,7 @@ import MoreIcon from "@mui/icons-material/More";
 import CreateIcon from "@mui/icons-material/Create";
 import { GetAllChoose } from '../../../../../api/choose.requests';
 import { useGlobalChoose } from "../../../../../global";
-
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -124,7 +124,7 @@ const ChooseAdmin = () => {
     <div className={style.Table_companent}>
        <div className={style.companent_left}>
         <button onClick={sortedChange} className={style.companent_left__item}>
-          Sorted name
+        <FilterListIcon style={{color:"blue"}}/>
         </button>
        <Link to="/admin/adchoose">
           <div className={style.companent_left__item}>
@@ -170,12 +170,12 @@ const ChooseAdmin = () => {
               <TableCell>
                 <i className={row.url} style={{fontSize:"30px",textAlign:"right"}} ></i>
               </TableCell>
-              <TableCell style={{ fontSize: "14px" }}><span>{row.name}</span></TableCell>
+              <TableCell><span style={{ fontSize: "14px" }}>{row.name}</span></TableCell>
               <TableCell
                 className={style.container}
                 style={{ fontSize: "14px",textAlign:"start" }}
               >
-                <div className={style.ellipsis}>{row.title}</div>
+                <div className={style.ellipsis}><span style={{ fontSize: "14px" }}>{row.title}</span></div>
               </TableCell>
               <TableCell style={{ fontSize: "14px",textAlign:"start" }} >
                 <Link to={`/admin/detailchoose/${row._id}`}>regaet

@@ -2,7 +2,7 @@
     .Table{
         width: 70%;
         height: 100%;
-        margin:20px auto;
+        margin:50px auto;
         padding-top:25px;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         
@@ -65,8 +65,9 @@
    }
         .image{
         width: 100px;
-        height: 70px;
+        height: 50px;
         border-radius:3px;
+        background:black
     }
     .image:hover{
         width: 250px;
@@ -83,7 +84,7 @@
         .Table{
             width: 95%;
             height: 100%;
-            margin:10px auto;
+            margin:30px auto;
             padding-top:10px;
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         }

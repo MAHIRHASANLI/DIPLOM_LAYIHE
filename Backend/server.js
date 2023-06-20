@@ -11,9 +11,12 @@ const sliders_router = require('./routes/slider.routes');
 const home_router = require('./routes/home.routes');
 const choose_router = require('./routes/choose.routes');
 const ourteam_router = require('./routes/ourteam.routes');
-const footer_router = require('./routes/footer.routes');
 const possion_router = require('./routes/position.routes');
 const blog_router = require('./routes/blog.routes');
+const gallery_router = require('./routes/galery.routes');
+const contact_router = require('./routes/contact.routes');
+const logo_router = require('./routes/logo.footer.routes');
+const followinginstagram_router = require('./routes/followinstagram.routes');
 
 //SLIDERD KRUD
 app.use('/api/sliders', sliders_router)
@@ -30,11 +33,20 @@ app.use('/api/choose', choose_router)
 //OURTEAM
 app.use('/api/team', ourteam_router)
 
-// blog_router
+//BLOG
 app.use('/api/blog', blog_router)
 
-//FOOTER
-app.use('/api/footer', footer_router)
+//GALLERY
+app.use('/api/gallery', gallery_router)
+
+////CONTACT
+app.use('/api/contact', contact_router)
+
+///follower
+app.use('/api/follower', followinginstagram_router)
+
+//LogoFOOTER
+app.use('/api/logo', logo_router)
 
 app.listen(process.env.PORT,()=>{
     console.log(`Connected: ${process.env.PORT}`);

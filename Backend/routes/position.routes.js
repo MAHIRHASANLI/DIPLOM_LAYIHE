@@ -9,7 +9,7 @@ possion_router.get('/:id', PositionController.GetById);
 
 possion_router.post('/',PositionPostMiddleware, PositionController.PostById);
 
-possion_router.put('/:id', PositionController.PutById);
+possion_router.put('/:id',PositionPostMiddleware, PositionController.PutById);
 
 possion_router.delete('/:id', PositionController.DeleteById);
 

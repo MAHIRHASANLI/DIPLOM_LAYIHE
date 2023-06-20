@@ -1,8 +1,9 @@
 import { useState,createContext,useContext, useEffect } from "react";
 import { GetAllSlider } from "../api/slider.requests";
-import { GetAllHome } from "../api/home.requests";
 import { GetAllChoose } from "../api/choose.requests";
 import { GetAllTeam } from "../api/ourteam.requests";
+import { GetAllBlog } from "../api/blog.requests";
+import { GetAllPassion } from "../api/position.requests";
 
 /////SLIDER///
 const GlobalData = createContext()
@@ -21,22 +22,23 @@ export const GlobalDataProvider = ({ children }) => {
 }
 export const useGlobalData = () => useContext(GlobalData)
 
-////HOME IMAGE///
-const GlobalDatahomeimg = createContext()
-export const GlobalDatahomeimgProvider = ({ children }) => {
-    const [globalImage, setGlobalImage] = useState([])
+///Passion///
+const GlobalPassion = createContext()
+export const GlobalPassionProvider = ({ children }) => {
+    const [globalPassion, setGlobalPassion] = useState([])
     useEffect(()=>{
-        GetAllHome().then((res)=>{
-            setGlobalImage(res)
+        GetAllPassion().then((res)=>{
+            setGlobalPassion(res)
         })
     },[])
     return (
-        <GlobalDatahomeimg.Provider value={[globalImage, setGlobalImage]}>
+        <GlobalPassion.Provider value={[globalPassion, setGlobalPassion]}>
             {children}
-        </GlobalDatahomeimg.Provider>
+        </GlobalPassion.Provider>
     )
 }
-export const useGlobalDatahomeimg = () => useContext(GlobalDatahomeimg)
+export const useGlobalPassion = () => useContext(GlobalPassion)
+
 
 ///CHOOSE///
 const GlobalChoose = createContext()
@@ -59,17 +61,34 @@ export const useGlobalChoose = () => useContext(GlobalChoose)
 const GlobalTeam = createContext()
 export const GlobalTeamProvider = ({ children }) => {
     const [globalTeam, setGlobalTeam] = useState([])
+    const [loading, setLoading] = useState(true)
     useEffect(()=>{
         GetAllTeam().then((res)=>{
             setGlobalTeam(res)
+            setLoading(false)
         })
     },[])
     return (
-        <GlobalTeam.Provider value={[globalTeam, setGlobalTeam]}>
+        <GlobalTeam.Provider value={[globalTeam, setGlobalTeam,loading, setLoading]}>
             {children}
         </GlobalTeam.Provider>
     )
 }
-export const useGlobalTeam = () => useContext(GlobalTeam)
+export const useGlobalTeam = () => useContext(GlobalTeam);
 
-
+////BLOGGLOBAL//
+const GlobalBlog = createContext()
+export const GlobalBlogProvider = ({ children }) => {
+    const [globalBlog, setGlobalBlog] = useState([])
+    useEffect(()=>{
+        GetAllBlog().then((res)=>{
+            setGlobalBlog(res)
+        })
+    },[])
+    return (
+        <GlobalBlog.Provider value={[globalBlog, setGlobalBlog]}>
+            {children}
+        </GlobalBlog.Provider>
+    )
+}
+export const useGlobalBlog = () => useContext(GlobalBlog);

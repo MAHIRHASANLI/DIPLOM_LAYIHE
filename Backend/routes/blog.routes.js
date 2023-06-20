@@ -9,7 +9,7 @@ blog_router.get('/:id', BlogController.GetById);
 
 blog_router.post('/',BlogPostMiddleware, BlogController.PostById);
 
-blog_router.put('/:id', BlogController.PutById);
+blog_router.put('/:id',BlogPostMiddleware, BlogController.PutById);
 
 blog_router.delete('/:id', BlogController.DeleteById);
 

@@ -1,5 +1,6 @@
 * {
-  padding: 0;
+  margin: 0;
+    padding: 0;
   font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-size: 16px;
@@ -8,7 +9,7 @@
 body {
   height: 200vh;
   margin: 0;
-  background-color:rgb(255,245,248);
+  background:white;
 }
 nav {
   position: fixed;
@@ -183,3 +184,5 @@ body {
 .sss{
   display: none;
 }
+
+/* //////// */

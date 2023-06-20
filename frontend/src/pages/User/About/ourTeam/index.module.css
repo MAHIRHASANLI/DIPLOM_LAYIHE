@@ -1,0 +1,111 @@
+/* @media only screen and (min-width: 992px) and (max-width: 1599px) { */
+.Team{
+    width: 100%;
+    margin:0;  
+    padding-top: 85px;
+    padding-bottom: 50px;
+    background-color:white;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+.team_logo{
+    font-size: 36px;
+    text-transform: capitalize;
+    margin-bottom: 50px;
+    margin-top:0;
+    display: block;
+    line-height: 1.2;
+    font-family: "Poppins", sans-serif;
+    color: black;
+    line-height: 1.3;
+    font-weight: 600;
+    /* margin-block-start: 0.83em; */
+    /* margin-block-end: 0.83em; */
+}
+
+.grid_item{
+    width: 100%;
+    height: 100%;
+    background-color:white;
+    border-radius:10px;
+    z-index: 1;
+    padding: 40px;
+    display: flex;
+    justify-content:space-around;
+    align-items:center;
+    flex-direction:column;
+    transition-duration: 600ms;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+}
+.image{
+    width: 165px;
+    height: 165px;
+    border-radius:100%;
+    overflow: hidden;
+}
+.image_img{
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    border-style: none;
+    object-fit:cover;
+    transition-duration: 600ms;
+
+}
+.team_name{
+    transition-duration: 500ms;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 0;
+    font-family: "Poppins", sans-serif;
+    color: black;
+    line-height: 1.2;
+    font-weight: 600;
+    margin-block-start: 1.67em;
+    /* margin-block-end: 1.67em; */
+    text-align: center;
+    font-weight: 500;
+}
+
+.team_title{
+    transition-duration: 500ms;
+    color: rgb(252,96,96);
+    font-size: 12px;
+    text-transform: uppercase;
+    text-align: center;
+}
+.team_icons{
+    position: relative;
+    z-index: 1;
+    margin-top: 30px;
+}
+.team_icons i{
+    color: #636363;
+    font-size: 16px;
+    transition-duration: 600ms;
+    margin-left:10px
+}
+/* // */
+.grid_item:hover {
+    background-color:rgb(252,96,96);
+    color:white;
+}
+.grid_item:hover .image_img{
+    transform: rotate(30deg);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.grid_item:hover .team_name{
+    color:white;
+}
+.grid_item:hover .team_title{
+    color:white;
+}
+.grid_item:hover i{
+  color:white;
+}
+.team_icons i:hover{
+    color:black;
+}
+/* } */

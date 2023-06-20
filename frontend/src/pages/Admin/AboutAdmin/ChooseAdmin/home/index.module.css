@@ -22,7 +22,7 @@
         }
             .companent_left__item{
             height: 35px;
-            width: 100px;
+            width: 120px;
             margin-right:5px;
             background:transparent;
             display:flex;
@@ -104,7 +104,7 @@
             }
             .companent_left__item{
                 height: 25px;
-                width: 60px;
+                width: 65px;
                 margin-right:2px;
                 background:transparent;
                 display:flex;

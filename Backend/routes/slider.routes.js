@@ -9,7 +9,7 @@ sliders_router.get('/:id', SliderController.GetById);
 
 sliders_router.post('/',SliderPostMiddleware, SliderController.PostById);
 
-sliders_router.put('/:id', SliderController.PutById);
+sliders_router.put('/:id',SliderPostMiddleware, SliderController.PutById);
 
 sliders_router.delete('/:id', SliderController.DeleteById);
 

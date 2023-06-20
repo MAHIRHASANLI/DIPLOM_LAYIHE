@@ -6,7 +6,7 @@ const SlidersSchema = Joi.object({
         .required(),
     title: Joi.string()
         .min(3)
-        .max(100)
+        .max(200)
         .required(),
     url: Joi.string()
         .required(),

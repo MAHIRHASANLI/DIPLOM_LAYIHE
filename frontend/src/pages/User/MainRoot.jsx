@@ -1,16 +1,18 @@
-import React from 'react'
-import {Outlet} from 'react-router-dom'
-import Navbar from '../../components/USER/Navbar'
-import Footer from '../../components/USER/Footer'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Navbar from "../../components/USER/Navbar";
+import FooterUser from "../../components/USER/Footer";
+import FollowerUser from "./FollowerInstagram";
 
 const MainRoot = () => {
   return (
     <>
-    <Navbar/>
-    <Outlet/>
-    <Footer/>
+      <Navbar />
+      <Outlet />
+      <FollowerUser/>
+      <FooterUser />
     </>
-  )
-}
+  );
+};
 
-export default MainRoot
+export default MainRoot;

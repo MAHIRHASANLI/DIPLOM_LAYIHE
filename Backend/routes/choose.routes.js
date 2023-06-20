@@ -9,7 +9,7 @@ choose_router.get('/:id', ChooseController.GetById);
 
 choose_router.post('/',ChoosePostMiddleware, ChooseController.PostById);
 
-choose_router.put('/:id', ChooseController.PutById);
+choose_router.put('/:id',ChoosePostMiddleware, ChooseController.PutById);
 
 choose_router.delete('/:id', ChooseController.DeleteById);
 

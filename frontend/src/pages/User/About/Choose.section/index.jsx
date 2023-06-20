@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 
 
 // import required modules
-import { FreeMode, Pagination } from "swiper";
+import { Autoplay} from "swiper";
 import { useGlobalChoose } from "../../../../global";
 
 
@@ -18,32 +18,21 @@ const ChooseUser = () => {
   const [globalChoose] =useGlobalChoose();
   return (
     <div className={style.DivSwiper}>
-      <h1 className={style.DivSwiper_text}>Why Choose Us</h1>
-    <Swiper
-    slidesPerView={3}
-    spaceBetween={30}
-    freeMode={true}
-    pagination={{
-      clickable: true,
-    }}
-    modules={[FreeMode, Pagination]}
-    className={style.mySwiper}
-  >
-    {
-      globalChoose && globalChoose.map((item)=>{
+      <h1 className={style.Swiper_title}>Why Choose Us</h1>
+      {/* centeredSlides={true} */}
+  <Swiper  slidesPerView={3}    spaceBetween={70}  grabCursor={true}  autoplay={{ delay: 3000, enabled: true, }} modules={[ Autoplay]} className="mySwiper">
+         { globalChoose && globalChoose.map((item)=>{
         return(
-          <SwiperSlide key={item._id}  className={style.mySwiper_item} style={{width:"280px"}}>
+          <SwiperSlide style={{background:"transparent"}} key={item._id} >
             <div className={style.swiper_item}>
             <i className={item.url}></i>
             <h4 className={style.swiper_item_h4}>{item.name}</h4>
             <p className={style.swiper_item_p}>{item.title}</p>
             </div>
-          </SwiperSlide>
-        )
-      })
-    }
-   
-  </Swiper>
+          </SwiperSlide>)
+         })
+        }
+      </Swiper>
     </div>
   )
 }

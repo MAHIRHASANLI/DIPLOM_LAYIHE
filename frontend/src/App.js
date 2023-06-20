@@ -1,19 +1,21 @@
 import './App.css';
-import { GlobalChooseProvider, GlobalDataProvider, GlobalDatahomeimgProvider, GlobalTeamProvider } from './global';
+import { GlobalBlogProvider, GlobalChooseProvider, GlobalDataProvider,  GlobalPassionProvider, GlobalTeamProvider } from './global';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ROUTES } from './router/router';
 const routes = createBrowserRouter(ROUTES)
 function App() {
   return (
-    <GlobalTeamProvider>
+    <GlobalBlogProvider>
+      <GlobalTeamProvider>
         <GlobalChooseProvider>
-          <GlobalDatahomeimgProvider>
+          <GlobalPassionProvider>
             <GlobalDataProvider>
-              <RouterProvider router={routes} />
+              <RouterProvider router={routes}/>
             </GlobalDataProvider>
-          </GlobalDatahomeimgProvider>
+            </GlobalPassionProvider>
         </GlobalChooseProvider>
-    </GlobalTeamProvider>
+      </GlobalTeamProvider>
+    </GlobalBlogProvider>
   );
 }
 

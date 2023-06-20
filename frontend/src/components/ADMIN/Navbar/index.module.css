@@ -9,7 +9,7 @@
 @media screen and (min-width: 800px) {
     .Link{
         margin:0 auto;
-        width: 50%;
+        width: 100%;
         display:flex;
         align-items:center;
         justify-content:space-between

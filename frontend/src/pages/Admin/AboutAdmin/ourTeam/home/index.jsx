@@ -22,7 +22,7 @@ import MoreIcon from "@mui/icons-material/More";
 import CreateIcon from "@mui/icons-material/Create";
 import { useGlobalTeam } from "../../../../../global";
 import { GetAllTeam } from "../../../../../api/ourteam.requests";
-
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -94,130 +94,151 @@ TablePaginationActions.propTypes = {
 };
 
 const OurTeamAdmin = () => {
-      const  [globalTeam, setGlobalTeam]=useGlobalTeam()
-      function handleChange(e){
-        GetAllTeam(e.target.value).then((res)=>{
-          setGlobalTeam(res)
-        })
-    }
-    function sortedChange(){
-      console.log("salam");
-      
-    }
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [globalTeam, setGlobalTeam,loading] = useGlobalTeam();
   
-    // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows =
-      page > 0 ? Math.max(0, (1 + page) * rowsPerPage - globalTeam.length) : 0;
-  
-    const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-    };
-  
-    const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      setPage(0);
-    };
+  function handleChange(e) {
+    GetAllTeam(e.target.value).then((res) => {
+      setGlobalTeam(res);
+    });
+  }
+  function sortedChange() {
+    console.log("salam");
+  }
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - globalTeam.length) : 0;
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   return (
     <div className={style.Table}>
-    {/* table uzeri companentler */}
-    <div className={style.Table_companent}>
-       <div className={style.companent_left}>
-        <button onClick={()=>{
-          const sorteddata = globalTeam.filter((a, b)=>a.name- b.name)
-          setGlobalTeam(sorteddata)
-        }} className={style.companent_left__item}>
-          Sorted name
-        </button>
-       <Link to="/admin/adteam">
-          <div className={style.companent_left__item}>
-            <strong className={style.count}>count: [ {globalTeam.length} ] +</strong>
-          </div>
-      </Link>
-       </div>
-      <h2 className={style.namePage}>our_team Data</h2>    
+      {/* table uzeri companentler */}
+      <div className={style.Table_companent}>
+        <div className={style.companent_left}>
+          <button
+            onClick={() => {
+              const sorteddata = globalTeam.filter((a, b) => a.name - b.name);
+              setGlobalTeam(sorteddata);
+            }}
+            className={style.companent_left__item}
+          >
+            <FilterListIcon style={{ color: "blue" }} />
+          </button>
+          <Link to="/admin/adteam">
+            <div className={style.companent_left__item}>
+              <strong className={style.count}>
+                count: [ {globalTeam.length} ] +
+              </strong>
+            </div>
+          </Link>
+        </div>
+        <h2 className={style.namePage}>our_team Data</h2>
 
         <input
           type="text"
           className={style.inputsearch}
-          onChange={(e)=>handleChange(e)}
+          onChange={(e) => handleChange(e)}
           name="name"
           placeholder="   search "
           variant="outlined"
           form="outlined-basic"
         />
-    </div>
+      </div>
 
-    {/* table */}
-    <TableContainer component={Paper}>
-    
-      <Table sx={{ width: "100%" }} aria-label="custom pagination table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Image</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Title</TableCell>
-            <TableCell>Detail<CreateIcon style={{fontSize:"20px",marginBottom:"6px"}}/></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0
-            ? globalTeam.slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-              )
-            : globalTeam
-          ).map((row) => (
-            <TableRow key={row.name}>
+      {/* table */}
+      <TableContainer component={Paper}>
+        <Table sx={{ width: "100%" }} aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Image</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Title</TableCell>
               <TableCell>
-                <img className={style.image} src={row.url} alt="" />
-              </TableCell>
-              <TableCell style={{ fontSize: "14px" }}>{row.name}</TableCell>
-              <TableCell
-                className={style.container}
-                style={{ fontSize: "14px",textAlign:"start" }}
-              >
-                <div className={style.ellipsis}>{row.title}</div>
-              </TableCell>
-              <TableCell style={{ fontSize: "14px",textAlign:"start" }} >
-                <Link to={`${row.url}`?`/admin/detailteam/${row._id}`:"/admin/team"}>
-                  <MoreIcon style={{ color: "blueviolet" }} />
-                </Link>
+                Detail
+                <CreateIcon style={{ fontSize: "20px", marginBottom: "6px" }} />
               </TableCell>
             </TableRow>
-          ))}
+          </TableHead>
+         {
+          loading ?(<div style={{margin:"50px 100px"}}>Loading...</div>):(
+            <TableBody>
+            {(rowsPerPage > 0
+              ? globalTeam.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : globalTeam
+            ).map((row) => (
+              <TableRow key={row._id}>
+                <TableCell>
+                  <img className={style.image} src={row.url} alt="" />
+                </TableCell>
+                <TableCell>
+                  <span style={{ fontSize: "14px" }}>{row.name}</span>
+                </TableCell>
+                <TableCell
+                  className={style.container}
+                  style={{ fontSize: "14px", textAlign: "start" }}
+                >
+                  <div className={style.ellipsis}>
+                    <span style={{ fontSize: "14px" }}>{row.title}</span>
+                  </div>
+                </TableCell>
+                <TableCell style={{ fontSize: "14px", textAlign: "start" }}>
+                  <Link
+                    to={
+                      `${row.url}`
+                        ? `/admin/detailteam/${row._id}`
+                        : "/admin/team"
+                    }
+                  >
+                    <MoreIcon style={{ color: "blueviolet" }} />
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))}
 
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          )
+         }
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                colSpan={3}
+                count={globalTeam.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "rows per page",
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
             </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-              colSpan={3}
-              count={globalTeam.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  "aria-label": "rows per page",
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
-  </div>
-  )
-}
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </div>
+  );
+};
 
-export default OurTeamAdmin
+export default OurTeamAdmin;

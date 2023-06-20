@@ -112,7 +112,7 @@ const DetailTeam = () => {
               name="name"
               label={
                 formik.errors.name && formik.touched.name ? (
-                  <p style={{ color: "red" }}>{formik.errors.name}</p>
+                  <span style={{ color: "red" }}>{formik.errors.name}</span>
                 ) : (
                   "  edit name"
                 )
@@ -132,7 +132,7 @@ const DetailTeam = () => {
               name="title"
               label={
                 formik.errors.title && formik.touched.title ? (
-                  <p style={{ color: "red" }}>{formik.errors.title}</p>
+                  <span style={{ color: "red" }}>{formik.errors.title}</span>
                   ) : (
                     "  edit title"
                     )
@@ -161,6 +161,7 @@ const DetailTeam = () => {
             />
 
             <TextField
+            type="email"
             margin="dense"
               hiddenLabel
               id="filled-hidden-label-small"
@@ -173,7 +174,7 @@ const DetailTeam = () => {
               name="email"
               label={
                 formik.errors.email && formik.touched.email ? (
-                  <p style={{ color: "red" }}>{formik.errors.email}</p>
+                  <span style={{ color: "red" }}>{formik.errors.email}</span>
                 ) : (
                   "  edit email"
                 )

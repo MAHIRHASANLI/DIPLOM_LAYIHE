@@ -69,7 +69,7 @@ const AdSlider = () => {
             id="outlined-basic"
             label={
               formik.errors.name && formik.touched.name ? (
-                <p style={{ color: "red" }}>{formik.errors.name}</p>
+                <span style={{ color: "red" }}>{formik.errors.name}</span>
               ) : (
                 "Add Name"
               )
@@ -93,7 +93,7 @@ const AdSlider = () => {
             id="outlined-basic"
             label={
               formik.errors.title && formik.touched.title ? (
-                <p style={{ color: "red" }}>{formik.errors.title}</p>
+                <span style={{ color: "red" }}>{formik.errors.title}</span>
               ) : (
                 "Add Title"
               )
@@ -118,7 +118,7 @@ const AdSlider = () => {
             variant="outlined"
             label={
               formik.errors.url && formik.touched.url ? (
-                <p style={{ color: "red" }}>{formik.errors.url}</p>
+                <span style={{ color: "red" }}>{formik.errors.url}</span>
               ) : (
                 "Add Image"
               )
@@ -126,6 +126,7 @@ const AdSlider = () => {
           />
 
           <TextField
+          type="email"
             style={{
               width: "100%",
               marginTop: "10px",
@@ -141,7 +142,7 @@ const AdSlider = () => {
             variant="outlined"
             label={
               formik.errors.email && formik.touched.email ? (
-                <p style={{ color: "red" }}>{formik.errors.email}</p>
+                <span style={{ color: "red" }}>{formik.errors.email}</span>
               ) : (
                 "Add Email"
               )

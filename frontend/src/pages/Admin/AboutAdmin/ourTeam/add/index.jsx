@@ -13,7 +13,7 @@ const AddTeam = () => {
   const [globalTeam, setGlobalTeam] = useGlobalTeam();
   // const [image,setImage] = useState([])
   const [loading, setLoading] = useState(false);
-  function handleSubmit(values, actions) {
+    function  handleSubmit(values, actions) {
     setLoading(true);
     const formData = new FormData();
     formData.append("file", values.url);
@@ -28,8 +28,8 @@ const AddTeam = () => {
         };
         PostTeam(newObj);
         setGlobalTeam([...globalTeam, values]);
-        navigate("/admin/team");
         setLoading(false);
+        // navigate("/admin/team");
         actions.resetForm();
       });
   }
@@ -68,7 +68,7 @@ const AddTeam = () => {
             id="outlined-basic"
             label={
               formik.errors.name && formik.touched.name ? (
-                <p style={{ color: "red" }}>{formik.errors.name}</p>
+                <span style={{ color: "red" }}>{formik.errors.name}</span>
               ) : (
                 "add name"
               )
@@ -92,7 +92,7 @@ const AddTeam = () => {
             id="outlined-basic"
             label={
               formik.errors.title && formik.touched.title ? (
-                <p style={{ color: "red" }}>{formik.errors.title}</p>
+                <span style={{ color: "red" }}>{formik.errors.title}</span>
               ) : (
                 "add title"
               )
@@ -117,7 +117,7 @@ const AddTeam = () => {
             variant="outlined"
             label={
               formik.errors.url && formik.touched.url ? (
-                <p style={{ color: "red" }}>{formik.errors.url}</p>
+                <span style={{ color: "red" }}>{formik.errors.url}</span>
               ) : (
                 "add image"
               )

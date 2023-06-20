@@ -14,6 +14,7 @@ const PositionController = {
             about: req.body.about,
             title: req.body.title,
             url: req.body.url,
+            img: req.body.img
         })
         await NewPassionObject.save()
         res.status(200).send(NewPassionObject)
@@ -23,6 +24,7 @@ const PositionController = {
             about: req.body.about,
             title: req.body.title,
             url: req.body.url,
+            img: req.body.img
         }
         await PositionModel.findByIdAndUpdate( req.params.id, UpdateObject);
         res.status(200).send(UpdateObject)

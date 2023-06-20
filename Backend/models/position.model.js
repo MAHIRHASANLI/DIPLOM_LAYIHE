@@ -15,6 +15,11 @@ const PositionModel = new mongoose.model('position', new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
+    },
+    img:  {
+        type: String,
+        trim: true,
+        required: true,
     }
 }))
 

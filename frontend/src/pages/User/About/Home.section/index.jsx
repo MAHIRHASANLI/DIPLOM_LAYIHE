@@ -1,24 +1,49 @@
-import React from "react";
-import { Link } from 'react-router-dom';
+import React, { useEffect } from "react";
+import {  NavLink } from "react-router-dom";
 import style from "./index.module.css";
-import { useGlobalChoose } from "../../../../global";
-import OtherHousesIcon from '@mui/icons-material/OtherHouses';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useState } from "react";
+import { GetAllHomeAbout } from "../../../../api/home.about.requests";
 
 const HomeGlobalSection = () => {
-  const [globalChoose] = useGlobalChoose();
+  const [homeImg, setHomeImg] = useState([]);
+  useEffect(() => {
+    GetAllHomeAbout().then((res) => setHomeImg(res));
+  }, []);
   return (
     <div className={style.HomeImg}>
       <div className={style.HomeImg_content}>
-        <h2 className={style.HomeImg_content_h2}>About Us</h2>
-        <ol className={style.HomeImg_content_home}><OtherHousesIcon style={{fontSize:"20px"}}/> <Link to="/">Home</Link> <ArrowForwardIosIcon style={{fontSize:"15px"}}/><span className={style.HomeImg_content_about}>About</span></ol>
+        <h2 className={style.context_h2}>About Us</h2>
+        <ol className={style.context}>
+            <NavLink to="/">
+             <li className={style.home}>
+             <i
+                style={{ fontSize: "16px", margin: "0" }}
+                className="fa-solid fa-house-chimney icons"
+              ></i>{" "}
+              Home
+             </li>
+            </NavLink>
+          <li className={style.about}>
+            <i
+              style={{ fontSize: "12px", margin: "0", color:"white" }}
+              className="fa-solid fa-chevron-right"
+            ></i>&nbsp;
+            About
+          </li>
+        </ol>
       </div>
 
-      <img className={style.HomeImg_item} src={globalChoose.url} alt="#" />;
-      {/* {globalChoose &&
-        globalChoose.map((item) => {
-          return
-        })} */}
+      {homeImg &&
+        homeImg.map((item) => {
+          return (
+            <img
+              key={item._id}
+              className={style.HomeImg_item}
+              src={item.url}
+              alt="#"
+            />
+          );
+        })}
     </div>
   );
 };

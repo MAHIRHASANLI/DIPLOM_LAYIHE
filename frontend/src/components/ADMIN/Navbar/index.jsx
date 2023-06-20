@@ -40,16 +40,16 @@ function Navbar() {
                   About
                   <div className={style.home_dropdown}>
                   <Link to="/admin/passion">
-                      <a href="">Passion</a>
+                      <a href="">- Passion</a>
                     </Link>
                     <Link to="/admin/choose">
-                      <a href="">Choose</a>
+                      <a href="">- Choose</a>
                     </Link>
                     <Link to="/admin/team">
-                      <a href="">our Team</a>
+                      <a href="">- our Team</a>
                     </Link>
                     <Link to="/admin/about">
-                      <a href="">Goo Back</a>
+                      <a href="">- Goo Back</a>
                     </Link>
                   </div>
                 {/* </span> */}
@@ -79,6 +79,10 @@ function Navbar() {
 
               <Link to="/admin/footer">
                 <span className={style.link}>Footer</span>
+              </Link>
+
+              <Link to="/admin/follower">
+                <span className={style.link}>Follower</span>
               </Link>
 
               <Link to="/">

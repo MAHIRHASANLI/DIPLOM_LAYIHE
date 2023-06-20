@@ -36,7 +36,7 @@ const DetailChoose = () => {
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          if(detail._id){
+          if(detail.url){
             DeleteChoose(detail._id)
             navigate('/admin/choose')
             setGlobalChoose(globalChoose.filter((m)=>m._id !== detail._id))
@@ -104,15 +104,15 @@ const DetailChoose = () => {
       <div className="sss" id="form" >
       <form className={style.Form__item} onSubmit={formik.handleSubmit}>
      <input type='text'  style={{width:"100%",marginTop:"10px",background:"white",borderRadius:"5px",height:"35px"}}   onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.name} error={formik.errors.name && formik.touched.name ?true : false} name='name' id="outlined-basic" placeholder={formik.errors.name && formik.touched.name ?  (
-          <p style={{ color: "red" }}>{formik.errors.name}</p>
+          <span style={{ color: "red" }}>{formik.errors.name}</span>
         ): "   update name"} variant="outlined" />
     
      <input type='text'  style={{width:"100%",marginTop:"10px",background:"white",borderRadius:"5px",height:"35px"}}   className={style.input} onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.title} error={formik.errors.title && formik.touched.title ?true : false} name='title' id="outlined-basic" placeholder={formik.errors.title && formik.touched.title ? (
-          <p style={{ color: "red" }}>{formik.errors.title}</p>
+          <span style={{ color: "red" }}>{formik.errors.title}</span>
         ): "   update title"}  variant="outlined" />
    
      <input style={{width:"100%",marginTop:"10px",background:"white",borderRadius:"5px",height:"35px"}}  onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.url} error={formik.errors.url && formik.touched.url ?true : false} name='url' id="outlined-basic"  variant="outlined" placeholder={formik.errors.url && formik.touched.url ? (
-          <p style={{ color: "red" }}>{formik.errors.url}</p>
+          <span style={{ color: "red" }}>{formik.errors.url}</span>
         ) : "   update image"} />
      
 

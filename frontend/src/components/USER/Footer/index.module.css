@@ -1,0 +1,75 @@
+@media screen and (min-width: 400px) {
+  .footeruser {
+    width: 100%;
+    padding: 12px 0 16px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .footeruser p {
+    margin-bottom: 0;
+    color: #252525;
+    line-height: 1.9;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+  }
+  .logo_icons {
+    margin: 10px auto 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .team_icons i {
+    color: #636363;
+    font-size: 16px;
+    color: #252525;
+    font-size: 16px;
+    margin-right: 20px;
+    transition-duration: 600ms;
+  }
+
+  .team_icons i:hover {
+    color: rgb(252, 96, 96);
+  }
+}
+
+/* //// */
+
+@media screen and (max-width: 400px) {
+  .footeruser {
+    width: 100%;
+    padding: 5px 0 6px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .footeruser p {
+    margin-bottom: 0;
+    color: #252525;
+    font-size: 10px;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+  }
+  .logo_icons {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .team_icons i {
+    color: #636363;
+    font-size: 10px;
+    color: #252525;
+    margin-right: 20px;
+    transition-duration: 600ms;
+  }
+
+  .team_icons i:hover {
+    color: rgb(252, 96, 96);
+  }
+}

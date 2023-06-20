@@ -1,10 +1,10 @@
-import AboutAdmin from "../pages/Admin/AboutAdmin/home";
+import AboutAdmin from "../pages/Admin/AboutAdmin/home.about.image/home";
 import ChooseAdmin from "../pages/Admin/AboutAdmin/ChooseAdmin/home";
 import AdminRoot from "../pages/Admin/AdminRoot";
-import BlogAdmin from "../pages/Admin/BlogAdmin";
-import ContactAdmin from "../pages/Admin/ContactAdmin";
+import BlogAdmin from "../pages/Admin/BlogAdmin/home";
+import ContactAdmin from "../pages/Admin/ContactAdmin/home";
 import Dashboard from "../pages/Admin/Deshboard";
-import GaleryAdmin from "../pages/Admin/GaleryAdmin";
+import GaleryAdmin from "../pages/Admin/GaleryAdmin/home";
  import About from "../pages/User/About";
 import Blog from "../pages/User/Blog";
 import Contact from "../pages/User/Contact";
@@ -18,11 +18,15 @@ import DetailSlider from "../pages/Admin/HomeAdmin/detail";
 import AddChoose from "../pages/Admin/AboutAdmin/ChooseAdmin/add";
 import DetailChoose from "../pages/Admin/AboutAdmin/ChooseAdmin/detail";
 import FooterAdmin from "../pages/Admin/Footer/home";
-import AdFooter from "../pages/Admin/Footer/add";
 import AddTeam from "../pages/Admin/AboutAdmin/ourTeam/add";
 import DetailOurTeam from "../pages/Admin/AboutAdmin/ourTeam/detail";
 import Passion from "../pages/Admin/AboutAdmin/forPassion/home";
 import DetailPassion from "../pages/Admin/AboutAdmin/forPassion/detail";
+import DetailBlog from "../pages/Admin/BlogAdmin/detail";
+import AddBlog from "../pages/Admin/BlogAdmin/add";
+import AdGallery from "../pages/Admin/GaleryAdmin/add";
+import FolloInstagramAdmin from "../pages/Admin/followerinstagram/home";
+import AddFollower from "../pages/Admin/followerinstagram/add";
 
 export const ROUTES = [
     {
@@ -107,26 +111,41 @@ export const ROUTES = [
                 path: 'detailteam/:id',
                 element: <DetailOurTeam/>
             },
-           
-            {
-                path: 'galery',
-                element: <GaleryAdmin />
-            },
             {
                 path: 'blog',
                 element: <BlogAdmin />
+            },
+            {
+                path: 'adblog',
+                element: <AddBlog />
+            },
+            {
+                path: 'detailblog/:id',
+                element: <DetailBlog />
             },
             {
                 path: 'contact',
                 element: <ContactAdmin />
             },
             {
+                path: 'galery',
+                element: <GaleryAdmin />
+            },
+            {
+                path: 'adgallery',
+                element: <AdGallery/>
+            },
+            {
                 path: 'footer',
                 element: <FooterAdmin/>
             },
             {
-                path: 'adfooter',
-                element: <AdFooter/>
+                path: 'follower',
+                element: <FolloInstagramAdmin/>
+            },
+            {
+                path: 'adfollower',
+                element: <AddFollower/>
             }
         ]
     }

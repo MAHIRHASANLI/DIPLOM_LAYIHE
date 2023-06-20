@@ -31,8 +31,8 @@ const OurteamController = {
             title: req.body.title,
             url: req.body.url,
         }
-        await OurteamModel.findByIdAndUpdate( req.params.id, UpdateObject);
-        res.status(200).send(UpdateObject)
+       const newObj = await OurteamModel.findByIdAndUpdate( req.params.id, UpdateObject);
+        res.status(200).send(newObj)
     },
     DeleteById: async (req, res) => {
         const id = req.params.id

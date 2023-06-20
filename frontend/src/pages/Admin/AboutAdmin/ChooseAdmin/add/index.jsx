@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import style from "./index.module.css";
-import axios from "axios";
 import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { validationChoose } from "../validation.schema";
@@ -12,27 +11,14 @@ import { useGlobalChoose } from "../../../../../global";
 const AddChoose = () => {
   const navigate = useNavigate();
   const [globalChoose, setGlobalChoose] = useGlobalChoose();
-  // const [image,setImage] = useState([])
   const [loading, setLoading] = useState(false);
   function handleSubmit(values, actions) {
     setLoading(true);
-    const formData = new FormData();
-    formData.append("file", values.url);
-    formData.append("upload_preset", "w2bgln2g");
-    axios
-      .post("https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload", formData)
-      .then((res) => {
-        const newObj = {
-          name: values.name,
-          title: values.title,
-          url: res.data.secure_url,
-        };
-        PostChoose(newObj);
+        PostChoose(values);
         setGlobalChoose([...globalChoose, values]);
-        navigate("/admin/choose");
         setLoading(false);
+        navigate("/admin/choose");
         actions.resetForm();
-      });
   }
   const formik = useFormik({
     initialValues: {
@@ -69,7 +55,7 @@ const AddChoose = () => {
             id="outlined-basic"
             label={
               formik.errors.name && formik.touched.name ? (
-                <p style={{ color: "red" }}>{formik.errors.name}</p>
+                <span style={{ color: "red" }}>{formik.errors.name}</span>
               ) : (
                 "Add Name"
               )
@@ -94,7 +80,7 @@ const AddChoose = () => {
             id="outlined-basic"
             label={
               formik.errors.title && formik.touched.title ? (
-                <p style={{ color: "red" }}>{formik.errors.title}</p>
+                <span style={{ color: "red" }}>{formik.errors.title}</span>
               ) : (
                 "Add Title"
               )
@@ -119,9 +105,9 @@ const AddChoose = () => {
             variant="outlined"
             label={
               formik.errors.url && formik.touched.url ? (
-                <p style={{ color: "red" }}>{formik.errors.url}</p>
+                <span style={{ color: "red" }}>{formik.errors.url}</span>
               ) : (
-                "Add Image"
+                "Add Icons"
               )
             }
           />
