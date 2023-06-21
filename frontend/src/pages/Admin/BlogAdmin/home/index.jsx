@@ -102,7 +102,7 @@ const BlogAdmin = () => {
     }
   
     function sortedChange(){
-      setGlobalBlog(globalBlog.sort((a,b)=>a.type > b.type))
+      setGlobalBlog([...globalBlog.sort((a,b)=> a.type.localeCompare(b.type))])
     }
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);

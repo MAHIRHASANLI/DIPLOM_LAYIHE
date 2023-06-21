@@ -1,9 +1,12 @@
 import React from 'react'
+import HomeGlobalSection from './homesection'
+import GalleryUser from './gallery'
 
 const Galery = () => {
   return (
-    <>Galery
-    
+    <>
+    <HomeGlobalSection/>
+    <GalleryUser/>
     </>
   )
 }

@@ -52,19 +52,30 @@ export default function FooterAdmin() {
 
   ///formik//
   function handleSubmit(values, actions) {
+    // console.log(values.urlblack);
+    // console.log(values.url);
     setLoading(true);
     const formData = new FormData();
-    formData.appendc("file", values.url, values.urlblack);
+    // formData.append("file", values.url);
+    const uploadFile ={
+      url:values.url,
+      urlblack: values.urlblack
+    }
+    formData.append("file", values.url)
+    formData.append([..."files", values.urlblack])
+
+    // formData.append("file",[...])
     formData.append("upload_preset", "w2bgln2g");
     axios
       .post("https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload", formData)
       .then((res) => {
-        const newObj = {
-          url: res.data.secure_url,
-          urlblack: res.secure_url,
-          count: values.count,
-        };
-        console.log(newObj);
+        console.log(res);
+        // const newObj = {
+        //   url: res.data.secure_url,
+        //   urlblack: res.secure_url,
+        //   count: values.count,
+        // };
+        // console.log(newObj);
         // PutHomeAbout(values._id,newObj);
         setFooter([...footer, values]);
         setLoading(false);
@@ -168,6 +179,7 @@ export default function FooterAdmin() {
             />
 
             <TextField
+            //  type="file"  accept="image/*" required
               style={{
                 width: "100%",
                 marginTop: "10px",
@@ -193,6 +205,7 @@ export default function FooterAdmin() {
             />
 
             <TextField
+            // type="file"  accept="image/*" required
               style={{
                 width: "100%",
                 marginTop: "10px",

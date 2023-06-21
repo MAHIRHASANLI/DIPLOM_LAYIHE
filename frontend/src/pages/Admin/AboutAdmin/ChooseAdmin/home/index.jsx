@@ -101,7 +101,7 @@ const ChooseAdmin = () => {
         })
     }
     function sortedChange(){
-      setGlobalChoose(globalChoose.sort((a,b)=>a.name > b.name))
+      setGlobalChoose([...globalChoose.sort((a,b)=> a.name.localeCompare(b.name))])
     }
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);

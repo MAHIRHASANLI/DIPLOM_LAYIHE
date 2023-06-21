@@ -102,7 +102,7 @@ const OurTeamAdmin = () => {
     });
   }
   function sortedChange() {
-    console.log("salam");
+    setGlobalTeam([...globalTeam.sort((a,b)=> a.name.localeCompare(b.name))]);
   }
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -125,10 +125,7 @@ const OurTeamAdmin = () => {
       <div className={style.Table_companent}>
         <div className={style.companent_left}>
           <button
-            onClick={() => {
-              const sorteddata = globalTeam.filter((a, b) => a.name - b.name);
-              setGlobalTeam(sorteddata);
-            }}
+            onClick={sortedChange}
             className={style.companent_left__item}
           >
             <FilterListIcon style={{ color: "blue" }} />

@@ -102,7 +102,7 @@ export default function HomeAdmin() {
       })
   }
   function sortedChange(){
-    setGlobalSlider(globalSlider.sort((a,b)=>a.name - b.name))
+    setGlobalSlider([...globalSlider.sort((a,b)=> a.name.localeCompare(b.name))])
   }
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
