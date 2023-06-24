@@ -61,7 +61,7 @@
 }
 .Detail_leftitem{
     width: 28%;
-    height: 330px;
+    height: 100%;
     display:flex;
     justify-content:space-around;
     align-items:center;

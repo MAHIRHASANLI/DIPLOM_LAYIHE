@@ -22,7 +22,7 @@ const FooterUser = () => {
                   <Grid item xs={12} sm={7} md={8} lg={9}>
                     <p>
                       {item.count}{" "}
-                      <a style={{ color: "red" }} href="">
+                      <a style={{ color: "red" }} href="#">
                         Colorlib
                       </a>
                     </p>
@@ -39,13 +39,13 @@ const FooterUser = () => {
                           <a href="https://www.facebook.com/sharer/sharer.php?u=example.org">
                             <i className="fa-brands fa-facebook-f"></i>
                           </a>
-                          <a href="">
+                          <a href="#">
                             <i className="fa-brands fa-twitter"></i>
                           </a>
-                          <a href="">
+                          <a href="#">
                             <i className="fa-brands fa-linkedin-in"></i>
                           </a>
-                          <a href="">
+                          <a href="#">
                             <i className="fa-brands fa-pinterest-p"></i>
                           </a>
                         </div>

@@ -1,6 +1,10 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { GetAllHomeAbout, PutHomeAbout } from "../../../../../api/home.about.requests";
+import {
+  GetAllHomeAbout,
+  GetByIDHomeAbout,
+  PutHomeAbout,
+} from "../../../../../api/home.about.requests";
 import style from "./index.module.css";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -10,13 +14,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button, TableHead, TextField } from "@mui/material";
+import { Button, Fab, TableHead, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import CreateIcon from "@mui/icons-material/Create";
 ///MODAL//
 import Modal from "@mui/material/Modal";
 import { validationHomeAboutIMG } from "../validation.home.about";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 ///modall.Style//
 const stylemodal = {
@@ -33,43 +38,56 @@ const stylemodal = {
 const AboutAdmin = () => {
   const [loading, setLoading] = useState(false);
   const [globalImage, setGlobalImage] = useState([]);
-  useEffect(() => {
-    GetAllHomeAbout().then((res) => {
-      setGlobalImage(res);
-    });
-  }, []);
+  const [detail, setDetail]= useState({})
 
+ //GET ALL///
+ useEffect(()=>{
+  GetAllHomeAbout().then((res)=>{
+    setGlobalImage(res);
+    // setDetail(globalImage.find((m)=>m._id))
+  })
+},[])
   ///MODAL///
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleconnected = () =>setOpen(false);
+  const handleconnected = () => setOpen(false);
   const handleClose = () => setOpen(false);
-
   ///formik//
-  function handleSubmit(values, actions) {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("file", values.url);
-    formData.append("upload_preset", "w2bgln2g");
-    axios.post(`https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload`, formData)
-      .then((res) => {
-        const newObj = {
-          url: res.data.secure_url,
-        };
-        PutHomeAbout(values._id,newObj);
-        setGlobalImage(values);
-        setLoading(false);
-         handleconnected()
-        actions.resetForm();
-      });
-  }
   const formik = useFormik({
     initialValues: {
       url: "",
     },
     validationSchema: validationHomeAboutIMG,
-    onSubmit: handleSubmit,
+    onSubmit: async (values, actions) => {
+      setLoading(true);
+      const formData = new FormData();
+      try {
+        formData.append("file", values.url);
+        formData.append("upload_preset", "givlaamt");
+        const res = await axios.post(
+          "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
+          formData
+          );
+          console.log(res.data.secure_url);
+          console.log(detail);
+        const newObj = {
+          url: res.data.secure_url,
+        };
+      //   console.log(newObj);
+        PutHomeAbout(detail, newObj);
+      setGlobalImage([newObj]);
+        setLoading(false);
+        handleconnected();
+      //   actions.resetForm();
+      } catch (error) {
+        console.log(error);
+      }
+    },
   });
+///Get by id
+useEffect(()=>{
+
+},[])
   return (
     <>
       <div className={style.Table}>
@@ -111,13 +129,16 @@ const AboutAdmin = () => {
                       <Button
                         variant="outlined"
                         color="primary"
-                        onClick={handleOpen}
+                        onClick={()=>{
+                          setDetail(row._id)
+                          handleOpen()
+                        }}
                       >
                         <CreateIcon />
                       </Button>
                     </TableCell>
                   </TableRow>
-                ))}
+                ))} 
             </TableBody>
             <TableFooter>
               <TableRow></TableRow>
@@ -135,32 +156,36 @@ const AboutAdmin = () => {
       >
         <Box sx={stylemodal}>
           <form className="Form__item" onSubmit={formik.handleSubmit}>
-            {/* setSelectImage(e.target.files[0]); */}
-            {formik.errors.url && formik.touched.url ? (
-              <span style={{ color: "red" }}>{formik.errors.url}</span>
-            ) : (
-              <span>update image:</span>
-            )}
-            <TextField
-              type="text"
-              margin="dense"
-              hiddenLabel
-              id="filled-hidden-label-small"
-              variant="outlined"
-              size="small"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.url}
-              error={formik.errors.url && formik.touched.url ? true : false}
-              name="url"
-              label={
-                formik.errors.url && formik.touched.url ? (
-                  <span style={{ color: "red" }}>{formik.errors.url}</span>
+           
+            <label className="file_img" htmlFor="upload-photo">
+              <input
+                style={{ display: "none" }}
+                id="upload-photo"
+                name="url"
+                type="file"
+                onChange={(e) => formik.setFieldValue("url", e.target.files[0])}
+              />
+
+              <Fab
+                color="info"
+                size="small"
+                component="span"
+                aria-label="add"
+                variant="extended"
+                style={{ margin: "10px auto"}}
+              >
+                {formik.errors.url && formik.touched.url ? (
+                  <span style={{ color: "red", fontSize: "14px" }}>
+                    {formik.errors.url}
+                  </span>
                 ) : (
-                  "  edit image"
-                )
-              }
-            />
+                  <span style={{ color: "white", fontSize: "14px" }}>
+                    {" "}
+                    + Update photo
+                  </span>
+                )}
+              </Fab>
+            </label>
 
             <Button
               variant="outlined"
@@ -170,7 +195,7 @@ const AboutAdmin = () => {
                 background: "white",
                 borderRadius: "5px",
               }}
-              type="submit"
+              type="Submit"
               color={
                 formik.errors.url && formik.touched.url ? "error" : "success"
               }

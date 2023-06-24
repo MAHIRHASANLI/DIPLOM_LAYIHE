@@ -180,9 +180,9 @@ const BlogAdmin = () => {
                 <div className={style.ellipsis}><span style={{ fontSize: "14px" }}>{row.title}</span></div>
               </TableCell>
               <TableCell style={{ fontSize: "14px",textAlign:"start" }} >
-                <Link to={`/admin/detailblog/${row._id}`}>
-                  <MoreIcon style={{ color: "blueviolet" }} />
-                </Link>
+               <Link to={`/admin/detailblog/${row._id}`}>
+                <MoreIcon style={{ color: "blueviolet" }} />
+              </Link>
               </TableCell>
             </TableRow>
           ))}

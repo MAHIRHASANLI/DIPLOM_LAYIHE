@@ -39,7 +39,7 @@ const ContactUser = () => {
                 
                    <div style={{padding:"60px 0 25px"}} >
                    <iframe className={style.iframe_user} aria-hidden="false"
-                        tabIndex="0" src={item.address} frameBorder="0"></iframe>
+                        tabIndex="0" src={item.address}></iframe>
                    </div>
                 </Grid>
               </Grid>

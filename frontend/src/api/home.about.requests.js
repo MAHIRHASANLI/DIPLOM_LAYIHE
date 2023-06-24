@@ -8,7 +8,13 @@ export const GetAllHomeAbout = async()=>{
     })
     return GlobalData;
 }
-
+export const GetByIDHomeAbout = async(id)=>{
+    let GlobalData;
+    await axios.get(`${BASE_URL}/homeimg/${id}`).then((res)=>{
+        GlobalData = res.data
+    })
+    return GlobalData;
+}
 export const PutHomeAbout = (id,payload)=>{
     axios.put(`${BASE_URL}/homeimg/${id}`,payload)
 }

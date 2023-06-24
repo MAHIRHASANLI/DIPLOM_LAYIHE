@@ -1,40 +1,21 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
-import { Button, TextField } from "@mui/material";
+import { Button, Fab, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { PostBlog } from "../../../../api/blog.requests";
 import { validationourBlog } from "../validation.blog";
 import { useGlobalBlog } from "../../../../global";
 
+
+import DatePicker from 'react-date-picker';
 const AddBlog = () => {
   const navigate = useNavigate();
   const [globalBlog, setGlobalBlog] = useGlobalBlog();
   // const [image,setImage] = useState([])
   const [loading, setLoading] = useState(false);
-  function handleSubmit(values, actions) {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("file", values.url);
-    formData.append("upload_preset", "w2bgln2g");
-    axios
-      .post("https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload", formData)
-      .then((res) => {
-        const newObj = {
-          type: values.type,
-          title: values.title,
-          time: values.time,
-          comment: values.comment,
-          url: res.data.secure_url,
-        };
-        PostBlog(newObj);
-        setGlobalBlog([...globalBlog, values]);
-        navigate("/admin/blog");
-        setLoading(false);
-        actions.resetForm();
-      });
-  }
+ 
   const formik = useFormik({
     initialValues: {
       type: "",
@@ -44,7 +25,32 @@ const AddBlog = () => {
       url: "",
     },
     validationSchema: validationourBlog,
-    onSubmit: handleSubmit,
+    onSubmit:  async (values, actions) => {
+      setLoading(true);
+      const formData = new FormData();
+      try {
+        formData.append("file", values.url);
+        formData.append("upload_preset", "bneya0lk");
+        const res = await axios.post(
+          "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
+          formData
+        );
+        const newObj = {
+          type: values.type,
+          title: values.title,
+          time: values.time,
+          comment: values.comment,
+          url: res.data.secure_url,
+        };
+        PostBlog(newObj);
+        setGlobalBlog([...globalBlog, newObj]);
+        navigate("/admin/blog");
+        setLoading(false);
+        actions.resetForm();
+      } catch (error) {
+        console.log(error);
+      }
+    },
   });
   function handleClick() {
     navigate("/admin/team");
@@ -60,16 +66,17 @@ const AddBlog = () => {
             type="text"
             style={{
               width: "100%",
-              marginTop: "10px",
-              background: "white",
               borderRadius: "5px",
             }}
+            margin="dense"
+            id="filled-hidden-label-small"
+            variant="outlined"
+            size="small"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.type}
             error={formik.errors.type && formik.touched.type ? true : false}
             name="type"
-            id="outlined-basic"
             label={
               formik.errors.type && formik.touched.type ? (
                 <span style={{ color: "red" }}>{formik.errors.type}</span>
@@ -77,23 +84,23 @@ const AddBlog = () => {
                 "add category"
               )
             }
-            variant="outlined"
           />
 
           <TextField
             type="text"
             style={{
               width: "100%",
-              marginTop: "10px",
-              background: "white",
               borderRadius: "5px",
             }}
+            margin="dense"
+            id="filled-hidden-label-small"
+            variant="outlined"
+            size="small"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.title}
             error={formik.errors.title && formik.touched.title ? true : false}
             name="title"
-            id="outlined-basic"
             label={
               formik.errors.title && formik.touched.title ? (
                 <span style={{ color: "red" }}>{formik.errors.title}</span>
@@ -101,41 +108,41 @@ const AddBlog = () => {
                 "add title"
               )
             }
-            variant="outlined"
           />
-          {/* setSelectImage(e.target.files[0]); */}
           <TextField
             type="date"
             style={{
               width: "100%",
-              marginTop: "10px",
-              background: "white",
               borderRadius: "5px",
             }}
+            margin="dense"
+            id="filled-hidden-label-small"
+            variant="outlined"
+            size="small"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.time}
             error={formik.errors.time && formik.touched.time ? true : false}
             name="time"
-            id="outlined-basic"
             label={
               formik.errors.time && formik.touched.time ? (
-                <span style={{ color: "red" }}>{formik.errors.time}</span>
+                <span style={{ color: "red",marginLeft:"80px"}}>                                       {formik.errors.time}</span>
               ) : (
-                "add time"
+                <span style={{ color: "black",marginLeft:"70px"}}>ad date</span>
               )
             }
-            variant="outlined"
           />
-
+ 
           <TextField
-            type="text"
-            style={{
-              width: "100%",
-              marginTop: "10px",
-              background: "white",
-              borderRadius: "5px",
-            }}
+             type="text"
+             style={{
+               width: "100%",
+               borderRadius: "5px",
+             }}
+             margin="dense"
+             id="filled-hidden-label-small"
+             variant="outlined"
+             size="small"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.comment}
@@ -143,7 +150,6 @@ const AddBlog = () => {
               formik.errors.comment && formik.touched.comment ? true : false
             }
             name="comment"
-            id="outlined-basic"
             label={
               formik.errors.comment && formik.touched.comment ? (
                 <span style={{ color: "red" }}>{formik.errors.comment}</span>
@@ -151,31 +157,37 @@ const AddBlog = () => {
                 "add comment"
               )
             }
-            variant="outlined"
           />
 
-          <TextField
-            style={{
-              width: "100%",
-              marginTop: "10px",
-              background: "white",
-              borderRadius: "5px",
-            }}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.url}
-            error={formik.errors.url && formik.touched.url ? true : false}
-            name="url"
-            id="outlined-basic"
-            variant="outlined"
-            label={
-              formik.errors.url && formik.touched.url ? (
-                <span style={{ color: "red" }}>{formik.errors.url}</span>
+          <label className="file_img" htmlFor="upload-photo">
+            <input
+              style={{ display: "none" }}
+              id="upload-photo"
+              name="url"
+              type="file"
+              onChange={(e) => formik.setFieldValue("url", e.target.files[0])}
+            />
+
+            <Fab
+              color="info"
+              size="small"
+              component="span"
+              aria-label="add"
+              variant="extended"
+              style={{ marginTop: "10px" }}
+            >
+              {formik.errors.url && formik.touched.url ? (
+                <span style={{ color: "red", fontSize: "14px" }}>
+                  {formik.errors.url}
+                </span>
               ) : (
-                "add image"
-              )
-            }
-          />
+                <span style={{ color: "white", fontSize: "14px" }}>
+                  {" "}
+                  + Upload photo
+                </span>
+              )}
+            </Fab>
+          </label>
 
           <Button
             variant="outlined"

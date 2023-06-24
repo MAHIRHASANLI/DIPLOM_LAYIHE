@@ -7,7 +7,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button, TableHead, TextField } from "@mui/material";
+import { Button, Fab, TableHead, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import CreateIcon from "@mui/icons-material/Create";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -204,29 +204,33 @@ export default function FooterAdmin() {
               }
             />
 
-            <TextField
-            // type="file"  accept="image/*" required
-              style={{
-                width: "100%",
-                marginTop: "10px",
-                background: "white",
-                borderRadius: "5px",
-              }}
-              onChange={formik.handleChange}
+<label htmlFor="upload-photo">
+            <input
+              style={{ display: "none" }}
+              id="upload-photo"
+              name="url"
+              type="file"
+              onChange={(e)=>formik.setFieldValue('image', e.target.files[0])}
               onBlur={formik.handleBlur}
               value={formik.values.url}
               error={formik.errors.url && formik.touched.url ? true : false}
-              name="url"
-              id="outlined-basic"
-              variant="outlined"
-              label={
-                formik.errors.url && formik.touched.url ? (
-                  <span style={{ color: "red" }}>{formik.errors.url}</span>
-                ) : (
-                  "  edit logo"
-                )
-              }
             />
+
+            <Fab
+              color="info"
+              size="small"
+              component="span"
+              aria-label="add"
+              variant="extended"
+              style={{marginTop:"10px"}}
+            >
+              {formik.errors.url && formik.touched.url ? (
+                <span style={{ color: "red",fontSize:"14px" }}>{formik.errors.url}</span>
+              ) : (
+                <span style={{ color: "white",fontSize:"14px" }}> + Upload photo</span>
+              )}
+            </Fab>
+          </label> 
 
             <Button
               variant="outlined"

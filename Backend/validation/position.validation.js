@@ -8,7 +8,8 @@ const PositionSchema = Joi.object({
     .min(3)
     .max(200)
     .required(),
-    url: Joi.string()
+    url: Joi.string().uri()
+    .label("Intro Video")
     .required(),
     img: Joi.string()
     .required()

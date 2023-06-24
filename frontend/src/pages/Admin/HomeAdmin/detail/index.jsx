@@ -125,11 +125,6 @@ const DetailTeam = () => {
               id="filled-hidden-label-small"
               variant="outlined"
               size="small"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.title}
-              error={formik.errors.title && formik.touched.title ? true : false}
-              name="title"
               label={
                 formik.errors.title && formik.touched.title ? (
                   <span style={{ color: "red" }}>{formik.errors.title}</span>
@@ -137,6 +132,11 @@ const DetailTeam = () => {
                     "  edit title"
                     )
                   }
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.title}
+              error={formik.errors.title && formik.touched.title ? true : false}
+              name="title"
                   
                   />
 

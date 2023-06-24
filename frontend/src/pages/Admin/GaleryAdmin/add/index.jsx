@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { Button, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Fab, MenuItem, Select, TextField } from "@mui/material";
 import { PostGallery } from "../../../../api/gallery.requests";
 import { validationGallery } from "../validation.gallery";
 
@@ -11,14 +11,23 @@ const AdGallery = () => {
   const navigate = useNavigate();
   // const [image,setImage] = useState([])
   const [loading, setLoading] = useState(false);
-  function handleSubmit(values, actions) {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("file", values.url);
-    formData.append("upload_preset", "w2bgln2g");
-    axios
-      .post("https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload", formData)
-      .then((res) => {
+ 
+  const formik = useFormik({
+    initialValues: {
+      url: "",
+      category: "",
+    },
+    validationSchema: validationGallery,
+    onSubmit: async (values, actions) => {
+      setLoading(true);
+      const formData = new FormData();
+      try {
+        formData.append("file", values.url);
+        formData.append("upload_preset", "ohj21ecl");
+        const res = await axios.post(
+          "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
+          formData
+        );
         const newObj = {
           url: res.data.secure_url,
           category: values.category,
@@ -27,15 +36,10 @@ const AdGallery = () => {
         navigate("/admin/galery");
         setLoading(false);
         actions.resetForm();
-      });
-  }
-  const formik = useFormik({
-    initialValues: {
-      url: "",
-      category: "",
+      } catch (error) {
+        console.log(error);
+      }
     },
-    validationSchema: validationGallery,
-    onSubmit: handleSubmit,
   });
   function handleClick() {
     navigate("/admin/galery");
@@ -54,7 +58,6 @@ const AdGallery = () => {
           )}
           <Select
             margin="normal"
-            hiddenLabel
             id="filled-hidden-label-small"
             variant="outlined"
             size="small"
@@ -76,24 +79,43 @@ const AdGallery = () => {
             <MenuItem value="video">Video</MenuItem>
           </Select>
 
-          {formik.errors.url && formik.touched.url ? (
+          {/* {formik.errors.url && formik.touched.url ? (
             <span style={{ color: "red" }}>{formik.errors.url}</span>
           ) : (
             <span>add image</span>
-          )}
-          <TextField
-            margin="dense"
-            hiddenLabel
-            id="filled-hidden-label-small"
-            variant="outlined"
-            size="small"
-            style={{ width: "100%" }}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.url}
-            error={formik.errors.url && formik.touched.url ? true : false}
-            name="url"
-          />
+          )} */}
+
+          <label className="file_img" htmlFor="upload-photo">
+            <input
+              style={{ display: "none" }}
+              id="upload-photo"
+              name="url"
+              type="file"
+              onChange={(e) => formik.setFieldValue("url", e.target.files[0])}
+              onBlur={formik.handleBlur}
+              error={formik.errors.url && formik.touched.url ? true : false}
+            />
+
+            <Fab
+              color="info"
+              size="small"
+              component="span"
+              aria-label="add"
+              variant="extended"
+              style={{ marginTop: "10px" }}
+            >
+              {formik.errors.url && formik.touched.url ? (
+                <span style={{ color: "red", fontSize: "14px" }}>
+                  {formik.errors.url}
+                </span>
+              ) : (
+                <span style={{ color: "white", fontSize: "14px" }}>
+                  {" "}
+                  + Upload photo
+                </span>
+              )}
+            </Fab>
+          </label>
 
           <Button
             variant="outlined"

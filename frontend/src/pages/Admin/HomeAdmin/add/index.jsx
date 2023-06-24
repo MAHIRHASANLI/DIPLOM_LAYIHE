@@ -7,33 +7,13 @@ import { useFormik } from "formik";
 import { PostSlider } from "../../../../api/slider.requests";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Button, TextField } from "@mui/material";
+import Fab from "@mui/material/Fab";
+
 const AdSlider = () => {
   const navigate = useNavigate();
   // const [image,setImage] = useState([])
   const [loading, setLoading] = useState(false);
   const [globalSlider, setGlobalSlider] = useGlobalData();
-  function handleSubmit(values, actions) {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("file", values.url);
-    formData.append("upload_preset", "w2bgln2g");
-    axios
-      .post("https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload", formData)
-      .then((res) => {
-        const newObj = {
-          name: values.name,
-          title: values.title,
-          url: res.data.secure_url,
-          email: values.email,
-        };
-        PostSlider(newObj);
-        setGlobalSlider([...globalSlider, values]);
-
-        navigate("/admin/home");
-        setLoading(false);
-        actions.resetForm();
-      });
-  }
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -42,7 +22,32 @@ const AdSlider = () => {
       email: "",
     },
     validationSchema: validationSlider,
-    onSubmit: handleSubmit,
+    onSubmit: async (values, actions) => {
+      setLoading(true);
+      const formData = new FormData();
+      try {
+        formData.append("file", values.url);
+        formData.append("upload_preset", "flrfgfh2");
+        const res = await axios.post(
+          "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
+          formData
+        );
+        const newObj = {
+          name: values.name,
+          title: values.title,
+          url: res.data.secure_url,
+          email: values.email,
+        };
+        PostSlider(newObj);
+        setGlobalSlider([...globalSlider, newObj]);
+
+        navigate("/admin/home");
+        setLoading(false);
+        actions.resetForm();
+      } catch (error) {
+        console.log(error);
+      }
+    },
   });
   function handleClick() {
     navigate("/admin/home");
@@ -57,16 +62,19 @@ const AdSlider = () => {
             type="text"
             style={{
               width: "100%",
-              marginTop: "10px",
               background: "white",
               borderRadius: "5px",
             }}
+            margin="dense"
+            hiddenLabel
+            id="filled-hidden-label-small"
+            variant="outlined"
+            size="small"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.name}
             error={formik.errors.name && formik.touched.name ? true : false}
             name="name"
-            id="outlined-basic"
             label={
               formik.errors.name && formik.touched.name ? (
                 <span style={{ color: "red" }}>{formik.errors.name}</span>
@@ -74,72 +82,49 @@ const AdSlider = () => {
                 "Add Name"
               )
             }
-            variant="outlined"
           />
 
           <TextField
             type="text"
             style={{
               width: "100%",
-              marginTop: "10px",
               background: "white",
               borderRadius: "5px",
             }}
+            margin="dense"
+            id="filled-hidden-label-small"
+            variant="outlined"
+            size="small"
+            label={
+              formik.errors.title && formik.touched.title ? (
+                <span style={{ color: "red" }}>{formik.errors.title}</span>
+              ) : (
+                "  edit title"
+              )
+            }
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.title}
             error={formik.errors.title && formik.touched.title ? true : false}
             name="title"
-            id="outlined-basic"
-            label={
-              formik.errors.title && formik.touched.title ? (
-                <span style={{ color: "red" }}>{formik.errors.title}</span>
-              ) : (
-                "Add Title"
-              )
-            }
-            variant="outlined"
-          />
-          {/* setSelectImage(e.target.files[0]); */}
-
-          <TextField
-            style={{
-              width: "100%",
-              marginTop: "10px",
-              background: "white",
-              borderRadius: "5px",
-            }}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.url}
-            error={formik.errors.url && formik.touched.url ? true : false}
-            name="url"
-            id="outlined-basic"
-            variant="outlined"
-            label={
-              formik.errors.url && formik.touched.url ? (
-                <span style={{ color: "red" }}>{formik.errors.url}</span>
-              ) : (
-                "Add Image"
-              )
-            }
           />
 
           <TextField
-          type="email"
+            type="email"
             style={{
               width: "100%",
-              marginTop: "10px",
               background: "white",
               borderRadius: "5px",
             }}
+            margin="dense"
+            id="filled-hidden-label-small"
+            variant="outlined"
+            size="small"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.email}
             error={formik.errors.email && formik.touched.email ? true : false}
             name="email"
-            id="outlined-basic"
-            variant="outlined"
             label={
               formik.errors.email && formik.touched.email ? (
                 <span style={{ color: "red" }}>{formik.errors.email}</span>
@@ -148,6 +133,38 @@ const AdSlider = () => {
               )
             }
           />
+          <label className="file_img" htmlFor="upload-photo">
+            <TextField
+              style={{ display: "none" }}
+              id="upload-photo"
+              type="file"
+              name="url"
+              error={formik.errors.url && formik.touched.url ? true : false}
+              onBlur={formik.handleBlur}
+              onChange={(e) => formik.setFieldValue("url", e.target.files[0])}
+            />
+
+            <Fab
+              component="span"
+              aria-label="add"
+              margin="dense"
+              id="filled-hidden-label-small"
+              variant="outlined"
+              size="small"
+              style={{
+                width: "100%",
+                background: "white",
+                borderRadius: "5px",
+               
+              }}
+            >
+              {formik.errors.url && formik.touched.url ? (
+                <span style={{ color: "red",fontSize:"14px" }}>{formik.errors.url}</span>
+              ) : (
+                <span style={{ color: "black",fontSize:"14px" }}> + Upload photo</span>
+              )}
+            </Fab>
+          </label>
 
           <Button
             variant="outlined"

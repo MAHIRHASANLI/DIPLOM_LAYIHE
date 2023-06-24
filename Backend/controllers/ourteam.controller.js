@@ -21,6 +21,10 @@ const OurteamController = {
             name: req.body.name,
             title: req.body.title,
             url: req.body.url,
+            linkedn: req.body.linkedn,
+            pinterest: req.body.pinterest,
+            facebook: req.body.facebook,
+            twitter: req.body.twitter,
         })
         await NewTeamObject.save()
         res.status(200).send(NewTeamObject)
@@ -30,6 +34,11 @@ const OurteamController = {
             name: req.body.name,
             title: req.body.title,
             url: req.body.url,
+            linkedn: req.body.linkedn,
+            pinterest: req.body.pinterest,
+            facebook: req.body.facebook,
+            twitter: req.body.twitter,
+
         }
        const newObj = await OurteamModel.findByIdAndUpdate( req.params.id, UpdateObject);
         res.status(200).send(newObj)
