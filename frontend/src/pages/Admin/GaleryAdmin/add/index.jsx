@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { Button, Fab, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Fab, MenuItem, Select } from "@mui/material";
 import { PostGallery } from "../../../../api/gallery.requests";
 import { validationGallery } from "../validation.gallery";
 import { useEffect } from "react";
@@ -54,7 +54,6 @@ const AdGallery = () => {
         <div style={{ paddingBottom: "30px" }}>Loading...</div>
       ) : (
         <form className="Form__item" onSubmit={formik.handleSubmit}>
-          {/* setSelectImage(e.target.files[0]); */}
           {formik.errors.category && formik.touched.category ? (
             <span style={{ color: "red" }}>{formik.errors.category}</span>
           ) : (
@@ -66,8 +65,6 @@ const AdGallery = () => {
             variant="outlined"
             size="small"
             style={{ width: "100%" }}
-            //    label="Age"
-            // id="demo-simple-select"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.category}
@@ -89,11 +86,6 @@ const AdGallery = () => {
             <MenuItem value="video">Video</MenuItem>
           </Select>
 
-          {/* {formik.errors.url && formik.touched.url ? (
-            <span style={{ color: "red" }}>{formik.errors.url}</span>
-          ) : (
-            <span>add image</span>
-          )} */}
 
           <label className="file_img" htmlFor="upload-photo">
             <input
@@ -120,7 +112,6 @@ const AdGallery = () => {
                 </span>
               ) : (
                 <span style={{ color: "white", fontSize: "14px" }}>
-                  {" "}
                   + Upload photo
                 </span>
               )}

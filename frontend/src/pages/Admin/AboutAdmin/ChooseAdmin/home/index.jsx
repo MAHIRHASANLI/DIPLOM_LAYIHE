@@ -125,18 +125,16 @@ const ChooseAdmin = () => {
     };
   return (
     <div className={style.Table}>
-    {/* table uzeri companentler */}
     <div className={style.Table_companent}>
        <div className={style.companent_left}>
         <button onClick={sortedChange} className={style.companent_left__item}>
         <FilterListIcon style={{color:"blue"}}/>
         </button>
-       <Link to="/admin/adchoose">
           <div className={style.companent_left__item}>
-           {/* New */}
+       <Link to="/admin/adchoose">
            <strong style={{color:"blue"}}>count: [ {globalChoose.length} ] +</strong>
-          </div>
       </Link>
+          </div>
        </div>
       <h2 className={style.namePage}>Choose Data</h2>    
 

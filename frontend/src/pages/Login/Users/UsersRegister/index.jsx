@@ -60,7 +60,7 @@ const RegisterUsers = () => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="text-center mb-3">
-        <p>Sign un with:</p>
+        <p style={{color:"white"}}>Sign un with:</p>
       </div>
       <MDBInput
         onChange={formik.handleChange}
@@ -74,7 +74,7 @@ const RegisterUsers = () => {
               {formik.errors.username}
             </li>
           ) : (
-            "Surname"
+            <li style={{ color: "white" }}>Username</li>
           )
         }
         id="form1"
@@ -90,7 +90,7 @@ const RegisterUsers = () => {
           formik.errors.email && formik.touched.email ? (
             <li style={{ color: "rgb(252,96,96)" }}>{formik.errors.email}</li>
           ) : (
-            "Email"
+            <li style={{ color: "white" }}>Email</li>
           )
         }
         id="form1"
@@ -108,7 +108,7 @@ const RegisterUsers = () => {
               {formik.errors.password}
             </li>
           ) : (
-            "Password"
+            <li style={{color:"white"}}>Password</li>
           )
         }
         id="form1"
@@ -127,7 +127,7 @@ const RegisterUsers = () => {
                 {formik.errors.checkbox}
               </li>
             ) : (
-              "I have read and agree to the terms"
+            <li style={{color:"white"}}>I have read and agree to the terms</li>
             )
           }
         />

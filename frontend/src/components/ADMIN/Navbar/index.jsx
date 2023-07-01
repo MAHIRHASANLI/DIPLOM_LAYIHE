@@ -7,7 +7,6 @@ import List from "@mui/material/List";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MenuIcon from "@mui/icons-material/Menu";
 
-
 function Navbar() {
   const [state, setState] = React.useState({
     top: false,
@@ -45,28 +44,27 @@ function Navbar() {
             - Slider
           </NavLink>
         </li>
-        <li style={{ display: "block", margin: "10px 30px" }}>
-          <NavLink
-            className={style.hamburger_menu}
-            style={{ color: "black" }}
-            to="/admin/about"
-          >
+        <li
+          className={style.hamburger_menu}
+          style={{ display: "block", margin: "10px 30px" }}
+        >
+          <Link style={{ color: "black" }} to="/admin/about">
             - About
-            <div className={style.hamburger_dropdown}>
-              <Link to="/admin/passion">
-                <a href="">- Passion</a>
-              </Link>
-              <Link to="/admin/choose">
-                <a href="">- Choose</a>
-              </Link>
-              <Link to="/admin/team">
-                <a href="">- our Team</a>
-              </Link>
-              <Link to="/admin/about">
-                <a href="">- Goo Back</a>
-              </Link>
-            </div>
-          </NavLink>
+          </Link>
+          <div className={style.hamburger_dropdown}>
+            <Link to="/admin/passion">
+              <span>- Passion</span>
+            </Link>
+            <Link to="/admin/choose">
+              <span>- Choose</span>
+            </Link>
+            <Link to="/admin/team">
+              <span>- our Team</span>
+            </Link>
+            <Link to="/admin/about">
+              <span>- Goo Back</span>
+            </Link>
+          </div>
         </li>
         <li style={{ display: "block", margin: "10px 30px" }}>
           <NavLink style={{ color: "black" }} to="/admin/galery">
@@ -108,45 +106,41 @@ function Navbar() {
         <Link to="/admin">
           <span className={style.link}>Dashboard</span>
         </Link>
-        <Link to="/admin/home">
-          <span className={style.link}>Home
+        <span className={style.link}>
+          <Link to="/admin/home">Home</Link>
           <div className={style.home_dropdown}>
-             <Link to="/admin/adslider"><a>Ad Slider</a></Link>
-            </div>
-          </span>
-        </Link>
-
-        <Link className={style.link} to="/admin/about">
-          About
-          <div className={style.home_dropdown}>
-            <Link to="/admin/passion">
-              <a href="">- Passion</a>
-            </Link>
-            <Link to="/admin/choose">
-              <a href="">- Choose</a>
-            </Link>
-            <Link to="/admin/team">
-              <a href="">- our Team</a>
-            </Link>
-            <Link to="/admin/about">
-              <a href="">- Goo Back</a>
+            <Link to="/admin/adslider">
+              <span>Ad Slider</span>
             </Link>
           </div>
-        </Link>
+        </span>
 
-        <Link to="/admin/galery">
-          <span className={style.link}>
-            Gallery
-          </span>
-        </Link>
-
-        <Link to="/admin/blog">
-          <span className={style.link}>Blog
+        <div className={style.link}>
+          <Link className={style.link} to="/admin/about">
+            About
+          </Link>
           <div className={style.home_dropdown}>
-             <Link to="/admin/adblog"><a>Ad Blog</a></Link>
-            </div>
-          </span>
+            <Link to="/admin/passion">
+              <span>- Passion</span>
+            </Link>
+            <Link to="/admin/choose">
+              <span>- Choose</span>
+            </Link>
+            <Link to="/admin/team">
+              <span>- our Team</span>
+            </Link>
+          </div>
+        </div>
+        <Link to="/admin/galery">
+          <span className={style.link}>Gallery</span>
         </Link>
+
+        <span className={style.link}>
+          <NavLink to="/admin/blog">Blog</NavLink>
+          <div className={style.home_dropdown}>
+            <NavLink to="/admin/adblog"><span>Ad Blog</span></NavLink>
+          </div>
+        </span>
 
         <Link to="/admin/contact">
           <span className={style.link}>Contact</span>
@@ -161,9 +155,15 @@ function Navbar() {
         </Link>
 
         <Link to="/">
-          <span onClick={()=>{
-            localStorage.removeItem('admintoken');
-          }} className={style.link}><ArrowBackIosIcon/>User</span>
+          <span
+            onClick={() => {
+              localStorage.removeItem("admintoken");
+            }}
+            className={style.link}
+          >
+            <ArrowBackIosIcon />
+            User
+          </span>
         </Link>
       </ul>
 

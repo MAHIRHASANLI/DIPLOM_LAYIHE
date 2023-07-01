@@ -7,31 +7,31 @@
   position: relative;
   z-index: 1;
   margin-bottom: 10px;
-  overflow:hidden;
+  overflow: hidden;
   transition-duration: 500ms;
 }
 
-.blog_item::after{
-    content:"";
-    position:absolute;
-    top:0;
-    right: 0;
-    width: 0;
-    height: 0;
-    background-color:rgba(0,0,0,0.5);
-    transition-duration: 500ms;
+.blog_item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition-duration: 500ms;
 }
 
-.blog_item:hover::after{
-    width: 100%;
-    height: 100%;
+.blog_item:hover::after {
+  width: 100%;
+  height: 100%;
 }
 
-.blog_item img{
-    transition-duration: 700ms;
+.blog_item img {
+  transition-duration: 700ms;
 }
-.blog_item:hover img{
-    transform: rotate(10deg) scale(1.3);
+.blog_item:hover img {
+  transform: rotate(10deg) scale(1.3);
 }
 
 .top_item {
@@ -44,12 +44,14 @@
   right: 15px;
   z-index: 20;
   transition-duration: 500ms;
+  cursor: pointer;
 }
-.top_item a {
-    font-size: 12px;
-    color: #ffffff;
-    text-transform: uppercase;
-    font-weight: 500;
+.top_item span {
+  font-size: 12px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0;
 }
 .top_item:hover {
   background-color: black;
@@ -66,13 +68,15 @@
   bottom: 30px;
   right: 30px;
   z-index: 20;
+  transition-duration: 500ms;
+  cursor: pointer;
 }
 
- .title_blog a:hover, span:hover{
- color:red;
+.title_blog span:hover {
+  color: rgb(252, 96, 96);
 }
 
-.center_item a ,span{
+.center_item span {
   position: relative;
   z-index: 1;
   font-size: 13px;
@@ -81,9 +85,13 @@
   margin-right: 15px;
   font-family: "Poppins", sans-serif;
   transition-duration: 500ms;
-
+  cursor: pointer;
 }
-.bottom_item a {
+.center_item span:hover {
+  color: rgb(252, 96, 96);
+}
+
+.bottom_item span {
   font-size: 16px;
   color: #ffffff;
   margin-bottom: 0;
@@ -92,4 +100,7 @@
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   cursor: pointer;
+}
+.bottom_item:hover span {
+  color: rgb(252, 96, 96);
 }

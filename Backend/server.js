@@ -22,23 +22,6 @@ const logo_router = require('./routes/logo.footer.routes');
 const followinginstagram_router = require('./routes/followinstagram.routes');
 const message_router = require('./routes/message.routes');
 const logout_router = require('./routes/logout.routes');
-const verifyJWT = require('./middlewares/verifyJWT.middlewares');
-
-// const verifyJWT  = async(req,res,next)=>{
-//     const token =  req.headers['x-access-token'];
-//     if(!token){
-//         res.send({message:"You may need token to get here!"})
-//     }else{
-//         jwt.verify(token,process.env.SECRET_KEY,(err,decoded)=>{
-//             if(err){
-//                 res.send({auth:false,message:'Authentication failed!'});
-//             }else{
-//                 req.userId = decoded.id;
-//                 next()
-//             }
-//         })
-//     }
-// }
 
 
 ///Register
@@ -48,7 +31,7 @@ app.use('/api/register', register_router);
 app.use('/api/login', login_router);
 
 //Users
-app.use('/api/users', verifyJWT, users_router);
+app.use('/api/users', users_router);
 
 //LogOut
 app.use('/api/logout', logout_router);

@@ -1,44 +1,93 @@
-.login {
-  background-image: url("https://mdbootstrap.com/img/new/standard/city/044.webp");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  width: 100%;
-  height: 110%;
-  position: relative;
-  padding: 50px 0 30px;
-  z-index: 9;
-}
-.login::after {
-  position: absolute;
-  content: "";
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: -9;
-}
-.login_item {
-  z-index: 99999;
-  margin: 0;
-  padding: 0;
-}
-.login .btn{
-  border:none;
-  position: absolute;
-  top:40px;
-  right:40px;
-  padding:10px 15px;
-  background-color: rgba(252, 96, 96, 0.9);
-  transition: 0.5s all ease;
-  cursor: pointer;
-  font-size: 16px;
-  color:white;
+@media screen and (min-width: 700px) {
+  .login {
+    background-image: url("https://mdbootstrap.com/img/new/standard/city/044.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 110%;
+    position: relative;
+    padding: 50px 0 30px;
+    z-index: 9;
+  }
+  .login::after {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: -9;
+  }
+  .login_item {
+    z-index: 99999;
+    margin: 0;
+    padding: 0;
+  }
+  .login .btn{
+    border:none;
+    position: absolute;
+    top:40px;
+    right:40px;
+    padding:10px 15px;
+    background-color: rgba(252, 96, 96, 0.9);
+    transition: 0.5s all ease;
+    cursor: pointer;
+    font-size: 16px;
+    color:white;
+  }
+  
+  .login .btn:hover{
+    color:white;
+    background-color: rgb(30,157,229);
+  
+  }
 }
 
-.login .btn:hover{
-  color:white;
-  background-color: rgb(30,157,229);
-
+@media screen and (max-width: 700px) {
+  .login {
+    background-image: url("https://mdbootstrap.com/img/new/standard/city/044.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 110%;
+    position: relative;
+    padding: 50px 0 30px;
+    z-index: 9;
+  }
+  .login::after {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: -9;
+  }
+  .login_item {
+    z-index: 99999;
+    margin: 0;
+    padding: 0;
+  }
+  .login .btn{
+    border:none;
+    position: absolute;
+    top:10px;
+    right:10px;
+    padding:7px 12px;
+    background-color: rgba(252, 96, 96, 0.9);
+    transition: 0.5s all ease;
+    cursor: pointer;
+    font-size: 14px;
+    color:white;
+  }
+  
+  .login .btn:hover{
+    color:white;
+    background-color: rgb(30,157,229);
+  
+  }
 }

@@ -173,7 +173,7 @@
 .container .media_container .media i:hover{
   transform:scale(1.2);
 }
-.container .media_container .media a {
+.container .media_container .media span {
   bottom: 0;
   left: 50%;
   text-align: center;
@@ -182,6 +182,9 @@
   display: inline-block;
   width: 52px;
   height: 52px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   background-color: rgba(252, 96, 96, 0.9);
   transform: translateX(-50%);
   transition: 0.5s all ease;
@@ -189,14 +192,14 @@
   visibility: hidden;
   color: white;
   cursor: pointer;
-  text-align: center;
   line-height: 52px;
   font-size: 30px;
   color: #ffffff;
   border-radius: 50%;
+  padding:0;
 }
 
-.container .media_container .media:hover a {
+.container .media_container .media:hover span {
   bottom: 50%;
   transform: translate(-50%, 50%);
   opacity: 1;
@@ -204,6 +207,32 @@
   z-index: 999;
 }
 
-.media_container .media a:hover {
+.media_container .media span:hover {
   background-color: black;
+}
+.btn_2{
+  position: relative;
+  z-index: 1;
+  min-width: 160px;
+  height: 46px;
+  line-height: 42px;
+  font-size: 16px;
+  font-weight: 500;
+  display: inline-block;
+  padding: 0 30px;
+  text-align: center;
+  text-transform: capitalize;
+  background-color: transparent;
+  color: black;
+  border: 2px solid #fc6060;
+  border-radius: 60px;
+  margin-top: 40px;
+  transition: 0.3s linear;
+  cursor: pointer;
+}
+.btn_2:hover {
+  background-color: rgb(252, 96, 96);
+  color: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }

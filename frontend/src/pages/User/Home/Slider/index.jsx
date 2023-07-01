@@ -7,6 +7,7 @@ import style from "./index.module.css";
 // import required modules
 import { Navigation, Mousewheel, Keyboard, Autoplay } from "swiper";
 import { useGlobalData } from "../../../../global";
+import { Link } from "react-router-dom";
 
 const Slider = () => {
   const [globalSlider] = useGlobalData();
@@ -38,7 +39,7 @@ const Slider = () => {
                     objectFit: "cover",
                   }}
                   src={item.url}
-                  alt=""
+                  alt={item.name}
                 />
 
                 <div className={style.About_item}>
@@ -47,9 +48,9 @@ const Slider = () => {
                   </h1>
                   <p className={style.title}>{item.title}</p>
                   <div className={style.homeLink}>
-                    <a className={style.button}>
+                    <Link to="/contact" className={style.button}>
                       Get A Quote
-                    </a>
+                    </Link>
                     <a href={`mailto:${item.email}`} className={style.email}>
                       {item.email}
                     </a>

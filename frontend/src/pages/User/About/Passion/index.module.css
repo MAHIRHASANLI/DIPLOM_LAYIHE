@@ -39,33 +39,7 @@
   margin-block-end: 1em;
   font-family: "Poppins", sans-serif;
 }
-.button {
-  position: relative;
-  z-index: 1;
-  min-width: 160px;
-  height: 46px;
-  line-height: 42px;
-  font-size: 16px;
-  font-weight: 500;
-  display: inline-block;
-  padding: 0 30px;
-  text-align: center;
-  text-transform: capitalize;
-  background-color: transparent;
-  color: black;
-  border: 2px solid #fc6060;
-  border-radius: 60px;
-  margin-top: 40px;
-  transition: 0.3s linear;
-  cursor: pointer;
-}
-.button:hover {
-  background-color: rgb(252, 96, 96);
-  color: white;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-}
-/* //iframe/ */
+
 
 .iframe_img {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
@@ -133,4 +107,30 @@
   z-index: 100000;
   cursor: pointer;
   user-select: none;
+}
+
+.button {
+  position: relative;
+  z-index: 1;
+  min-width: 160px;
+  height: 46px;
+  line-height: 42px;
+  font-size: 16px;
+  font-weight: 500;
+  display: inline-block;
+  padding: 0 30px;
+  text-align: center;
+  text-transform: capitalize;
+  background-color: transparent;
+  color: black;
+  border: 2px solid #fc6060;
+  border-radius: 60px;
+  margin-top: 40px;
+  transition-duration: 500ms;
+}
+.button:hover {
+  background-color: rgb(252, 96, 96);
+  color: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }

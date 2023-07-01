@@ -74,7 +74,7 @@ const DetailTeam = () => {
     validationSchema: validationSlider,
     onSubmit: async (values) => {
       setLoad(true)
-      if (detail.url == values.url) {
+      if (detail.url === values.url) {
        await PutSlider(id, values);
         setDetail(values)
         setGlobalSlider([...globalSlider, values]);
@@ -88,7 +88,6 @@ const DetailTeam = () => {
             "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
             formData
           );
-          console.log(values.name);
           const newObj = {
             url: res.data.secure_url,
             name: values.name,
@@ -119,7 +118,7 @@ const DetailTeam = () => {
       formik.values.email = res.email;
       setLoading(false);
     });
-  }, [id]);
+  }, [id,formik]);
 
   ////Kecidler
   function nextClick() {

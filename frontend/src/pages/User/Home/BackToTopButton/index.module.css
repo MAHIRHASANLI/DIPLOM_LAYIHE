@@ -1,0 +1,16 @@
+.scroll_button{
+    position: fixed;
+    right: 40px;
+    bottom:40px;
+    width: 40px;
+    height: 40px;
+    z-index: 9999;
+    border:none;
+    border-radius:50%;
+    background-color:rgb(252,96,96);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition:all .4s linear;
+}
+.scroll_button:hover{
+    background-color:black;
+}

@@ -97,13 +97,13 @@ const DetailPassion = () => {
     validationSchema: validationPassion,
     onSubmit: async (values) => {
       setLoad(true);
-      if (detail.url == values.url && detail.img == values.img) {
+      if (detail.url === values.url && detail.img === values.img) {
         await PutPassion(id, values);
         setDetail(values);
         setGlobalPassion([...globalPassion, values]);
-      } else if (detail.url == values.url) {
+      } else if (detail.url === values.url) {
         await imgUpload(values);
-      } else if (detail.img == values.img) {
+      } else if (detail.img === values.img) {
         await urlUpload(values);
       } else {
         await urlUpload(values);
@@ -125,7 +125,7 @@ const DetailPassion = () => {
       formik.values.img = res.img;
       setLoading(false);
     });
-  }, [id]);
+  }, [id,formik]);
   //////Kecidler/////
   function nextClick() {
     const slider = document.getElementById("slider");

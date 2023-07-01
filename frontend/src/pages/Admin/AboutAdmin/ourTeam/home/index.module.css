@@ -60,14 +60,14 @@
     }
     .container{
         overflow:hidden;
-        height: 20px;
+        height: 30px;
     
     }
     .ellipsis {
-        text-overflow: ellipsis; /* enables ellipsis */
-        white-space: nowrap; /* keeps the text in a single line */
-        overflow: hidden; /* keeps the element from overflowing its parent */
-        height: 20px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden; 
+        height: 30px;
         width: 120px;
     }
         .image{

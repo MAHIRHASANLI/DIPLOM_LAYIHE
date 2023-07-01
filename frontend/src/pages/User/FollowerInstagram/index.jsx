@@ -35,12 +35,12 @@ const FollowerUser = () => {
               return (
                 <SwiperSlide className={style.swiper_item} key={item._id}>
                   <img src={item.url} alt="Loading..." />
-                  <a className={style.count}>
+                  <div className={style.count}>
                     <i className="fa-brands fa-instagram"></i>
                     <a href={`http://instagram.com/_u/${item.count}/`}>
                       {item.count}
                     </a>
-                  </a>
+                  </div>
                 </SwiperSlide>
               );
             })}

@@ -3,10 +3,12 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { GetAllLogoFooter } from "../../../api/logo.footer.requests";
 import style from "./index.module.css";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const FooterUser = () => {
-  const [footer, setFooter] = React.useState([]);
-  React.useEffect(() => {
+  const [footer, setFooter] = useState([]);
+  useEffect(() => {
     GetAllLogoFooter().then((res) => {
       setFooter(res);
     });
@@ -21,10 +23,10 @@ const FooterUser = () => {
                 <Grid key={item._id} container spacing={3}>
                   <Grid item xs={12} sm={7} md={8} lg={9}>
                     <p>
-                      {item.count}{" "}
-                      <a style={{ color: "red" }} href="#">
+                      {item.count}
+                     &nbsp; <span style={{ color: "red" }}>
                         Colorlib
-                      </a>
+                      </span>
                     </p>
                   </Grid>
                   <Grid item xs={12} sm={5} md={4} lg={3}>
@@ -39,13 +41,13 @@ const FooterUser = () => {
                           <a href="https://www.facebook.com/sharer/sharer.php?u=example.org">
                             <i className="fa-brands fa-facebook-f"></i>
                           </a>
-                          <a href="#">
+                          <a href="https://www.facebook.com/sharer/sharer.php?u=example.org">
                             <i className="fa-brands fa-twitter"></i>
                           </a>
-                          <a href="#">
+                          <a href="https://www.linkedin.com/in/mahir-hasanli-002413273/">
                             <i className="fa-brands fa-linkedin-in"></i>
                           </a>
-                          <a href="#">
+                          <a href="https://www.linkedin.com/in/mahir-hasanli-002413273/">
                             <i className="fa-brands fa-pinterest-p"></i>
                           </a>
                         </div>

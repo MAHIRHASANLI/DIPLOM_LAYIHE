@@ -9,7 +9,6 @@ const MessageSchema = Joi.object({
     comment: Joi.string()
     .min(10).max(200)
     .required(),
-    email: Joi.string()
-        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'az'] } })
+    email: Joi.string().email({ tlds: { allow: false } })
 });
 module.exports = MessageSchema;

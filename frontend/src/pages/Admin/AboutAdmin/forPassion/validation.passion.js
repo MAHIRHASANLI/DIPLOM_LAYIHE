@@ -5,7 +5,6 @@ export const validationPassion = Yup.object().shape({
     .required('name required'),
    title: Yup.string().trim('The contact name cannot include leading and trailing spaces').strict(true).min(5,'Too Short!').max(200, 'Too Long!')
     .required('title required'),
-    // url:Yup.string().url().trim('The contact name cannot include leading and trailing spaces').strict(true).required('vieo uri required'),
     img:Yup.string().url().trim('The contact name cannot include leading and trailing spaces').strict(true).required('img required'),
    url:  Yup.mixed()
    .required("required!")

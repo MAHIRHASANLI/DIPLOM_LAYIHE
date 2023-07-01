@@ -8,7 +8,7 @@ const TeamUser = () => {
   const [globalTeam] = useGlobalTeam();
   return (
     <div className={style.Team}>
-        <h2 className={style.team_logo}>Our Team</h2>
+        <h2 className={style.team_logo} data-aos="fade-up">Our Team</h2>
     <div style={{width:"86%"}}>
     <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={4}>
@@ -16,7 +16,7 @@ const TeamUser = () => {
             globalTeam.map((item) => {
               return (
                 <Grid key={item._id} className={style.grid} item xs={12} sm={6} md={4} lg={3}>
-                  <div className={style.grid_item} >
+                  <div data-aos="fade-up" className={style.grid_item} >
                     <div className={style.image}>
                       <img className={style.image_img} src={item.url} alt="" />
                     </div>

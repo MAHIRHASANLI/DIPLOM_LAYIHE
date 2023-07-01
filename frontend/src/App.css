@@ -213,3 +213,15 @@ body {
   border-radius:12px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
+
+.loading{
+  z-index:99999; 
+  position: fixed;
+  top:50%;
+  left:50%; 
+  transform:translate(-50%, -50%);
+}
+
+.active{
+  color:rgb(252,96,96)
+}

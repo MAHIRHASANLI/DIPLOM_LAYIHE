@@ -1,15 +1,15 @@
 import * as Yup from "yup"
 export const validationourBlog = Yup.object().shape({
-    type: Yup.string().min(2, 'Too Short!').trim('The contact name cannot include leading and trailing spaces').strict(true)
+    type: Yup.string().min(2, 'Too Short!').trim('The contact type cannot include leading and trailing spaces').strict(true)
     .max(20, 'Too Long!')
     .required('type required'),
     time: Yup.date()
     .min(new Date())
     .required(),
-    comment: Yup.string().min(2, 'Too Short!').trim('The contact name cannot include leading and trailing spaces').strict(true)
+    comment: Yup.string().min(2, 'Too Short!').trim('The contact comment cannot include leading and trailing spaces').strict(true)
     .max(20, 'Too Long!')
     .required('comment required'),
-   title: Yup.string().min(5,'Too Short!').trim('The contact name cannot include leading and trailing spaces').strict(true)
+   title: Yup.string().min(5,'Too Short!').trim('The contact title cannot include leading and trailing spaces').strict(true)
     .required('title required'),
     url: Yup.mixed()
     .required("required!")
@@ -21,5 +21,5 @@ export const validationourBlog = Yup.object().shape({
        "FILE_TYPE",
        "Invalid!",
        (value) => value && ["image/png", "image/jpeg", "image/webp"].includes(value.type)
-    ),
+    )
 })

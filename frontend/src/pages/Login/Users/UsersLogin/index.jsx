@@ -14,16 +14,23 @@ import { useUserContext } from "../../../../global";
 import UsersRegister from "../UsersRegister";
 import { UsersValidation } from "./users.validation";
 import { Button } from "@mui/material";
-import {  signIn } from "../../../../api/login.requests";
+import { signIn } from "../../../../api/login.requests";
 import Swal from "sweetalert2";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function LoginUser() {
-  const [user,setUser,usersAll] = useUserContext();
+  const [user, setUser, usersAll] = useUserContext();
   const navigate = useNavigate();
   const [error, setError] = useState(false);
   const [errorSurname, setErrorSurname] = useState(false);
- 
+
+  useEffect(() => {
+    if (user || localStorage.getItem("token") || localStorage.getItem("user")) {
+      navigate("/fawori");
+    }
+  }, [navigate, user]);
+
   const [justifyActive, setJustifyActive] = useState("tab1");
 
   const handleJustifyClick = (value) => {
@@ -41,10 +48,12 @@ function LoginUser() {
     },
     validationSchema: UsersValidation,
     onSubmit: async (values, actions) => {
-      const username = usersAll?.find((user) => user.username === values.username);
+      const username = usersAll?.find(
+        (user) => user.username === values.username
+      );
       if (values.password === values.confirmpassword) {
         setError(false);
-        setErrorSurname(false)
+        setErrorSurname(false);
         const login = {
           username: values.username,
           password: values.password,
@@ -68,18 +77,20 @@ function LoginUser() {
         setTimeout(() => {
           actions.resetForm();
         }, 2000);
-      }else if(!username){
+      } else if (!username) {
         setErrorSurname(true);
         setError(false);
       } else {
         setError(true);
-        setErrorSurname(false)
+        setErrorSurname(false);
       }
     },
   });
   return (
     <div className={style.login}>
-      <button className={style.btn}><NavLink to="/">Go Back</NavLink></button>
+      <button className={style.btn}>
+        <NavLink to="/">Go Back</NavLink>
+      </button>
       <div className={style.login_item}>
         <MDBContainer className="p-3 my-0 d-flex flex-column w-50">
           <MDBTabs
@@ -109,7 +120,7 @@ function LoginUser() {
             <MDBTabsPane show={justifyActive === "tab1"}>
               <form onSubmit={formik.handleSubmit}>
                 <div className="text-center mb-1">
-                  <p>Please enter your Surname and your Password</p>
+                  <p style={{color:"white"}}>Please enter your Surname and your Password</p>
                 </div>
 
                 <MDBInput
@@ -126,7 +137,7 @@ function LoginUser() {
                         {formik.errors.username}
                       </li>
                     ) : (
-                      "Username"
+                      <li style={{ color: "white" }}>Username</li>
                     )
                   }
                 />
@@ -144,7 +155,7 @@ function LoginUser() {
                         {formik.errors.password}
                       </li>
                     ) : (
-                      "Password"
+                      <li style={{ color: "white" }}>Password</li>
                     )
                   }
                 />
@@ -163,18 +174,22 @@ function LoginUser() {
                         {formik.errors.confirmpassword}
                       </li>
                     ) : (
-                      "Confirm password"
+                      <li style={{ color: "white" }}>Confirm password</li>
                     )
                   }
                 />
                 {error ? (
                   <span style={{ color: "red" }}>passsword eyni deyil!</span>
                 ) : (
-                  <span></span>
+                  ""
                 )}
-                {errorSurname?(<span style={{ color: "red" }}>Surname is wrong!</span>):""}
+                {errorSurname ? (
+                  <span style={{ color: "red" }}>Username is wrong!</span>
+                ) : (
+                  ""
+                )}
                 <div className="d-flex justify-content-center mx-9 mb-9">
-                  <a href="!#">Forgot password?</a>
+                 
                 </div>
                 <Button
                   type="submit"
@@ -196,7 +211,7 @@ function LoginUser() {
                 </p>
               </form>
             </MDBTabsPane>
-            {/* /////// */}
+
             <MDBTabsPane show={justifyActive === "tab2"}>
               <UsersRegister />
             </MDBTabsPane>

@@ -10,8 +10,6 @@ const SlidersSchema = Joi.object({
         .required(),
     url: Joi.string()
         .required(),
-    email: Joi.string()
-        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+        email: Joi.string().email({ tlds: { allow: false } })
 });
 module.exports = SlidersSchema;
-// { minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }

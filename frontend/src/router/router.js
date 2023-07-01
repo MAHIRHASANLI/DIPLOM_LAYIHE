@@ -5,7 +5,7 @@ import AdminRoot from "../pages/Admin/AdminRoot";
 import BlogAdmin from "../pages/Admin/BlogAdmin/home";
 import ContactAdmin from "../pages/Admin/ContactAdmin/home";
 import GaleryAdmin from "../pages/Admin/GaleryAdmin/home";
- import About from "../pages/User/About";
+import About from "../pages/User/About";
 import Blog from "../pages/User/Blog";
 import Contact from "../pages/User/Contact";
 import Galery from "../pages/User/Galery";
@@ -31,6 +31,7 @@ import RegisterAdmin from "../pages/Admin/Dashboard";
 import AdminLogin from "../pages/Login/LoginAdmin";
 import LoginUser from "../pages/Login/Users/UsersLogin";
 import Faworites from "../pages/User/Faworites";
+import NotFound from "../pages/User/NotFound";
 
 export const ROUTES = [
     {
@@ -59,7 +60,11 @@ export const ROUTES = [
             },
             {
                 path: 'fawori',
-                element: <Faworites/>
+                element: <Faworites />
+            },
+            {
+                path: '*',
+                element: <NotFound/>
             }
         ]
     },
@@ -73,23 +78,23 @@ export const ROUTES = [
             },
             {
                 path: 'home',
-                element: <HomeAdmin/>
+                element: <HomeAdmin />
             },
             {
                 path: 'adslider',
-                element: <AdSlider/>
+                element: <AdSlider />
             },
             {
                 path: 'detailslider/:id',
-                element: <DetailSlider/>
+                element: <DetailSlider />
             },
             {
                 path: 'passion',
-                element: <Passion/>
+                element: <Passion />
             },
             {
                 path: 'detailpassion/:id',
-                element: <DetailPassion/>
+                element: <DetailPassion />
             },
             {
                 path: 'about',
@@ -97,27 +102,27 @@ export const ROUTES = [
             },
             {
                 path: 'choose',
-                element: <ChooseAdmin/>
+                element: <ChooseAdmin />
             },
             {
                 path: 'adchoose',
-                element: <AddChoose/>
+                element: <AddChoose />
             },
             {
                 path: 'detailchoose/:id',
-                element: <DetailChoose/>
+                element: <DetailChoose />
             },
             {
                 path: 'team',
-                element: <OurTeam/>
+                element: <OurTeam />
             },
             {
                 path: 'adteam',
-                element: <AddTeam/>
+                element: <AddTeam />
             },
             {
                 path: 'detailteam/:id',
-                element: <DetailOurTeam/>
+                element: <DetailOurTeam />
             },
             {
                 path: 'blog',
@@ -141,33 +146,33 @@ export const ROUTES = [
             },
             {
                 path: 'adgallery',
-                element: <AdGallery/>
+                element: <AdGallery />
             },
             {
                 path: 'footer',
-                element: <FooterAdmin/>
+                element: <FooterAdmin />
             },
             {
                 path: 'follower',
-                element: <FolloInstagramAdmin/>
+                element: <FolloInstagramAdmin />
             },
             {
                 path: 'adfollower',
-                element: <AddFollower/>
+                element: <AddFollower />
             }
         ]
     },
     {
-        path:"/login",
-        element:<LoginRoot/>,
-        children:[
+        path: "/login",
+        element: <LoginRoot />,
+        children: [
             {
-                path:"",
-                element:<AdminLogin/>
+                path: "",
+                element: <AdminLogin />
             },
             {
-                path:"user",
-                element:<LoginUser/>
+                path: "user",
+                element: <LoginUser />
             }
         ]
     }

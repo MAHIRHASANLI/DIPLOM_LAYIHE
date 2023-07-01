@@ -13,13 +13,13 @@ const HomeGlobalSection = () => {
     <div className={style.HomeImg}>
       <div className={style.HomeImg_content}>
         <h2 className={style.context_h2}>Contact</h2>
-        <ol className={style.context}>
+        <ul className={style.context}>
             <NavLink to="/">
              <li className={style.home}>
              <i
                 style={{ fontSize: "16px", margin: "0" }}
                 className="fa-solid fa-house-chimney icons"
-              ></i>{" "}
+              ></i>
               Home
              </li>
             </NavLink>
@@ -30,7 +30,7 @@ const HomeGlobalSection = () => {
             ></i>&nbsp;
             Contact
           </li>
-        </ol>
+        </ul>
       </div>
 
       {homeImg &&
@@ -40,7 +40,7 @@ const HomeGlobalSection = () => {
               key={item._id}
               className={style.HomeImg_item}
               src={item.url}
-              alt="#"
+              alt="photograph"
             />
           );
         })}

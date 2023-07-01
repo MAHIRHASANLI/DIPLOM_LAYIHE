@@ -22,7 +22,9 @@ const AddChoose = () => {
         actions.resetForm();
   }
   useEffect(() => {
-    if (!localStorage.getItem("admintoken")) navigate("/login");
+    if (!localStorage.getItem("admintoken")) {
+      navigate("/login")
+    };
   }, [navigate]);
   const formik = useFormik({
     initialValues: {
@@ -91,7 +93,6 @@ const AddChoose = () => {
             }
             variant="outlined"
           />
-          {/* setSelectImage(e.target.files[0]); */}
 
           <TextField
             style={{

@@ -19,15 +19,17 @@ const PassionUser = () => {
                 <Grid key={item._id} container spacing={4}>
                   <Grid item xs={12} sm={12} md={6} lg={6}>
                     <div>
-                      <h3 className={style.passion_about}>{item.about}</h3>
-                      <p className={style.passion_title}>{item.title}</p>
-                      <p className={style.passion_title}>{item.title}</p>
+                      <h3 className={style.passion_about} data-aos="fade-up">{item.about}</h3>
+                      <p className={style.passion_title} data-aos="fade-up">{item.title}</p>
+                      <p className={style.passion_title} data-aos="fade-up">{item.title}</p>
 
-                      <a className={style.button}>Contact Us</a>
+                     <div data-aos="fade-up">
+                     <button className={style.button}>Contact Us</button>
+                     </div>
                     </div>
                   </Grid>
                   <Grid item xs={12} sm={12} md={6} lg={6}>
-                    <div className={style.iframe_img}>
+                    <div className={style.iframe_img}  data-aos="fade-up">
                       <i
                         onClick={() => setFile(item)}
                         style={{ margin: "auto" }}

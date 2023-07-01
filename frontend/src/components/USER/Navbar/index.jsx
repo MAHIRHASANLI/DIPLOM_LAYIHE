@@ -5,7 +5,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { GetAllLogoFooter } from "../../../api/logo.footer.requests";
 import { useUserContext } from "../../../global";
-import SensorOccupiedIcon from '@mui/icons-material/SensorOccupied';
+import SensorOccupiedIcon from "@mui/icons-material/SensorOccupied";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const Navbar = () => {
   const [user] = useUserContext();
@@ -30,15 +34,65 @@ const Navbar = () => {
       window.removeEventListener("scroll", listenScrollEvent);
     };
   }, []);
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
 
-  //logAut
-  // function hanldeLogOut() {
-  //   if (window.confirm("Log out User ?")) {
-  //     setUser(null);
-  //     localStorage.removeItem("token");
-  //     localStorage.removeItem("user");
-  //   }
-  // }
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <Box
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 130 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+        <li style={{ display: "block", margin: "80px 30px 0" }}>
+          <NavLink style={{ color: "black" }} to="/">
+            - Home
+          </NavLink>
+        </li>
+        <li style={{ display: "block", margin: "10px 30px" }}>
+          <NavLink style={{ color: "black" }} to="/about">
+            - About
+          </NavLink>
+        </li>
+        <li style={{ display: "block", margin: "10px 30px" }}>
+          <NavLink
+            className={style.hamburger_menu}
+            style={{ color: "black" }}
+            to="/gallery"
+          >
+            - Gallery
+          </NavLink>
+        </li>
+        <li style={{ display: "block", margin: "10px 30px" }}>
+          <NavLink style={{ color: "black" }} to="/blog">
+            - Blog
+          </NavLink>
+        </li>
+        <li style={{ display: "block", margin: "10px 30px" }}>
+          <NavLink style={{ color: "black" }} to="/contact">
+            - Contact
+          </NavLink>
+        </li>
+      </List>
+    </Box>
+  );
+
   return (
     <nav
       style={{
@@ -76,23 +130,40 @@ const Navbar = () => {
             Contact
           </NavLink>
         </ul>
-        <a role="button" className={style.icons}>
+        <li className={style.icons}>
           <SearchIcon />
-        </a>
+        </li>
         {user ? (
-          <NavLink to="fawori">
-            <li title="< Faworites" className={style.username} >
-              {user?.username}&nbsp;&nbsp; <AccountCircleIcon />
-            </li>
-          </NavLink>
+          <li title="< Faworites" className={style.username}>
+            <NavLink to="/fawori">
+              <span>{user?.username}&nbsp;&nbsp;<AccountCircleIcon style={{color:"rgb(252,96,96)"}}/></span> 
+            </NavLink>
+          </li>
         ) : (
           <NavLink to="/login/user">
-          <li title="< Log In" className={style.username} >
-            Log in&nbsp;&nbsp; <SensorOccupiedIcon />
-          </li>
-        </NavLink>
+            <li title="< Log In" className={style.username}>
+              Log in&nbsp;&nbsp; <SensorOccupiedIcon style={{color:"rgb(252,96,96)"}}/>
+            </li>
+          </NavLink>
         )}
       </div>
+      <ul className={style.hamburger}>
+        {["left"].map((anchor) => (
+          <React.Fragment key={anchor}>
+            <MenuIcon
+              style={{ color: "white", fontSize: "40px" }}
+              onClick={toggleDrawer(anchor, true)}
+            />
+            <Drawer
+              anchor={anchor}
+              open={state[anchor]}
+              onClose={toggleDrawer(anchor, false)}
+            >
+              {list(anchor)}
+            </Drawer>
+          </React.Fragment>
+        ))}
+      </ul>
     </nav>
   );
 };

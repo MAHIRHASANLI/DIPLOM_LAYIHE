@@ -14,17 +14,19 @@ import { useEffect } from "react";
 const AddFollower = () => {
   const navigate = useNavigate();
   const [follower, setFollower] = React.useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!localStorage.getItem("admintoken")) navigate("/login");
+    if (!localStorage.getItem("admintoken")) {
+      navigate("/login");
+    }
   }, [navigate]);
 
   useEffect(() => {
     GetAllFollowInstagram().then((res) => {
       setFollower(res);
     });
-  }, []); // const [image,setImage] = useState([])
-  const [loading, setLoading] = useState(false);
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -116,7 +118,6 @@ const AddFollower = () => {
                 </span>
               ) : (
                 <span style={{ color: "white", fontSize: "14px" }}>
-                  {" "}
                   + Upload photo
                 </span>
               )}

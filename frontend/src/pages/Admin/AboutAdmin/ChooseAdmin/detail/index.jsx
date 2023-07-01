@@ -30,9 +30,11 @@ const DetailChoose = () => {
       navigate("/admin/choose");
     }
   }, [globalChoose, navigate]);
-  
+
   useEffect(() => {
-    if (!localStorage.getItem("admintoken")) navigate("/login");
+    if (!localStorage.getItem("admintoken")) {
+      navigate("/login");
+    }
   }, [navigate]);
 
   function handleDelete(_id) {
@@ -59,7 +61,7 @@ const DetailChoose = () => {
 
   const slider = document.getElementById("slider");
   const form = document.getElementById("form");
-  
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -73,7 +75,6 @@ const DetailChoose = () => {
       setDetail(values);
       setGlobalChoose([...globalChoose, values]);
       setLoad(false);
-    
       slider.setAttribute("style", "display:block");
       form.setAttribute("style", "display:none");
     },
@@ -88,7 +89,7 @@ const DetailChoose = () => {
       formik.values.url = res.url;
       setLoading(false);
     });
-  }, [id]);
+  }, [id,formik]);
   // /Keciler
   function nextClick() {
     const slider = document.getElementById("slider");

@@ -78,7 +78,7 @@ const DetailOurTeam = () => {
     validationSchema: editvalidationourTeam,
     onSubmit: async (values) => {
       setLoad(true);
-      if (values.url == detail.url) {
+      if (values.url === detail.url) {
         await PutTeam(id, values);
         setDetail(values);
         setGlobalTeam([...globalTeam, values]);
@@ -128,7 +128,7 @@ const DetailOurTeam = () => {
       formik.values.facebook = res.facebook;
       setLoading(false);
     });
-  }, [id]);
+  }, [id,formik]);
   /////Kecidler///
   function nextClick() {
     const slider = document.getElementById("slider");

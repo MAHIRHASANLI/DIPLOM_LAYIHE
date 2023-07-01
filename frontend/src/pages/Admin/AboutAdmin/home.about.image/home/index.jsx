@@ -2,7 +2,6 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import {
   GetAllHomeAbout,
-  GetByIDHomeAbout,
   PutHomeAbout,
 } from "../../../../../api/home.about.requests";
 import style from "./index.module.css";
@@ -14,14 +13,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button, Fab, TableHead, TextField } from "@mui/material";
+import { Button, Fab, TableHead} from "@mui/material";
 import { useFormik } from "formik";
 import CreateIcon from "@mui/icons-material/Create";
 ///MODAL//
 import Modal from "@mui/material/Modal";
 import { validationHomeAboutIMG } from "../validation.home.about";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 ///modall.Style//
 const stylemodal = {

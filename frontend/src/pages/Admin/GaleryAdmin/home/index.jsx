@@ -101,7 +101,9 @@ export default function GaleryAdmin() {
   const [gallery, setGallery] = useState([]);
 
   useEffect(() => {
-    if (!localStorage.getItem("admintoken")) navigate("/login");
+    if (!localStorage.getItem("admintoken")) {
+      navigate("/login");
+    }
   }, [navigate]);
 
   useEffect(() => {
@@ -122,7 +124,6 @@ export default function GaleryAdmin() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - gallery.length) : 0;
 
@@ -137,7 +138,6 @@ export default function GaleryAdmin() {
 
   return (
     <div className={style.Table}>
-      {/* table uzeri companent */}
       <div className={style.Table_companent}>
         <div className={style.companent_left}>
           <button onClick={sortedChange} className={style.companent_left__item}>
@@ -164,7 +164,6 @@ export default function GaleryAdmin() {
         />
       </div>
 
-      {/* table */}
       <TableContainer component={Paper}>
         <Table sx={{ width: "100%" }} aria-label="custom pagination table">
           <TableHead>

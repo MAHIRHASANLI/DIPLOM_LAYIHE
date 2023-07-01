@@ -12,7 +12,6 @@ import { useFormik } from "formik";
 import { AdminValidation } from "./loginadmin.validation";
 import { Button } from "@mui/material";
 import { signIn } from "../../../api/login.requests";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -24,29 +23,13 @@ const AdminLogin = () => {
     },
     validationSchema: AdminValidation,
     onSubmit: async (values, actions) => {
-      // const username = usersAll?.find((user) => user.username == values.username);
-      // if (values.password === values.confirmpassword) {
-      // setError(false);
-      // setErrorSurname(false)
       const res = await signIn(values);
       if (res.auth && res.user.isAdmin) {
         localStorage.setItem("admintoken", res.token);
-        // localStorage.setItem("adminuser", JSON.stringify(res.user));
         setTimeout(() => {
           navigate("/admin");
         }, 1000);
       }
-      // setTimeout(() => {
-      //   actions.resetForm();
-      // }, 2000);
-      // }
-      // }else if(!username){
-      //   setErrorSurname(true);
-      //   setError(false);
-      // } else {
-      //   setError(true);
-      //   setErrorSurname(false)
-      // }
     },
   });
   return (
@@ -99,16 +82,6 @@ const AdminLogin = () => {
                   id="form2"
                   type="password"
                 />
-
-                {/* <div className="d-flex justify-content-between mx-4 mb-4">
-                <MDBCheckbox
-                  name="flexCheck"
-                  value=""
-                  id="flexCheckDefault"
-                  label="Remember me"
-                />
-                <a href="!#">Forgot password?</a>
-              </div> */}
 
                 <Button
                   type="submit"

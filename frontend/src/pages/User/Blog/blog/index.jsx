@@ -18,18 +18,18 @@ const BlogUser = () => {
             globalBlog.map((item) => {
               return (
                 <Grid key={item._id} item xs={12} sm={6} md={4} lg={4}>
-                <div className={style.blog_item}>
+                <div data-aos="fade-up" className={style.blog_item}>
                 <img
                     className="image"
                     style={{ width: "100%" }}
                     src={item.url}
                     alt=""
                   />
-                 <div className={style.top_item}><a href="#">{item.type}</a></div>
+                 <div className={style.top_item}><span>{item.type}</span></div>
 
                   <div className={style.title_blog}>
-                  <div className={style.center_item}><a href="#">{item.time}</a><span style={{color:"white"}}>|</span>  <a href="#">{item.comment}</a></div>
-                  <div className={style.bottom_item}><a href="#">{item.title}</a></div>
+                  <div className={style.center_item}><span>{item.time}</span><span style={{color:"white"}}>|</span>  <span>{item.comment}</span></div>
+                  <div className={style.bottom_item}><span>{item.title}</span></div>
                   </div>
                 </div>
                 </Grid>

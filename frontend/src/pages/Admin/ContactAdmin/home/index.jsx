@@ -72,10 +72,10 @@ export default function ContactAdmin() {
       handleconnected();
     }
   });
+
   return (
     <>
       <div className={style.Table}>
-        {/* table uzeri companent */}
         <div className={style.Table_companent}>
           <div className={style.companent_left}>
             <div className={style.companent_left__item}>
@@ -92,7 +92,6 @@ export default function ContactAdmin() {
           <Table sx={{ width: "100%" }} aria-label="custom pagination table">
             <TableHead>
               <TableRow>
-                {/* <TableCell>Address</TableCell> */}
                 <TableCell>Mobile</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Adress</TableCell>
@@ -108,14 +107,6 @@ export default function ContactAdmin() {
               {contact &&
                 contact.map((row) => (
                   <TableRow key={row._id}>
-                    {/* <TableCell>
-                      <iframe
-                        className={style.image}
-                        src={row.map}
-                        aria-hidden="false"
-                        tabIndex="0"
-                      ></iframe>
-                    </TableCell> */}
                     <TableCell>
                       <span style={{ fontSize: "14px" }}>{row.mobile}</span>
                     </TableCell>
@@ -135,7 +126,7 @@ export default function ContactAdmin() {
                           formik.values.email = row.email;
                           formik.values.mobile = row.mobile;
                           setDetail({
-                            id: row._id,
+                            id: row._id
                           });
                           setLoading(false);
                           handleOpen();
@@ -234,6 +225,7 @@ export default function ContactAdmin() {
                   )
                 }
               />
+
               <TextField
                 type="email"
                 margin="dense"

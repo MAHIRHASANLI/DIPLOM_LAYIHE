@@ -30,7 +30,7 @@ const AdSlider = () => {
     validationSchema: validationSlider,
     onSubmit: async (values, actions) => {
       setLoading(true);
-     const uniqueemail = globalSlider.find((m)=>m.email == values.email)
+     const uniqueemail = globalSlider.find((m)=>m.email === values.email)
     if(uniqueemail){
       window.alert("Enter another email!!!")
     }else{
@@ -51,7 +51,6 @@ const AdSlider = () => {
        await PostSlider(newObj);
         setGlobalSlider([...globalSlider, newObj]);
         navigate("/admin/home");
-       
         actions.resetForm();
       } catch (error) {
         console.log(error);

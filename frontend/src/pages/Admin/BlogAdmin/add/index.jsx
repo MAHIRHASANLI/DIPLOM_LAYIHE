@@ -7,10 +7,8 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { PostBlog } from "../../../../api/blog.requests";
 import { validationourBlog } from "../validation.blog";
 import { useGlobalBlog } from "../../../../global";
-
-
-import DatePicker from 'react-date-picker';
 import { useEffect } from "react";
+
 const AddBlog = () => {
   const navigate = useNavigate();
   const [globalBlog, setGlobalBlog] = useGlobalBlog();
@@ -29,7 +27,7 @@ const AddBlog = () => {
       url: "",
     },
     validationSchema: validationourBlog,
-    onSubmit:  async (values, actions) => {
+    onSubmit: async (values, actions) => {
       setLoading(true);
       const formData = new FormData();
       try {
@@ -130,23 +128,28 @@ const AddBlog = () => {
             name="time"
             label={
               formik.errors.time && formik.touched.time ? (
-                <span style={{ color: "red",marginLeft:"80px"}}>                                       {formik.errors.time}</span>
+                <span style={{ color: "red", marginLeft: "80px" }}>
+                  {" "}
+                  {formik.errors.time}
+                </span>
               ) : (
-                <span style={{ color: "black",marginLeft:"70px"}}>ad date</span>
+                <span style={{ color: "black", marginLeft: "70px" }}>
+                  ad date
+                </span>
               )
             }
           />
- 
+
           <TextField
-             type="text"
-             style={{
-               width: "100%",
-               borderRadius: "5px",
-             }}
-             margin="dense"
-             id="filled-hidden-label-small"
-             variant="outlined"
-             size="small"
+            type="text"
+            style={{
+              width: "100%",
+              borderRadius: "5px",
+            }}
+            margin="dense"
+            id="filled-hidden-label-small"
+            variant="outlined"
+            size="small"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.comment}

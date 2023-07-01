@@ -58,12 +58,11 @@
     color: black;
     transition: 4s;
   }
-  .home_dropdown a {
+  .home_dropdown span {
     font-size: 14px;
     font-family: "Poppins", sans-serif;
     display: block;
     padding: 1px 0 1px;
-    color: white;
     color: black;
   }
   .link:hover .home_dropdown {
@@ -127,7 +126,7 @@
   transition: all 0.2s linear;
 }
 
-.hamburger_dropdown a {
+.hamburger_dropdown span {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
   display: block;

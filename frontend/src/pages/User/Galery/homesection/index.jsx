@@ -13,13 +13,13 @@ const HomeGlobalSection = () => {
     <div className={style.HomeImg}>
       <div className={style.HomeImg_content}>
         <h2 className={style.context_h2}>Gallery</h2>
-        <ol className={style.context}>
+        <ol  className={style.context}>
             <NavLink to="/">
              <li className={style.home}>
              <i
                 style={{ fontSize: "16px", margin: "0" }}
                 className="fa-solid fa-house-chimney icons"
-              ></i>{" "}
+              ></i>
               Home
              </li>
             </NavLink>

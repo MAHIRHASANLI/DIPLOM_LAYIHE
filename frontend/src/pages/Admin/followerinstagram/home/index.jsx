@@ -118,13 +118,12 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-
 export default function FolloInstagramAdmin() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [follower, setFollower] = useState([]);
   const [detail, setDetail] = useState({});
-  const [load, setLoad] = useState(true)
+  const [load, setLoad] = useState(true);
   ///MODAL///
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -132,7 +131,9 @@ export default function FolloInstagramAdmin() {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    if (!localStorage.getItem("admintoken")) navigate("/login");
+    if (!localStorage.getItem("admintoken")) {
+      navigate("/login");
+    }
   }, [navigate]);
 
   ///Get All
@@ -151,8 +152,8 @@ export default function FolloInstagramAdmin() {
     validationSchema: validationFollower,
     onSubmit: async (values) => {
       setLoading(true);
-      if (values.url == detail.url) {
-      await  PutFollowInstagram(detail.id, values);
+      if (values.url === detail.url) {
+        await PutFollowInstagram(detail.id, values);
         setFollower([...follower, values]);
         console.log("Cloudinary update olunmadi!");
       } else {
@@ -168,7 +169,7 @@ export default function FolloInstagramAdmin() {
             url: res.data.secure_url,
             count: values.count,
           };
-         await PutFollowInstagram(detail.id, newObj);
+          await PutFollowInstagram(detail.id, newObj);
           setFollower([...follower, newObj]);
           console.log("Cloudinary update olundu!");
         } catch (error) {
@@ -179,22 +180,21 @@ export default function FolloInstagramAdmin() {
       handleconnected();
     },
   });
-///
-const [page, setPage] = React.useState(0);
-const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  ///
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-// Avoid a layout jump when reaching the last page with empty rows.
-const emptyRows =
-  page > 0 ? Math.max(0, (1 + page) * rowsPerPage - follower.length) : 0;
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - follower.length) : 0;
 
-const handleChangePage = (event, newPage) => {
-  setPage(newPage);
-};
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-const handleChangeRowsPerPage = (event) => {
-  setRowsPerPage(parseInt(event.target.value, 10));
-  setPage(0);
-};
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   return (
     <>
       <div className={style.Table}>
@@ -230,108 +230,104 @@ const handleChangeRowsPerPage = (event) => {
             </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-              ? follower.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : follower
-            ).map((row) => (
-                  <TableRow key={row._id}>
-                    <TableCell>
-                      <img
-                        className={style.image}
-                        src={row.url}
-                        alt={row.url}
-                      />
-                    </TableCell>
+                ? follower.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : follower
+              ).map((row) => (
+                <TableRow key={row._id}>
+                  <TableCell>
+                    <img className={style.image} src={row.url} alt={row.url} />
+                  </TableCell>
 
-                    <TableCell>
-                      <span style={{ fontSize: "14px" }}>{row.count}</span>
-                    </TableCell>
+                  <TableCell>
+                    <span style={{ fontSize: "14px" }}>{row.count}</span>
+                  </TableCell>
 
-                    <TableCell style={{ fontSize: "14px" }}>
-                      <Button
-                        variant="outlined"
-                        color="success"
-                        onClick={() => {
-                          formik.values.url = row.url;
-                          formik.values.count = row.count;
-                          setDetail({
-                            id: row._id,
-                            url: row.url,
-                          });
-                          setLoad(false)
-                          handleOpen();
-                        }}
-                      >
-                        <CreateIcon />
-                      </Button>
-                    </TableCell>
+                  <TableCell style={{ fontSize: "14px" }}>
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      onClick={() => {
+                        formik.values.url = row.url;
+                        formik.values.count = row.count;
+                        setDetail({
+                          id: row._id,
+                          url: row.url,
+                        });
+                        setLoad(false);
+                        handleOpen();
+                      }}
+                    >
+                      <CreateIcon />
+                    </Button>
+                  </TableCell>
 
-                    <TableCell style={{ fontSize: "14px" }}>
-                      <Button
-                        variant="outlined"
-                        color="error"
-                        onClick={(_id) => {
-                          Swal.fire({
-                            title: "Are you sure?",
-                            text: "You won't be able to revert this!",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#3085d6",
-                            cancelButtonColor: "#d33",
-                            confirmButtonText: "Yes, delete it!",
-                          }).then((result) => {
-                            if (result.isConfirmed) {
-                              if (row) {
-                                DeleteFollowInstagram(row._id);
-                                setFollower(
-                                  follower.filter((m) => m._id !== row._id)
-                                );
-                              }
+                  <TableCell style={{ fontSize: "14px" }}>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={(_id) => {
+                        Swal.fire({
+                          title: "Are you sure?",
+                          text: "You won't be able to revert this!",
+                          icon: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#3085d6",
+                          cancelButtonColor: "#d33",
+                          confirmButtonText: "Yes, delete it!",
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            if (row) {
+                              DeleteFollowInstagram(row._id);
                               setFollower(
                                 follower.filter((m) => m._id !== row._id)
                               );
-                              Swal.fire(
-                                "Deleted!",
-                                "Your file has been deleted.",
-                                "success"
-                              );
                             }
-                          });
-                        }}
-                      >
-                        <DeleteIcon />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-           {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
+                            setFollower(
+                              follower.filter((m) => m._id !== row._id)
+                            );
+                            Swal.fire(
+                              "Deleted!",
+                              "Your file has been deleted.",
+                              "success"
+                            );
+                          }
+                        });
+                      }}
+                    >
+                      <DeleteIcon />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                  colSpan={3}
+                  count={follower.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: {
+                      "aria-label": "rows per page",
+                    },
+                    native: true,
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
               </TableRow>
-            )}
-          </TableBody>
-       
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                colSpan={3}
-                count={follower.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: {
-                    "aria-label": "rows per page",
-                  },
-                  native: true,
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
             </TableFooter>
           </Table>
         </TableContainer>
@@ -345,79 +341,85 @@ const handleChangeRowsPerPage = (event) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={stylemodal}>
-        {load?(<div>Loading</div>):(  <form className="Form__item" onSubmit={formik.handleSubmit}>
-            <TextField
-              type="text"
-              margin="dense"
-              hiddenLabel
-              id="filled-hidden-label-small"
-              variant="outlined"
-              size="small"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.url}
-              error={formik.errors.url && formik.touched.url ? true : false}
-              name="url"
-              label={
-                formik.errors.url && formik.touched.url ? (
-                  <span style={{ color: "red" }}>{formik.errors.url}</span>
-                ) : (
-                  "  edit image"
-                )
-              }
-            />
-            {/* setSelectImage(e.target.files[0]); */}
-            <TextField
-              type="text"
-              margin="dense"
-              hiddenLabel
-              id="filled-hidden-label-small"
-              variant="outlined"
-              size="small"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.count}
-              error={formik.errors.count && formik.touched.count ? true : false}
-              name="count"
-              label={
-                formik.errors.count && formik.touched.count ? (
-                  <span style={{ color: "red" }}>{formik.errors.count}</span>
-                ) : (
-                  "  edit count"
-                )
-              }
-            />
+          {load ? (
+            <div>Loading</div>
+          ) : (
+            <form className="Form__item" onSubmit={formik.handleSubmit}>
+              <TextField
+                type="text"
+                margin="dense"
+                hiddenLabel
+                id="filled-hidden-label-small"
+                variant="outlined"
+                size="small"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.url}
+                error={formik.errors.url && formik.touched.url ? true : false}
+                name="url"
+                label={
+                  formik.errors.url && formik.touched.url ? (
+                    <span style={{ color: "red" }}>{formik.errors.url}</span>
+                  ) : (
+                    "  edit image"
+                  )
+                }
+              />
+              {/* setSelectImage(e.target.files[0]); */}
+              <TextField
+                type="text"
+                margin="dense"
+                hiddenLabel
+                id="filled-hidden-label-small"
+                variant="outlined"
+                size="small"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.count}
+                error={
+                  formik.errors.count && formik.touched.count ? true : false
+                }
+                name="count"
+                label={
+                  formik.errors.count && formik.touched.count ? (
+                    <span style={{ color: "red" }}>{formik.errors.count}</span>
+                  ) : (
+                    "  edit count"
+                  )
+                }
+              />
 
-            <Button
-              variant="outlined"
-              style={{
-                display: "block",
-                margin: "20px auto",
-                background: "white",
-                borderRadius: "5px",
-              }}
-              type="submit"
-              color={
-                formik.errors.url && formik.touched.url ? "error" : "success"
-              }
-            >
-              {/* &nbsp;&nbsp;&nbsp; */}
-              {loading ? "Loading..." : "Edit Follower"}
-            </Button>
-            <Button
-              onClick={handleconnected}
-              variant="outlined"
-              style={{
-                display: "block",
-                margin: "15px auto",
-                background: "white",
-                borderRadius: "5px",
-              }}
-              color="error"
-            >
-              X
-            </Button>
-          </form>)}
+              <Button
+                variant="outlined"
+                style={{
+                  display: "block",
+                  margin: "20px auto",
+                  background: "white",
+                  borderRadius: "5px",
+                }}
+                type="submit"
+                color={
+                  formik.errors.url && formik.touched.url ? "error" : "success"
+                }
+              >
+                {/* &nbsp;&nbsp;&nbsp; */}
+                {loading ? "Loading..." : "Edit Follower"}
+              </Button>
+              <Button
+                onClick={handleconnected}
+                variant="outlined"
+                style={{
+                  display: "block",
+                  margin: "15px auto",
+                  background: "white",
+                  borderRadius: "5px",
+                }}
+                color="error"
+              >
+                X
+              </Button>
+            </form>
+          )}
         </Box>
       </Modal>
     </>

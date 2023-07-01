@@ -94,7 +94,6 @@ export default function FooterAdmin() {
       };
       PutLogoFooter(detail.id, newObj);
       setFooter([...footer, newObj]);
-      // setUrlBlack(res.data.secure_url);
     } catch (error) {
       console.log(`urlBlack: ${error}`);
     }
@@ -109,12 +108,12 @@ export default function FooterAdmin() {
     validationSchema: validationFooter,
     onSubmit: async (values) => {
       setLoad(true);
-      if (detail.url == values.url && detail.urlblack == values.urlblack) {
+      if (detail.url === values.url && detail.urlblack === values.urlblack) {
         await PutLogoFooter(detail.id, values);
         setFooter([...footer, values]);
-      } else if (detail.url == values.url) {
+      } else if (detail.url === values.url) {
         await urlblackUpload(values);
-      } else if (detail.urlblack == values.urlblack) {
+      } else if (detail.urlblack === values.urlblack) {
         await urlUpload(values);
       } else {
         await urlUpload(values);
@@ -127,12 +126,10 @@ export default function FooterAdmin() {
   return (
     <>
       <div className={style.Table}>
-        {/* table uzeri companent */}
         <div className={style.Table_companent}>
           <h2 className={style.namePage}>Footer Data</h2>
         </div>
 
-        {/* table */}
         <TableContainer component={Paper}>
           <Table sx={{ width: "100%" }} aria-label="custom pagination table">
             <TableHead>
@@ -184,7 +181,6 @@ export default function FooterAdmin() {
         </TableContainer>
       </div>
 
-      {/* MODAL */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -273,78 +269,6 @@ export default function FooterAdmin() {
                 }
               />
 
-              {/* <Input 
-                type="file"
-                id="outlined-basic"
-                  variant="outlined"
-                  name="urlblack"
-                  // type="file"
-                  onChange={formik.handleChange}
-                   
-                    // formik.setFieldValue("urlblack", e.target.files[0])
-                  onBlur={formik.handleBlur}
-                  // value={formik.values.urlblack}
-                  error={
-                    formik.errors.urlblack && formik.touched.urlblack
-                      ? true
-                      : false
-                  }
-                /> */}
-
-              {/* <label htmlFor="upload-photo"> */}
-              {/* <input
-                  // style={{ display: "none" }}
-                  id="upload-photo"
-                  name="urlblack"
-                  type="file"
-                  onChange={
-                    async (e) => {
-                      const formData = new FormData();
-                      try {
-                        formData.append("file", e.target.files[0]);
-                        formData.append("upload_preset", "givlaamt");
-                        const res = await axios.post(
-                          "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
-                          formData
-                        );
-                        setImage(res.data.secure_url);
-                        console.log("img update success!");
-                      } catch (error) {
-                        console.log(`forPassion: ${error}`);
-                      }
-                    }
-                    // formik.setFieldValue("urlblack", e.target.files[0])
-                  }
-                  onBlur={formik.handleBlur}
-                  value={detail.urlblack}
-                  error={
-                    formik.errors.urlblack && formik.touched.urlblack
-                      ? true
-                      : false
-                  }
-                /> */}
-
-              {/* <Fab
-                color="info"
-                size="small"
-                component="span"
-                aria-label="add"
-                variant="extended"
-                style={{ marginTop: "10px" }}
-              >
-                {formik.errors.urlblack && formik.touched.urlblack ? (
-                  <span style={{ color: "red", fontSize: "14px" }}>
-                    {formik.errors.urlblack}
-                  </span>
-                ) : (
-                  <span style={{ color: "white", fontSize: "14px" }}>
-                    {" "}
-                    + Upload urlblack
-                  </span>
-                )}
-              </Fab> */}
-              {/* </label> */}
-
               <Button
                 variant="outlined"
                 style={{
@@ -360,7 +284,6 @@ export default function FooterAdmin() {
                     : "success"
                 }
               >
-                {/* &nbsp;&nbsp;&nbsp; */}
                 {load ? "Loading..." : "Edit Footer"}
               </Button>
               <Button
@@ -383,18 +306,3 @@ export default function FooterAdmin() {
     </>
   );
 }
-// async (e) => {
-//   const formData = new FormData();
-//   try {
-//     formData.append("file", e.target.files[0]);
-//     formData.append("upload_preset", "givlaamt");
-//     const res = await axios.post(
-//       "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
-//       formData
-//     );
-//     setImage(res.data.secure_url);
-//     console.log("img update success!");
-//   } catch (error) {
-//     console.log(`forPassion: ${error}`);
-//   }
-// }

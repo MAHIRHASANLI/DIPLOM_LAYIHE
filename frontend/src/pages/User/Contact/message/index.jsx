@@ -72,9 +72,9 @@ const MessageUser = () => {
             placeholder="Email"
           />
         </p>
-        <p className={style.comment}>
+        <div className={style.comment}>
           <button type="submit">Submit comment</button>  { user? "" : <>{error ? (<div className={style.login_message}><p>You must be logged in <KeyboardArrowRightIcon/></p>&nbsp; &nbsp;<button><NavLink to="/login/user"><SensorOccupiedIcon/> Log In</NavLink></button></div>):(<div className={style.login_message}><button><NavLink to="/login/user"><SensorOccupiedIcon/> Log In</NavLink></button></div>)}</>}
-        </p>
+        </div>
       </form>
     </div>
   );

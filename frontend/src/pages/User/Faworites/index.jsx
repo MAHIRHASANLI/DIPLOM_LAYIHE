@@ -19,16 +19,40 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Autoplay } from "swiper";
+import Navbar from "../../../components/USER/Navbar";
+import { FadingBalls } from "react-cssfx-loading";
+import { Helmet } from "react-helmet";
 
 const Faworites = () => {
   const navigate = useNavigate();
   const [user, setUser] = useUserContext();
   const [fawori, setFawori] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const localStorag = JSON.parse(localStorage.getItem("fawori"));
     setFawori(localStorag);
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  }, []);
   return (
+    <div className="application">
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>Contact</title>
+      <link rel="canonical" href="http://mysite.com/example" />
+    </Helmet>
+    {loading ? (
+      <div className="loading">
+        <FadingBalls key="key" />
+      </div>
+    ) : (
+      <>
+        <Navbar/>
     <div className={style.faworites}>
       <div className={style.faworites_item}>
         <div className={style.username_item}>
@@ -126,6 +150,9 @@ const Faworites = () => {
             })}
         </Swiper>
       </div>
+    </div>
+    </>
+      )}
     </div>
   );
 };

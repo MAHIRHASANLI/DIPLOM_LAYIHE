@@ -16,7 +16,7 @@ const ChooseUser = () => {
   const [globalChoose] = useGlobalChoose();
   return (
     <div className={style.DivSwiper}>
-      <h1 className={style.Swiper_title}>Why Choose Us</h1>
+      <h1 className={style.Swiper_title} data-aos="fade-up">Why Choose Us</h1>
       {/* centeredSlides={true} */}
       <Swiper
         slidesPerView={3}

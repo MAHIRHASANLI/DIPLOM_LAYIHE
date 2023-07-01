@@ -128,7 +128,6 @@ const BlogAdmin = () => {
     };
   return (
     <div className={style.Table}>
-    {/* table uzeri companentler */}
     <div className={style.Table_companent}>
        <div className={style.companent_left}>
         <button onClick={sortedChange} className={style.companent_left__item}>
@@ -136,7 +135,6 @@ const BlogAdmin = () => {
         </button>
        <Link to="/admin/adblog">
           <div className={style.companent_left__item}>
-           {/* New */}
            <strong style={{color:"blue"}}>count: [ {globalBlog.length} ] +</strong>
           </div>
       </Link>

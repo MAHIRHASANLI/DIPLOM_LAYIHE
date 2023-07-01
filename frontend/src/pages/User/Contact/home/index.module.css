@@ -31,7 +31,7 @@
         font-family: "Poppins", sans-serif;
     }
     
-    .contact_user a{
+    .contact_user a,span{
         font-size: 16px;
         color: #252525;
         display: block;

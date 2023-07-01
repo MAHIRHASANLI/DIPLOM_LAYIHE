@@ -70,7 +70,7 @@ const DetailBlog = () => {
     validationSchema: validationourBlog,
     onSubmit: async (values) => {
       setLoad(true);
-      if (values.url == detail.url) {
+      if (values.url === detail.url) {
       await  PutBlog(id, values);
       setDetail(values)
         setGlobalBlog([...globalBlog, values]);
@@ -116,7 +116,7 @@ const DetailBlog = () => {
       formik.values.url = res.url;
       setLoading(false);
     });
-  }, [id]);
+  }, [id,formik]);
 
   ///Kecidler
   function nextClick() {
@@ -158,7 +158,6 @@ const DetailBlog = () => {
                       <>Loading...</>
                     ) : (
                       <>
-                        {" "}
                         <CreateIcon /> <strong>Edit Slider</strong>
                       </>
                     )}
@@ -167,7 +166,7 @@ const DetailBlog = () => {
                     onClick={(_id) => handleDelete(_id)}
                     className={style.btn_bottom}
                   >
-                    <DeleteIcon /> <strong>Delete Slider</strong>
+                    <DeleteIcon/><strong>Delete Slider</strong>
                   </div>
                 </div>
               </div>

@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { useUserContext } from "../../../../global";
 
-
 const GalleryUser = () => {
   const [user] = useUserContext();
   const [gallery, setGallery] = useState([]);
@@ -22,7 +21,6 @@ const GalleryUser = () => {
       setGallery(res);
     });
   }
-
 
   // Get all buttons with class="btn" inside the container
   var aa = document.getElementById("aa");
@@ -44,19 +42,40 @@ const GalleryUser = () => {
           id="aa"
           onClick={(e) => handleClick(e)}
           className="btn gallery"
+          data-aos="fade-up"
         >
           All
         </button>
-        <button onClick={(e) => handleClick(e)} value="human" className="btn">
+        <button
+          data-aos="fade-up"
+          onClick={(e) => handleClick(e)}
+          value="human"
+          className="btn"
+        >
           Human
         </button>
-        <button onClick={(e) => handleClick(e)} value="nature" className="btn">
+        <button
+          data-aos="fade-up"
+          onClick={(e) => handleClick(e)}
+          value="nature"
+          className="btn"
+        >
           Nature
         </button>
-        <button onClick={(e) => handleClick(e)} value="country" className="btn">
+        <button
+          data-aos="fade-up"
+          onClick={(e) => handleClick(e)}
+          value="country"
+          className="btn"
+        >
           Country
         </button>
-        <button onClick={(e) => handleClick(e)} value="video" className="btn">
+        <button
+          data-aos="fade-up"
+          onClick={(e) => handleClick(e)}
+          value="video"
+          className="btn"
+        >
           Video
         </button>
       </div>
@@ -66,42 +85,46 @@ const GalleryUser = () => {
           {gallery &&
             gallery.map((file) => {
               return (
-                <div
-                  className={style.media}
-                  key={file._id}
-                 
-                >
-                  <i onClick={()=>{
-                   if(user){
-                    let localParse = JSON.parse(localStorage.getItem('fawori'))
-                    const findLocal = localParse.find((img)=>img === file.url)
-                   if(!findLocal){
-                    localParse.push(file.url);
-                    localStorage.setItem('fawori', JSON.stringify(localParse));
-                    Swal.fire({
-                      position: "center-end",
-                      icon: "success",
-                      title: "Fawori successfully!!",
-                      showConfirmButton: false,
-                      timer: 800,
-                      width:250,
-                    });
-                   }
-                   }else{
-                    Swal.fire({
-                      position: "center-end",
-                      icon: "error",
-                      title: "You're not logged in!!",
-                      showConfirmButton: false,
-                      timer: 800,
-                      width:250,
-                    });
-                   }
-                  }} className="fa-solid fa-heart-circle-plus"></i>
+                <div className={style.media} key={file._id} data-aos="fade-up">
+                  <i
+                    onClick={() => {
+                      if (user) {
+                        const localParse = JSON.parse(
+                          localStorage.getItem("fawori")
+                        );
+                        const findLocal = localParse.find(
+                          (img) => img === file.url
+                        );
+                        if (!findLocal) {
+                          localParse.push(file.url);
+                          localStorage.setItem(
+                            "fawori",
+                            JSON.stringify(localParse)
+                          );
+                          Swal.fire({
+                            position: "center-end",
+                            icon: "success",
+                            title: "Fawori successfully!!",
+                            showConfirmButton: false,
+                            timer: 800,
+                            width: 250,
+                          });
+                        }
+                      } else {
+                        Swal.fire({
+                          position: "center-end",
+                          icon: "error",
+                          title: "You're not logged in!!",
+                          showConfirmButton: false,
+                          timer: 800,
+                          width: 250,
+                        });
+                      }
+                    }}
+                    className="fa-solid fa-heart-circle-plus"
+                  ></i>
                   <img src={file.url} alt={file.category} />
-                  <a  onClick={() => setFile(file)}>
-                    +
-                  </a>
+                  <span onClick={() => setFile(file)}>+</span>
                 </div>
               );
             })}
@@ -116,9 +139,7 @@ const GalleryUser = () => {
         </div>
       </div>
 
-      <a href="#" className={style.btn_2}>
-        View More
-      </a>
+      <button type="button" className={style.btn_2}>View More</button>
     </div>
   );
 };
