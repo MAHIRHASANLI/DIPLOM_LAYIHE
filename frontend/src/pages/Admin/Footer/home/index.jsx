@@ -7,16 +7,20 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button, Fab, TableHead, TextField } from "@mui/material";
+import { Button, TableHead, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import CreateIcon from "@mui/icons-material/Create";
-import FilterListIcon from "@mui/icons-material/FilterList";
-
 ///MODAL//
 import Modal from "@mui/material/Modal";
 import { validationFooter } from "../footer.validation";
 import axios from "axios";
-import { GetAllLogoFooter } from "../../../../api/logo.footer.requests";
+import {
+  GetAllLogoFooter,
+  PutLogoFooter,
+} from "../../../../api/logo.footer.requests";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 ///modall.Style//
 const stylemodal = {
@@ -32,57 +36,70 @@ const stylemodal = {
 };
 
 export default function FooterAdmin() {
-  const [loading, setLoading] = React.useState(false);
-  const [footer, setFooter] = React.useState([]);
-  React.useEffect(() => {
+  const navigate = useNavigate();
+  const [footer, setFooter] = useState([]);
+  const [detail, setDetail] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [load, setLoad] = useState(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+  
+  useEffect(() => {
     GetAllLogoFooter().then((res) => {
       setFooter(res);
     });
-  }, []);
-
-  function sortedChange() {
-    setFooter(footer.sort((a, b) => a._id > b._id));
-  }
-
+  }, [load]);
   ///MODAL///
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleconnected = () => setOpen(false);
   const handleClose = () => setOpen(false);
-
-  ///formik//
-  function handleSubmit(values, actions) {
-    // console.log(values.urlblack);
-    // console.log(values.url);
-    setLoading(true);
+  ////CLOUDINARY///
+  const urlUpload = async (values) => {
     const formData = new FormData();
-    // formData.append("file", values.url);
-    const uploadFile ={
-      url:values.url,
-      urlblack: values.urlblack
+    try {
+      formData.append("file", values.url);
+      formData.append("upload_preset", "givlaamt");
+      const res = await axios.post(
+        "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
+        formData);
+      const newObj = {
+        url: res.data.secure_url,
+        urlblack: values.urlblack,
+        count: values.count,
+      };
+      PutLogoFooter(detail.id, newObj);
+      setFooter([...footer, newObj]);
+      // setUrl(res.data.secure_url);
+    } catch (error) {
+      console.log(`url: ${error}`);
     }
-    formData.append("file", values.url)
-    formData.append([..."files", values.urlblack])
+  };
 
-    // formData.append("file",[...])
-    formData.append("upload_preset", "w2bgln2g");
-    axios
-      .post("https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload", formData)
-      .then((res) => {
-        console.log(res);
-        // const newObj = {
-        //   url: res.data.secure_url,
-        //   urlblack: res.secure_url,
-        //   count: values.count,
-        // };
-        // console.log(newObj);
-        // PutHomeAbout(values._id,newObj);
-        setFooter([...footer, values]);
-        setLoading(false);
-        handleconnected();
-        actions.resetForm();
-      });
-  }
+  const urlblackUpload = async (values) => {
+    const formData = new FormData();
+    try {
+      formData.append("file", values.urlblack);
+      formData.append("upload_preset", "givlaamt");
+      const res = await axios.post(
+        "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
+        formData
+      );
+      const newObj = {
+        url: values.url,
+        urlblack: res.data.secure_url,
+        count: values.count,
+      };
+      PutLogoFooter(detail.id, newObj);
+      setFooter([...footer, newObj]);
+      // setUrlBlack(res.data.secure_url);
+    } catch (error) {
+      console.log(`urlBlack: ${error}`);
+    }
+  };
+  ///formik//
   const formik = useFormik({
     initialValues: {
       url: "",
@@ -90,21 +107,28 @@ export default function FooterAdmin() {
       count: "",
     },
     validationSchema: validationFooter,
-    onSubmit: handleSubmit,
+    onSubmit: async (values) => {
+      setLoad(true);
+      if (detail.url == values.url && detail.urlblack == values.urlblack) {
+        await PutLogoFooter(detail.id, values);
+        setFooter([...footer, values]);
+      } else if (detail.url == values.url) {
+        await urlblackUpload(values);
+      } else if (detail.urlblack == values.urlblack) {
+        await urlUpload(values);
+      } else {
+        await urlUpload(values);
+        await urlblackUpload(values);
+      }
+      handleconnected();
+      setLoad(false);
+    },
   });
   return (
     <>
       <div className={style.Table}>
         {/* table uzeri companent */}
         <div className={style.Table_companent}>
-          <div className={style.companent_left}>
-            <button
-              onClick={sortedChange}
-              className={style.companent_left__item}
-            >
-              <FilterListIcon style={{ color: "blue" }} />
-            </button>
-          </div>
           <h2 className={style.namePage}>Footer Data</h2>
         </div>
 
@@ -113,7 +137,8 @@ export default function FooterAdmin() {
           <Table sx={{ width: "100%" }} aria-label="custom pagination table">
             <TableHead>
               <TableRow>
-                <TableCell>Logo</TableCell>
+                <TableCell>Top-logo</TableCell>
+                <TableCell>Bottom-logo</TableCell>
                 <TableCell>Count</TableCell>
                 <TableCell>Update</TableCell>
               </TableRow>
@@ -123,7 +148,10 @@ export default function FooterAdmin() {
                 footer.map((row) => (
                   <TableRow key={row._id}>
                     <TableCell>
-                      <img className={style.image} src={row.url} alt="" />
+                      <img style={{background:"black"}} className={style.image} src={row.url} alt="" />
+                    </TableCell>
+                    <TableCell>
+                      <img style={{background:"white"}} className={style.image} src={row.urlblack} alt="" />
                     </TableCell>
                     <TableCell>
                       <span style={{ fontSize: "14px" }}>{row.count}</span>
@@ -132,7 +160,19 @@ export default function FooterAdmin() {
                       <Button
                         variant="outlined"
                         color="success"
-                        onClick={handleOpen}
+                        onClick={() => {
+                          formik.values.count = row.count;
+                          formik.values.url = row.url;
+                          formik.values.urlblack = row.urlblack;
+                          setDetail({
+                            id: row._id,
+                            count: row.count,
+                            url: row.url,
+                            urlblack: row.urlblack,
+                          });
+                          setLoading(false);
+                          handleOpen();
+                        }}
                       >
                         <CreateIcon />
                       </Button>
@@ -152,118 +192,209 @@ export default function FooterAdmin() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={stylemodal}>
-          <form className="Form__item" onSubmit={formik.handleSubmit}>
-            {/* setSelectImage(e.target.files[0]); */}
-            <TextField
-              type="text"
-              style={{
-                width: "100%",
-                marginTop: "10px",
-                background: "white",
-                borderRadius: "5px",
-              }}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.count}
-              error={formik.errors.count && formik.touched.count ? true : false}
-              name="count"
-              id="outlined-basic"
-              label={
-                formik.errors.count && formik.touched.count ? (
-                  <span style={{ color: "red" }}>{formik.errors.count}</span>
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <form className="Form__item" onSubmit={formik.handleSubmit}>
+              <TextField
+                type="text"
+                style={{
+                  width: "100%",
+                  marginTop: "10px",
+                  background: "white",
+                  borderRadius: "5px",
+                }}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.count}
+                error={
+                  formik.errors.count && formik.touched.count ? true : false
+                }
+                name="count"
+                id="outlined-basic"
+                label={
+                  formik.errors.count && formik.touched.count ? (
+                    <span style={{ color: "red" }}>{formik.errors.count}</span>
+                  ) : (
+                    "  edit count"
+                  )
+                }
+                variant="outlined"
+              />
+
+              <TextField
+                style={{
+                  width: "100%",
+                  marginTop: "10px",
+                  background: "white",
+                  borderRadius: "5px",
+                }}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.url}
+                error={formik.errors.url && formik.touched.url ? true : false}
+                name="url"
+                id="outlined-basic"
+                variant="outlined"
+                label={
+                  formik.errors.url && formik.touched.url ? (
+                    <span style={{ color: "red" }}>{formik.errors.url}</span>
+                  ) : (
+                    "  edit url"
+                  )
+                }
+              />
+              <TextField
+                style={{
+                  width: "100%",
+                  marginTop: "10px",
+                  background: "white",
+                  borderRadius: "5px",
+                }}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.urlblack}
+                error={
+                  formik.errors.urlblack && formik.touched.urlblack
+                    ? true
+                    : false
+                }
+                name="urlblack"
+                id="outlined-basic"
+                variant="outlined"
+                label={
+                  formik.errors.urlblack && formik.touched.urlblack ? (
+                    <span style={{ color: "red" }}>
+                      {formik.errors.urlblack}
+                    </span>
+                  ) : (
+                    "  edit urlblack"
+                  )
+                }
+              />
+
+              {/* <Input 
+                type="file"
+                id="outlined-basic"
+                  variant="outlined"
+                  name="urlblack"
+                  // type="file"
+                  onChange={formik.handleChange}
+                   
+                    // formik.setFieldValue("urlblack", e.target.files[0])
+                  onBlur={formik.handleBlur}
+                  // value={formik.values.urlblack}
+                  error={
+                    formik.errors.urlblack && formik.touched.urlblack
+                      ? true
+                      : false
+                  }
+                /> */}
+
+              {/* <label htmlFor="upload-photo"> */}
+              {/* <input
+                  // style={{ display: "none" }}
+                  id="upload-photo"
+                  name="urlblack"
+                  type="file"
+                  onChange={
+                    async (e) => {
+                      const formData = new FormData();
+                      try {
+                        formData.append("file", e.target.files[0]);
+                        formData.append("upload_preset", "givlaamt");
+                        const res = await axios.post(
+                          "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
+                          formData
+                        );
+                        setImage(res.data.secure_url);
+                        console.log("img update success!");
+                      } catch (error) {
+                        console.log(`forPassion: ${error}`);
+                      }
+                    }
+                    // formik.setFieldValue("urlblack", e.target.files[0])
+                  }
+                  onBlur={formik.handleBlur}
+                  value={detail.urlblack}
+                  error={
+                    formik.errors.urlblack && formik.touched.urlblack
+                      ? true
+                      : false
+                  }
+                /> */}
+
+              {/* <Fab
+                color="info"
+                size="small"
+                component="span"
+                aria-label="add"
+                variant="extended"
+                style={{ marginTop: "10px" }}
+              >
+                {formik.errors.urlblack && formik.touched.urlblack ? (
+                  <span style={{ color: "red", fontSize: "14px" }}>
+                    {formik.errors.urlblack}
+                  </span>
                 ) : (
-                  "  edit count"
-                )
-              }
-              variant="outlined"
-            />
+                  <span style={{ color: "white", fontSize: "14px" }}>
+                    {" "}
+                    + Upload urlblack
+                  </span>
+                )}
+              </Fab> */}
+              {/* </label> */}
 
-            <TextField
-            //  type="file"  accept="image/*" required
-              style={{
-                width: "100%",
-                marginTop: "10px",
-                background: "white",
-                borderRadius: "5px",
-              }}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.urlblack}
-              error={
-                formik.errors.urlblack && formik.touched.urlblack ? true : false
-              }
-              name="urlblack"
-              id="outlined-basic"
-              variant="outlined"
-              label={
-                formik.errors.urlblack && formik.touched.urlblack ? (
-                  <span style={{ color: "red" }}>{formik.errors.urlblack}</span>
-                ) : (
-                  "  edit logo"
-                )
-              }
-            />
-
-<label htmlFor="upload-photo">
-            <input
-              style={{ display: "none" }}
-              id="upload-photo"
-              name="url"
-              type="file"
-              onChange={(e)=>formik.setFieldValue('image', e.target.files[0])}
-              onBlur={formik.handleBlur}
-              value={formik.values.url}
-              error={formik.errors.url && formik.touched.url ? true : false}
-            />
-
-            <Fab
-              color="info"
-              size="small"
-              component="span"
-              aria-label="add"
-              variant="extended"
-              style={{marginTop:"10px"}}
-            >
-              {formik.errors.url && formik.touched.url ? (
-                <span style={{ color: "red",fontSize:"14px" }}>{formik.errors.url}</span>
-              ) : (
-                <span style={{ color: "white",fontSize:"14px" }}> + Upload photo</span>
-              )}
-            </Fab>
-          </label> 
-
-            <Button
-              variant="outlined"
-              style={{
-                display: "block",
-                margin: "20px auto",
-                background: "white",
-                borderRadius: "5px",
-              }}
-              type="submit"
-              color={
-                formik.errors.url && formik.touched.url ? "error" : "success"
-              }
-            >
-              {/* &nbsp;&nbsp;&nbsp; */}
-              {loading ? "Loading..." : "Edit Footer"}
-            </Button>
-            <Button
-              onClick={handleconnected}
-              variant="outlined"
-              style={{
-                display: "block",
-                margin: "15px auto",
-                background: "white",
-                borderRadius: "5px",
-              }}
-              color="error"
-            >
-              X
-            </Button>
-          </form>
+              <Button
+                variant="outlined"
+                style={{
+                  display: "block",
+                  margin: "20px auto",
+                  background: "white",
+                  borderRadius: "5px",
+                }}
+                type="submit"
+                color={
+                  formik.errors.urlblack && formik.touched.urlblack
+                    ? "error"
+                    : "success"
+                }
+              >
+                {/* &nbsp;&nbsp;&nbsp; */}
+                {load ? "Loading..." : "Edit Footer"}
+              </Button>
+              <Button
+                onClick={handleconnected}
+                variant="outlined"
+                style={{
+                  display: "block",
+                  margin: "15px auto",
+                  background: "white",
+                  borderRadius: "5px",
+                }}
+                color="error"
+              >
+                X
+              </Button>
+            </form>
+          )}
         </Box>
       </Modal>
     </>
   );
 }
+// async (e) => {
+//   const formData = new FormData();
+//   try {
+//     formData.append("file", e.target.files[0]);
+//     formData.append("upload_preset", "givlaamt");
+//     const res = await axios.post(
+//       "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
+//       formData
+//     );
+//     setImage(res.data.secure_url);
+//     console.log("img update success!");
+//   } catch (error) {
+//     console.log(`forPassion: ${error}`);
+//   }
+// }

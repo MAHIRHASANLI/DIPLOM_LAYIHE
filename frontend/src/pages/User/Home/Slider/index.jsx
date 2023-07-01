@@ -10,7 +10,6 @@ import { useGlobalData } from "../../../../global";
 
 const Slider = () => {
   const [globalSlider] = useGlobalData();
-
   return (
     <div className={style.About}>
       <Swiper
@@ -48,7 +47,7 @@ const Slider = () => {
                   </h1>
                   <p className={style.title}>{item.title}</p>
                   <div className={style.homeLink}>
-                    <a href="" className={style.button}>
+                    <a className={style.button}>
                       Get A Quote
                     </a>
                     <a href={`mailto:${item.email}`} className={style.email}>

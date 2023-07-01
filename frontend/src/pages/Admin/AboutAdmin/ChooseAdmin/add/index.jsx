@@ -7,6 +7,7 @@ import { validationChoose } from "../validation.schema";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { PostChoose } from "../../../../../api/choose.requests";
 import { useGlobalChoose } from "../../../../../global";
+import { useEffect } from "react";
 
 const AddChoose = () => {
   const navigate = useNavigate();
@@ -20,6 +21,9 @@ const AddChoose = () => {
         navigate("/admin/choose");
         actions.resetForm();
   }
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
   const formik = useFormik({
     initialValues: {
       name: "",

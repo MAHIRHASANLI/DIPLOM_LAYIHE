@@ -6,12 +6,16 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Button, Fab, MenuItem, Select, TextField } from "@mui/material";
 import { PostGallery } from "../../../../api/gallery.requests";
 import { validationGallery } from "../validation.gallery";
+import { useEffect } from "react";
 
 const AdGallery = () => {
   const navigate = useNavigate();
-  // const [image,setImage] = useState([])
   const [loading, setLoading] = useState(false);
  
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+
   const formik = useFormik({
     initialValues: {
       url: "",
@@ -63,13 +67,19 @@ const AdGallery = () => {
             size="small"
             style={{ width: "100%" }}
             //    label="Age"
-            labelId="demo-simple-select-label"
             // id="demo-simple-select"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.category}
             error={
               formik.errors.category && formik.touched.category ? true : false
+            }
+            label={
+              formik.errors.category && formik.touched.category ? (
+                <span style={{ color: "red" }}>{formik.errors.category}</span>
+              ) : (
+                <span style={{ color: "blue" }}>update category</span>
+              )
             }
             name="category"
           >

@@ -19,10 +19,11 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { useGlobalData } from "../../../../global";
 import { TableHead } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MoreIcon from "@mui/icons-material/More";
 import CreateIcon from "@mui/icons-material/Create";
-import FilterListIcon from '@mui/icons-material/FilterList';
+import FilterListIcon from "@mui/icons-material/FilterList";
+import { useEffect } from "react";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -94,15 +95,22 @@ TablePaginationActions.propTypes = {
 };
 
 export default function HomeAdmin() {
+  const navigate = useNavigate();
   const [globalSlider, setGlobalSlider] = useGlobalData();
-  
-  function handleChange(e){
-      GetAllSlider(e.target.value).then((res)=>{
-        setGlobalSlider(res)
-      })
+
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+
+  function handleChange(e) {
+    GetAllSlider(e.target.value).then((res) => {
+      setGlobalSlider(res);
+    });
   }
-  function sortedChange(){
-    setGlobalSlider([...globalSlider.sort((a,b)=> a.name.localeCompare(b.name))])
+  function sortedChange() {
+    setGlobalSlider([
+      ...globalSlider.sort((a, b) => a.name.localeCompare(b.name)),
+    ]);
   }
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -120,98 +128,109 @@ export default function HomeAdmin() {
     setPage(0);
   };
   return (
-       <div className={style.Table}>
-        {/* table uzeri companent */}
-        <div className={style.Table_companent}>
-           <div className={style.companent_left}>
-            <button onClick={sortedChange} className={style.companent_left__item}>
-            <FilterListIcon style={{color:"blue"}}/>
-            </button>
-           <Link to="/admin/adslider">
-              <div className={style.companent_left__item}>
-              <strong className={style.count}>count: [ {globalSlider.length} ] +</strong>
-              </div>
+    <div className={style.Table}>
+      {/* table uzeri companent */}
+      <div className={style.Table_companent}>
+        <div className={style.companent_left}>
+          <button onClick={sortedChange} className={style.companent_left__item}>
+            <FilterListIcon style={{ color: "blue" }} />
+          </button>
+          <Link to="/admin/adslider">
+            <div className={style.companent_left__item}>
+              <strong className={style.count}>
+                count: [ {globalSlider.length} ] +
+              </strong>
+            </div>
           </Link>
-           </div>
-          <h2 className={style.namePage}>Slider Data</h2>    
-
-            <input
-              type="text"
-              className={style.inputsearch}
-              onChange={(e)=>handleChange(e)}
-              name="name"
-              placeholder="   search "
-              variant="outlined"
-              form="outlined-basic"
-            />
         </div>
+        <h2 className={style.namePage}>Slider Data</h2>
 
-        {/* table */}
-        <TableContainer component={Paper}>
-          <Table sx={{ width: "100%" }} aria-label="custom pagination table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Image</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell><span className={style.container}>Title</span></TableCell>
-                <TableCell>Detail<CreateIcon style={{fontSize:"20px",marginBottom:"6px"}}/></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {(rowsPerPage > 0
-                ? globalSlider.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : globalSlider
-              ).map((row) => (
-                <TableRow key={row._id}>
-                  <TableCell>
-                    <img className={style.image} src={row.url} alt="" />
-                  </TableCell>
-                  <TableCell><span style={{ fontSize: "14px" }}>{row.name}</span></TableCell>
-                  <TableCell
-                    className={style.container}
-                    style={{ fontSize: "14px",textAlign:"start" }}
-                  >
-                    <div className={style.ellipsis}><span style={{ fontSize: "14px" }}>{row.title}</span></div>
-                  </TableCell>
-                  <TableCell style={{ fontSize: "14px",textAlign:"start" }} >
-                    <Link to={`${row}`?`/admin/detailslider/${row._id}`:""}> 
-                    <MoreIcon style={{ color: "blueviolet" }} />
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ))}
-
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  colSpan={3}
-                  count={globalSlider.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "rows per page",
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
+        <input
+          type="text"
+          className={style.inputsearch}
+          onChange={(e) => handleChange(e)}
+          name="name"
+          placeholder="   search "
+          variant="outlined"
+          form="outlined-basic"
+        />
       </div>
+
+      {/* table */}
+      <TableContainer  component={Paper}>
+        <Table sx={{ width: "100%" }} aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Image</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>
+                <span className={style.container}>Title</span>
+              </TableCell>
+              <TableCell>
+                Detail
+                <CreateIcon style={{ fontSize: "20px", marginBottom: "6px" }} />
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {(rowsPerPage > 0
+              ? globalSlider.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : globalSlider
+            ).map((row) => (
+              <TableRow key={row._id}>
+                <TableCell>
+                  <img className={style.image} src={row.url} alt="" />
+                </TableCell>
+                <TableCell>
+                  <span style={{ fontSize: "14px" }}>{row.name}</span>
+                </TableCell>
+                <TableCell
+                  className={style.container}
+                  style={{ fontSize: "14px", textAlign: "start" }}
+                >
+                  <div className={style.ellipsis}>
+                    <span style={{ fontSize: "14px" }}>{row.title}</span>
+                  </div>
+                </TableCell>
+                <TableCell style={{ fontSize: "14px", textAlign: "start" }}>
+                  <Link to={`${row}` ? `/admin/detailslider/${row._id}` : ""}>
+                    <MoreIcon style={{ color: "blueviolet" }} />
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))}
+
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                colSpan={3}
+                count={globalSlider.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "rows per page",
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }

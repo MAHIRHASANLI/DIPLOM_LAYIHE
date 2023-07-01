@@ -15,7 +15,9 @@ import CreateIcon from "@mui/icons-material/Create";
 import Modal from "@mui/material/Modal";
 import { GetAllContact, PutContact } from "../../../../api/contact.requests";
 import { validationContact } from "../validation.contact";
-
+import { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 ///modall.Style//
 const stylemodal = {
@@ -31,15 +33,22 @@ const stylemodal = {
 };
 
 export default function ContactAdmin() {
-  const [loading, setLoading] = React.useState(false);
-  const [contact, setContact] = React.useState([]);
-  React.useEffect(() => {
+  const navigate = useNavigate();
+  const [contact, setContact] = useState([]);
+  const [detail, setDetail] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [load, setLoad] = useState(false);
+  
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+
+  useEffect(() => {
     GetAllContact().then((res) => {
       setContact(res);
     });
-  }, []);
+  }, [load]);
 
-  
   ///MODAL///
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -47,23 +56,21 @@ export default function ContactAdmin() {
   const handleClose = () => setOpen(false);
 
   ///formik//
-  function handleSubmit(values, actions) {
-        setLoading(true)
-        // PutContact(values._id, values)
-        setContact( values);
-        setLoading(false);
-         handleconnected()
-        actions.resetForm();
-     
-  }
   const formik = useFormik({
     initialValues: {
+      maps: "",
       address: "",
       mobile: "",
       email: "",
     },
     validationSchema: validationContact,
-    onSubmit: handleSubmit,
+    onSubmit: async(values)=>{
+      setLoad(true);
+     await PutContact(detail.id, values)
+      setContact([...contact,values])
+      setLoad(false);
+      handleconnected();
+    }
   });
   return (
     <>
@@ -85,9 +92,10 @@ export default function ContactAdmin() {
           <Table sx={{ width: "100%" }} aria-label="custom pagination table">
             <TableHead>
               <TableRow>
-                <TableCell>Address</TableCell>
+                {/* <TableCell>Address</TableCell> */}
                 <TableCell>Mobile</TableCell>
                 <TableCell>Email</TableCell>
+                <TableCell>Adress</TableCell>
                 <TableCell>
                   Update
                   <CreateIcon
@@ -100,26 +108,38 @@ export default function ContactAdmin() {
               {contact &&
                 contact.map((row) => (
                   <TableRow key={row._id}>
-                    <TableCell>
+                    {/* <TableCell>
                       <iframe
-                      className={style.image}
-                        src={row.address}
+                        className={style.image}
+                        src={row.map}
                         aria-hidden="false"
                         tabIndex="0"
                       ></iframe>
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
                       <span style={{ fontSize: "14px" }}>{row.mobile}</span>
                     </TableCell>
                     <TableCell>
                       <span style={{ fontSize: "14px" }}>{row.email}</span>
                     </TableCell>
-
+                    <TableCell>
+                      <span style={{ fontSize: "14px" }}>{row.address}</span>
+                    </TableCell>
                     <TableCell style={{ fontSize: "14px" }}>
                       <Button
                         variant="outlined"
                         color="success"
-                        onClick={handleOpen}
+                        onClick={() => {
+                          formik.values.maps = row.maps;
+                          formik.values.address = row.address;
+                          formik.values.email = row.email;
+                          formik.values.mobile = row.mobile;
+                          setDetail({
+                            id: row._id,
+                          });
+                          setLoading(false);
+                          handleOpen();
+                        }}
                       >
                         <CreateIcon />
                       </Button>
@@ -142,104 +162,131 @@ export default function ContactAdmin() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={stylemodal}>
-          <form className="Form__item" onSubmit={formik.handleSubmit}>
-            {/* setSelectImage(e.target.files[0]); */}
-            <TextField
-              type="text"
-              margin="dense"
-              hiddenLabel
-              id="filled-hidden-label-small"
-              variant="outlined"
-              size="small"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.address}
-              error={
-                formik.errors.address && formik.touched.address ? true : false
-              }
-              name="address"
-              label={
-                formik.errors.address && formik.touched.address ? (
-                  <span style={{ color: "red" }}>{formik.errors.address}</span>
-                ) : (
-                  "  edit address"
-                )
-              }
-            />
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <form className="Form__item" onSubmit={formik.handleSubmit}>
+              <TextField
+                type="text"
+                margin="dense"
+                hiddenLabel
+                id="filled-hidden-label-small"
+                variant="outlined"
+                size="small"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.maps}
+                error={formik.errors.maps && formik.touched.maps ? true : false}
+                name="maps"
+                label={
+                  formik.errors.maps && formik.touched.maps ? (
+                    <span style={{ color: "red" }}>{formik.errors.maps}</span>
+                  ) : (
+                    "  edit map"
+                  )
+                }
+              />
 
-            <TextField
-              type="text"
-              margin="dense"
-              hiddenLabel
-              id="filled-hidden-label-small"
-              variant="outlined"
-              size="small"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.mobile}
-              error={
-                formik.errors.mobile && formik.touched.mobile ? true : false
-              }
-              name="mobile"
-              label={
-                formik.errors.mobile && formik.touched.mobile ? (
-                  <span style={{ color: "red" }}>{formik.errors.mobile}</span>
-                ) : (
-                  "  edit mobile"
-                )
-              }
-            />
-            <TextField
-              type="email"
-              margin="dense"
-              hiddenLabel
-              id="filled-hidden-label-small"
-              variant="outlined"
-              size="small"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
-              error={formik.errors.email && formik.touched.email ? true : false}
-              name="email"
-              label={
-                formik.errors.email && formik.touched.email ? (
-                  <span style={{ color: "red" }}>{formik.errors.email}</span>
-                ) : (
-                  "  edit email"
-                )
-              }
-            />
+              <TextField
+                type="text"
+                margin="dense"
+                hiddenLabel
+                id="filled-hidden-label-small"
+                variant="outlined"
+                size="small"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.address}
+                error={
+                  formik.errors.address && formik.touched.address ? true : false
+                }
+                name="address"
+                label={
+                  formik.errors.address && formik.touched.address ? (
+                    <span style={{ color: "red" }}>
+                      {formik.errors.address}
+                    </span>
+                  ) : (
+                    "  edit address"
+                  )
+                }
+              />
 
-            <Button
-              variant="outlined"
-              style={{
-                display: "block",
-                margin: "20px auto",
-                background: "white",
-                borderRadius: "5px",
-              }}
-              type="submit"
-              color={
-                formik.errors.url && formik.touched.url ? "error" : "success"
-              }
-            >
-              {/* &nbsp;&nbsp;&nbsp; */}
-              {loading ? "Loading..." : "Edit Contact"}
-            </Button>
-            <Button
-              onClick={handleconnected}
-              variant="outlined"
-              style={{
-                display: "block",
-                margin: "15px auto",
-                background: "white",
-                borderRadius: "5px",
-              }}
-              color="error"
-            >
-              X
-            </Button>
-          </form>
+              <TextField
+                type="text"
+                margin="dense"
+                hiddenLabel
+                id="filled-hidden-label-small"
+                variant="outlined"
+                size="small"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.mobile}
+                error={
+                  formik.errors.mobile && formik.touched.mobile ? true : false
+                }
+                name="mobile"
+                label={
+                  formik.errors.mobile && formik.touched.mobile ? (
+                    <span style={{ color: "red" }}>{formik.errors.mobile}</span>
+                  ) : (
+                    "  edit mobile"
+                  )
+                }
+              />
+              <TextField
+                type="email"
+                margin="dense"
+                hiddenLabel
+                id="filled-hidden-label-small"
+                variant="outlined"
+                size="small"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                error={
+                  formik.errors.email && formik.touched.email ? true : false
+                }
+                name="email"
+                label={
+                  formik.errors.email && formik.touched.email ? (
+                    <span style={{ color: "red" }}>{formik.errors.email}</span>
+                  ) : (
+                    "  edit email"
+                  )
+                }
+              />
+
+              <Button
+                variant="outlined"
+                style={{
+                  display: "block",
+                  margin: "20px auto",
+                  background: "white",
+                  borderRadius: "5px",
+                }}
+                type="submit"
+                color={
+                  formik.errors.url && formik.touched.url ? "error" : "success"
+                }
+              >
+                {load ? "Loading..." : "Edit Contact"}
+              </Button>
+              <Button
+                onClick={handleconnected}
+                variant="outlined"
+                style={{
+                  display: "block",
+                  margin: "15px auto",
+                  background: "white",
+                  borderRadius: "5px",
+                }}
+                color="error"
+              >
+                X
+              </Button>
+            </form>
+          )}
         </Box>
       </Modal>
     </>

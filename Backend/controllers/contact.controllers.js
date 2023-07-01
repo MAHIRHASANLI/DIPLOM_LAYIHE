@@ -9,6 +9,7 @@ const ContactController = {
         const NewContactObject = new ContactModel({
             mobile: req.body.mobile,
             address: req.body.address,
+            maps: req.body.maps,
             email: req.body.email
         })
       const newobj =  await NewContactObject.save()
@@ -19,6 +20,7 @@ const ContactController = {
             mobile: req.body.mobile,
             address: req.body.address,
             email: req.body.email,
+            maps: req.body.maps
         }
         await ContactModel.findByIdAndUpdate( req.params.id, UpdateObject);
         res.status(200).send(UpdateObject)

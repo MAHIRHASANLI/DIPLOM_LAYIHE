@@ -1,18 +1,17 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import { GetAllGallery } from "../../../../api/gallery.requests";
 import style from "./index.module.css";
+import { useState } from "react";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
+import { useUserContext } from "../../../../global";
 
-import { SlideshowLightbox } from "lightbox.js-react";
-import "lightbox.js-react/dist/index.css";
-import { Fab } from "@mui/material";
 
 const GalleryUser = () => {
-  const [img, setImg] = React.useState("");
-  console.log(img);
-  const [gallery, setGallery] = React.useState([]);
-  React.useEffect(() => {
+  const [user] = useUserContext();
+  const [gallery, setGallery] = useState([]);
+  const [file, setFile] = useState(null);
+  useEffect(() => {
     GetAllGallery().then((res) => {
       setGallery(res);
     });
@@ -24,31 +23,27 @@ const GalleryUser = () => {
     });
   }
 
+
   // Get all buttons with class="btn" inside the container
   var aa = document.getElementById("aa");
   const btnsElement = document.querySelectorAll(".btn");
   btnsElement.forEach((btn) => {
     btn.addEventListener("click", () => {
-      if (aa.className.includes("active")) {
-        aa.classList.remove("active");
+      if (aa.className.includes("gallery")) {
+        aa.classList.remove("gallery");
       }
-      document.querySelector(".active")?.classList.remove("active");
-      btn.classList.add("active");
+      document.querySelector(".gallery")?.classList.remove("gallery");
+      btn.classList.add("gallery");
     });
   });
-  /////
 
-  ////
   return (
     <div className={style.gallery_user}>
-     
-    
       <div className={style.btns}>
         <button
           id="aa"
           onClick={(e) => handleClick(e)}
-          //  value=""
-          className="btn active"
+          className="btn gallery"
         >
           All
         </button>
@@ -65,41 +60,62 @@ const GalleryUser = () => {
           Video
         </button>
       </div>
-      <div style={{ width: "90%" }}>
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={4}>
-            {gallery &&
-              gallery.map((item) => {
-                return (
-                  <Grid key={item._id} item xs={12} sm={6} md={3} lg={3}>
-                    <div className={style.gallery_img}>
-                      <img
-                        style={{ width: "100%", height: "100%" }}
-                        src={item.url}
-                      />
-                      {/* <SlideshowLightbox className="container grid grid-cols-3 gap-2 mx-auto">
-                        <img
-                          src={item.url}
-                          style={{ width: "100%", height: "100%" }}
-                          alt=""
-                        />
-                      </SlideshowLightbox> */}
-                      <a
-                        // href={item.url}
-                        style={{ color: "red" }}
-                        className="w-full rounded"
-                      >
-                        +
-                      </a>
-                      {/* <i className="w-full rounded fa-solid fa-plus"></i> */}
-                    </div>
-                    {/* <SimpleLightbox><img src={item.url} alt="" /></SimpleLightbox> */}
-                  </Grid>
-                );
-              })}
-          </Grid>
-        </Box>
+
+      <div className={style.container}>
+        <div className={style.media_container}>
+          {gallery &&
+            gallery.map((file) => {
+              return (
+                <div
+                  className={style.media}
+                  key={file._id}
+                 
+                >
+                  <i onClick={()=>{
+                   if(user){
+                    let localParse = JSON.parse(localStorage.getItem('fawori'))
+                    const findLocal = localParse.find((img)=>img === file.url)
+                   if(!findLocal){
+                    localParse.push(file.url);
+                    localStorage.setItem('fawori', JSON.stringify(localParse));
+                    Swal.fire({
+                      position: "center-end",
+                      icon: "success",
+                      title: "Fawori successfully!!",
+                      showConfirmButton: false,
+                      timer: 800,
+                      width:250,
+                    });
+                   }
+                   }else{
+                    Swal.fire({
+                      position: "center-end",
+                      icon: "error",
+                      title: "You're not logged in!!",
+                      showConfirmButton: false,
+                      timer: 800,
+                      width:250,
+                    });
+                   }
+                  }} className="fa-solid fa-heart-circle-plus"></i>
+                  <img src={file.url} alt={file.category} />
+                  <a  onClick={() => setFile(file)}>
+                    +
+                  </a>
+                </div>
+              );
+            })}
+        </div>
+
+        <div
+          className={style.popup_media}
+          style={{ display: file ? "block" : "none" }}
+        >
+          <span onClick={() => setFile(null)}>&times;</span>
+          {<img src={file?.url} alt={file?.category} />}
+        </div>
       </div>
+
       <a href="#" className={style.btn_2}>
         View More
       </a>

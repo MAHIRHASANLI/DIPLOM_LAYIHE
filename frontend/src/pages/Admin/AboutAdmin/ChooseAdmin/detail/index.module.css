@@ -17,7 +17,7 @@
     right:10px;
     background-color:red;
     color:white;
-    width: 25px;
+    width: 40px;
 }
 .Detail .detail_count , p , span{
     font-family: "Poppins", sans-serif;
@@ -58,6 +58,7 @@
 }
 .btn_bottom:hover{
     background-color:white; 
+    color:red;
 }
 .Detail_leftitem{
     width: 28%;

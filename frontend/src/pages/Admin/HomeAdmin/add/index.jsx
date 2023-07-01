@@ -8,12 +8,18 @@ import { PostSlider } from "../../../../api/slider.requests";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Button, TextField } from "@mui/material";
 import Fab from "@mui/material/Fab";
+import { useEffect } from "react";
 
 const AdSlider = () => {
   const navigate = useNavigate();
-  // const [image,setImage] = useState([])
   const [loading, setLoading] = useState(false);
   const [globalSlider, setGlobalSlider] = useGlobalData();
+
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+
+  //Formik
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -24,6 +30,10 @@ const AdSlider = () => {
     validationSchema: validationSlider,
     onSubmit: async (values, actions) => {
       setLoading(true);
+     const uniqueemail = globalSlider.find((m)=>m.email == values.email)
+    if(uniqueemail){
+      window.alert("Enter another email!!!")
+    }else{
       const formData = new FormData();
       try {
         formData.append("file", values.url);
@@ -38,16 +48,17 @@ const AdSlider = () => {
           url: res.data.secure_url,
           email: values.email,
         };
-        PostSlider(newObj);
+       await PostSlider(newObj);
         setGlobalSlider([...globalSlider, newObj]);
-
         navigate("/admin/home");
-        setLoading(false);
+       
         actions.resetForm();
       } catch (error) {
         console.log(error);
       }
-    },
+    }
+    setLoading(false);
+    }
   });
   function handleClick() {
     navigate("/admin/home");
@@ -155,13 +166,17 @@ const AdSlider = () => {
                 width: "100%",
                 background: "white",
                 borderRadius: "5px",
-               
               }}
             >
               {formik.errors.url && formik.touched.url ? (
-                <span style={{ color: "red",fontSize:"14px" }}>{formik.errors.url}</span>
+                <span style={{ color: "red", fontSize: "14px" }}>
+                  {formik.errors.url}
+                </span>
               ) : (
-                <span style={{ color: "black",fontSize:"14px" }}> + Upload photo</span>
+                <span style={{ color: "black", fontSize: "14px" }}>
+                  {" "}
+                  + Upload photo
+                </span>
               )}
             </Fab>
           </label>

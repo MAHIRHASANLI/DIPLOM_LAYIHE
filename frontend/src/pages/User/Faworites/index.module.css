@@ -1,0 +1,53 @@
+.faworites {
+  width: 100%;
+  padding: 100px 0;
+  margin: 0;
+  height: 100%;
+  background-image: url("https://wallpaperaccess.com/full/158838.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.faworites_item {
+  width: 75%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px 30px 40px;
+}
+
+.username_item {
+    width: 100%;
+    display: flex;
+    margin-bottom:50px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px 0px 30px;
+    border-radius:10px;
+    background-color: rgba(0, 0, 0, 0.4);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.44) 10px 10px 10px;
+}
+
+.username_item p {
+  color: white;
+  line-height: 25px;
+  font-family: inherit;
+  font-size: 16px;
+  color: white;
+}
+
+.username_item button{
+padding:10px 15px;
+border:1px solid white;
+transition:all .4s linear;
+}
+.username_item button:hover{
+    font-family: inherit;
+    background-color: #a4a4a4;
+    color:white;
+    border:none;
+}

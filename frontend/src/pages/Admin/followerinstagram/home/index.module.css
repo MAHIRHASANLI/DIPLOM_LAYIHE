@@ -1,6 +1,6 @@
 @media screen and (min-width: 700px) {
   .Table {
-    width: 70%;
+    width: 80%;
     height: 100%;
     margin: 20px auto;
     padding-top: 25px;
@@ -16,8 +16,6 @@
     margin-bottom: 20px;
     z-index: 9;
     background-color: rgb(238, 238, 238);
-    position: sticky;
-    top: 0;
   }
   .Table_companent .companent_left {
     display: flex;
@@ -80,8 +78,6 @@
     margin-bottom: 7px;
     z-index: 9;
     background-color: rgb(238, 238, 238);
-    position: sticky;
-    top: 0;
   }
   .Table_companent .companent_left {
     display: flex;

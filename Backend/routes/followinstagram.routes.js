@@ -5,6 +5,8 @@ const followinginstagram_router = express.Router();
 
 followinginstagram_router.get('/', FollowInstagramController.GetAll);
 
+followinginstagram_router.get('/:id', FollowInstagramController.GetById);
+
 followinginstagram_router.post('/',FollowinstagramPostMiddleware, FollowInstagramController.PostById);
 
 followinginstagram_router.put('/:id',FollowinstagramPostMiddleware, FollowInstagramController.PutById);

@@ -24,11 +24,14 @@ import { editvalidationourTeam } from "./edit.validation";
 const DetailOurTeam = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
-  const [globalTeam, setGlobalTeam] = useGlobalTeam();
+  const [globalTeam, setGlobalTeam, load, setLoad] = useGlobalTeam();
   const [detail, setDetail] = useState({});
   const [loading, setLoading] = useState(true);
-  const [load, setLoad] = useState(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+  
   useEffect(() => {
     if (globalTeam === null) {
       navigate("/admin/team");
@@ -40,8 +43,6 @@ const DetailOurTeam = () => {
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
-      // width:"60%",
-      // height:"50vh",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
@@ -61,6 +62,9 @@ const DetailOurTeam = () => {
     });
   }
 
+  const slider = document.getElementById("slider");
+  const form = document.getElementById("form");
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -75,14 +79,9 @@ const DetailOurTeam = () => {
     onSubmit: async (values) => {
       setLoad(true);
       if (values.url == detail.url) {
-        PutTeam(id, values);
+        await PutTeam(id, values);
+        setDetail(values);
         setGlobalTeam([...globalTeam, values]);
-        // navigate("/admin/team");
-        const slider = document.getElementById("slider");
-        const form = document.getElementById("form");
-        slider.setAttribute("style", "display:block");
-        form.setAttribute("style", "display:none");
-        setLoad(false);
         console.log("Cloudinary update olunmadi");
       } else {
         const formData = new FormData();
@@ -102,22 +101,21 @@ const DetailOurTeam = () => {
             linkedn: values.linkedn,
             facebook: values.facebook,
           };
-          PutTeam(id, newObj);
+          await PutTeam(id, newObj);
+          setDetail(newObj);
           setGlobalTeam([...globalTeam, newObj]);
-          // navigate("/admin/team");
           console.log("Cloudinary update olundu!");
-          setLoad(false);
-          const slider = document.getElementById("slider");
-          const form = document.getElementById("form");
-          slider.setAttribute("style", "display:block");
-          form.setAttribute("style", "display:none");
         } catch (error) {
-          console.log(error);
+          console.log(`ourTeam update error: ${error}`);
         }
       }
+      setLoad(false);
+
+      slider.setAttribute("style", "display:block");
+      form.setAttribute("style", "display:none");
     },
   });
-////useEffect///
+  ////useEffect///
   useEffect(() => {
     GetByIdTeam(id).then((res) => {
       setDetail(res);
@@ -182,6 +180,7 @@ const DetailOurTeam = () => {
                 </div>
               </div>
             </Grid>
+
             <Grid item xs={12} sm={8} md={8} lg={8}>
               <div className={style.Detail_rightitem}>
                 <div className={style.detail_data} id="slider">
@@ -239,10 +238,12 @@ const DetailOurTeam = () => {
                     <span>{detail.pinterest}</span>
                   </p>
                 </div>
-                {loading ? (
-                  <div>Loading...</div>
-                ) : (
-                  <div className="sss" id="form">
+
+                {/* Form-Update */}
+                <div className="sss" id="form">
+                  {loading ? (
+                    <div>Loading...</div>
+                  ) : (
                     <form
                       className={style.detail_form}
                       onSubmit={formik.handleSubmit}
@@ -250,8 +251,7 @@ const DetailOurTeam = () => {
                       <TextField
                         type="text"
                         style={{
-                          width: "100%",
-                          borderRadius: "5px",
+                          width: "90%",
                         }}
                         margin="dense"
                         id="filled-hidden-label-small"
@@ -280,8 +280,7 @@ const DetailOurTeam = () => {
                       <TextField
                         type="text"
                         style={{
-                          width: "100%",
-                          borderRadius: "5px",
+                          width: "90%",
                         }}
                         margin="dense"
                         id="filled-hidden-label-small"
@@ -310,8 +309,7 @@ const DetailOurTeam = () => {
                       <TextField
                         type="text"
                         style={{
-                          width: "100%",
-                          borderRadius: "5px",
+                          width: "90%",
                         }}
                         margin="dense"
                         id="filled-hidden-label-small"
@@ -341,8 +339,7 @@ const DetailOurTeam = () => {
                       <TextField
                         type="text"
                         style={{
-                          width: "100%",
-                          borderRadius: "5px",
+                          width: "90%",
                         }}
                         margin="dense"
                         id="filled-hidden-label-small"
@@ -372,8 +369,7 @@ const DetailOurTeam = () => {
                       <TextField
                         type="text"
                         style={{
-                          width: "100%",
-                          borderRadius: "5px",
+                          width: "90%",
                         }}
                         margin="dense"
                         id="filled-hidden-label-small"
@@ -402,8 +398,7 @@ const DetailOurTeam = () => {
                       <TextField
                         type="text"
                         style={{
-                          width: "100%",
-                          borderRadius: "5px",
+                          width: "90%",
                         }}
                         margin="dense"
                         id="filled-hidden-label-small"
@@ -432,8 +427,7 @@ const DetailOurTeam = () => {
                       <TextField
                         type="text"
                         style={{
-                          width: "100%",
-                          borderRadius: "5px",
+                          width: "90%",
                         }}
                         margin="dense"
                         id="filled-hidden-label-small"
@@ -461,7 +455,6 @@ const DetailOurTeam = () => {
                         variant="outlined"
                         style={{
                           margin: "5px 0 0 20px",
-                          background: "white",
                           borderRadius: "5px",
                         }}
                         type="submit"
@@ -472,14 +465,20 @@ const DetailOurTeam = () => {
                         }
                       >
                         &nbsp;&nbsp;
-                        <AddShoppingCartIcon /> Update
+                        {load ? (
+                          <>Loading...</>
+                        ) : (
+                          <>
+                            {" "}
+                            <AddShoppingCartIcon /> Update
+                          </>
+                        )}
                       </Button>
                       <Button
                         onClick={backClick}
                         variant="outlined"
                         style={{
                           margin: "5px 0 0 50px",
-                          background: "white",
                           borderRadius: "5px",
                         }}
                         color="error"
@@ -487,8 +486,8 @@ const DetailOurTeam = () => {
                         X
                       </Button>
                     </form>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </Grid>
           </Grid>

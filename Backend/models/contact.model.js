@@ -9,6 +9,11 @@ const ContactModel = new mongoose.model('Contact', new mongoose.Schema({
         trim: true,
         required: true,
     },
+    maps:  {
+        type: String,
+        trim: true,
+        required: true,
+    },
     address:  {
         type: String,
         trim: true,

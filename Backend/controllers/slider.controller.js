@@ -17,7 +17,7 @@ const SliderController = {
         res.status(200).send(GetbyidSliders)
     },
     PostById: async (req, res) => {
-        const NewSliderObject = new HomeSlider({
+        const NewSliderObject = await HomeSlider({
             name: req.body.name,
             title: req.body.title,
             url: req.body.url,

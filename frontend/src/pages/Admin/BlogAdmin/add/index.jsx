@@ -10,12 +10,16 @@ import { useGlobalBlog } from "../../../../global";
 
 
 import DatePicker from 'react-date-picker';
+import { useEffect } from "react";
 const AddBlog = () => {
   const navigate = useNavigate();
   const [globalBlog, setGlobalBlog] = useGlobalBlog();
-  // const [image,setImage] = useState([])
   const [loading, setLoading] = useState(false);
- 
+
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+
   const formik = useFormik({
     initialValues: {
       type: "",

@@ -12,14 +12,29 @@ import { Button, TableHead, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import CreateIcon from "@mui/icons-material/Create";
 import Swal from "sweetalert2";
-import DeleteIcon from '@mui/icons-material/Delete';
-
+import DeleteIcon from "@mui/icons-material/Delete";
+///
+import PropTypes from "prop-types";
+import { useTheme } from "@mui/material/styles";
+import TablePagination from "@mui/material/TablePagination";
+import IconButton from "@mui/material/IconButton";
+import FirstPageIcon from "@mui/icons-material/FirstPage";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import LastPageIcon from "@mui/icons-material/LastPage";
+///
 ///MODAL//
 import Modal from "@mui/material/Modal";
-import { DeleteFollowInstagram, GetAllFollowInstagram } from "../../../../api/followinginstagram.requests";
-import { validationFollower } from "../followinstagram.validation";
-import { Link } from "react-router-dom";
-
+import {
+  DeleteFollowInstagram,
+  GetAllFollowInstagram,
+  PutFollowInstagram,
+} from "../../../../api/followinginstagram.requests";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import { validationFollower } from "./follow.validation";
 
 ///modall.Style//
 const stylemodal = {
@@ -34,41 +49,152 @@ const stylemodal = {
   p: 4,
 };
 
-export default function FolloInstagramAdmin() {
-  const [loading, setLoading] = React.useState(false);
-  const [follower, setFollower] = React.useState([]);
-  React.useEffect(() => {
-    GetAllFollowInstagram().then((res) => {
-        setFollower(res);
-    });
-  }, []);
+function TablePaginationActions(props) {
+  const theme = useTheme();
+  const { count, page, rowsPerPage, onPageChange } = props;
 
-  
+  const handleFirstPageButtonClick = (event) => {
+    onPageChange(event, 0);
+  };
+
+  const handleBackButtonClick = (event) => {
+    onPageChange(event, page - 1);
+  };
+
+  const handleNextButtonClick = (event) => {
+    onPageChange(event, page + 1);
+  };
+
+  const handleLastPageButtonClick = (event) => {
+    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+  };
+
+  return (
+    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+      <IconButton
+        onClick={handleFirstPageButtonClick}
+        disabled={page === 0}
+        aria-label="first page"
+      >
+        {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
+      </IconButton>
+      <IconButton
+        onClick={handleBackButtonClick}
+        disabled={page === 0}
+        aria-label="previous page"
+      >
+        {theme.direction === "rtl" ? (
+          <KeyboardArrowRight />
+        ) : (
+          <KeyboardArrowLeft />
+        )}
+      </IconButton>
+      <IconButton
+        onClick={handleNextButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="next page"
+      >
+        {theme.direction === "rtl" ? (
+          <KeyboardArrowLeft />
+        ) : (
+          <KeyboardArrowRight />
+        )}
+      </IconButton>
+      <IconButton
+        onClick={handleLastPageButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="last page"
+      >
+        {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
+      </IconButton>
+    </Box>
+  );
+}
+
+TablePaginationActions.propTypes = {
+  count: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+};
+
+
+export default function FolloInstagramAdmin() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [follower, setFollower] = useState([]);
+  const [detail, setDetail] = useState({});
+  const [load, setLoad] = useState(true)
   ///MODAL///
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleconnected = () => setOpen(false);
   const handleClose = () => setOpen(false);
 
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+
+  ///Get All
+  useEffect(() => {
+    GetAllFollowInstagram().then((res) => {
+      setFollower(res);
+    });
+  }, [loading]);
+
   ///formik//
-  function handleSubmit(values, actions) {
-    console.log(values);
-        setLoading(true)
-        // PutContact(values._id, values)
-        // setFollower( values);
-        setLoading(false);
-         handleconnected()
-        actions.resetForm();
-     
-  }
   const formik = useFormik({
     initialValues: {
       url: "",
       count: "",
     },
     validationSchema: validationFollower,
-    onSubmit: handleSubmit,
+    onSubmit: async (values) => {
+      setLoading(true);
+      if (values.url == detail.url) {
+      await  PutFollowInstagram(detail.id, values);
+        setFollower([...follower, values]);
+        console.log("Cloudinary update olunmadi!");
+      } else {
+        const formData = new FormData();
+        try {
+          formData.append("file", values.url);
+          formData.append("upload_preset", "eltc4qvh");
+          const res = await axios.post(
+            "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
+            formData
+          );
+          const newObj = {
+            url: res.data.secure_url,
+            count: values.count,
+          };
+         await PutFollowInstagram(detail.id, newObj);
+          setFollower([...follower, newObj]);
+          console.log("Cloudinary update olundu!");
+        } catch (error) {
+          console.log(`Followers: ${error}`);
+        }
+      }
+      setLoading(false);
+      handleconnected();
+    },
   });
+///
+const [page, setPage] = React.useState(0);
+const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+// Avoid a layout jump when reaching the last page with empty rows.
+const emptyRows =
+  page > 0 ? Math.max(0, (1 + page) * rowsPerPage - follower.length) : 0;
+
+const handleChangePage = (event, newPage) => {
+  setPage(newPage);
+};
+
+const handleChangeRowsPerPage = (event) => {
+  setRowsPerPage(parseInt(event.target.value, 10));
+  setPage(0);
+};
   return (
     <>
       <div className={style.Table}>
@@ -76,9 +202,11 @@ export default function FolloInstagramAdmin() {
         <div className={style.Table_companent}>
           <div className={style.companent_left}>
             <div className={style.companent_left__item}>
-            <Link to="/admin/adfollower">
-              <strong className={style.count}>count: [ {follower.length} ] +</strong>
-          </Link>
+              <Link to="/admin/adfollower">
+                <strong className={style.count}>
+                  count: [ {follower.length} ] +
+                </strong>
+              </Link>
             </div>
           </div>
           <h2 className={style.namePage}>Follower Data</h2>
@@ -97,17 +225,26 @@ export default function FolloInstagramAdmin() {
                     style={{ fontSize: "20px", marginBottom: "6px" }}
                   />
                 </TableCell>
-                   <TableCell>Delete</TableCell>
+                <TableCell>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {follower &&
-                follower.map((row) => (
+              {(rowsPerPage > 0
+              ? follower.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : follower
+            ).map((row) => (
                   <TableRow key={row._id}>
                     <TableCell>
-                    <img className={style.image} src={row.url} alt={row.url} />
+                      <img
+                        className={style.image}
+                        src={row.url}
+                        alt={row.url}
+                      />
                     </TableCell>
-                
+
                     <TableCell>
                       <span style={{ fontSize: "14px" }}>{row.count}</span>
                     </TableCell>
@@ -116,44 +253,85 @@ export default function FolloInstagramAdmin() {
                       <Button
                         variant="outlined"
                         color="success"
-                        onClick={handleOpen}
+                        onClick={() => {
+                          formik.values.url = row.url;
+                          formik.values.count = row.count;
+                          setDetail({
+                            id: row._id,
+                            url: row.url,
+                          });
+                          setLoad(false)
+                          handleOpen();
+                        }}
                       >
                         <CreateIcon />
                       </Button>
                     </TableCell>
 
-                    <TableCell style={{ fontSize: "14px" }}><Button
-                  variant="outlined"
-                  color="error"
-                  onClick={(_id)=>{
-                        Swal.fire({
-                          title: 'Are you sure?',
-                          text: "You won't be able to revert this!",
-                          icon: 'warning',
-                          showCancelButton: true,
-                          confirmButtonColor: '#3085d6',
-                          cancelButtonColor: '#d33',
-                          confirmButtonText: 'Yes, delete it!'
-                        }).then((result) => {
-                          if (result.isConfirmed) {
-                            if(row){
-                              DeleteFollowInstagram(row._id)
-                              setFollower(follower.filter((m)=>m._id !== row._id))
+                    <TableCell style={{ fontSize: "14px" }}>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={(_id) => {
+                          Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              if (row) {
+                                DeleteFollowInstagram(row._id);
+                                setFollower(
+                                  follower.filter((m) => m._id !== row._id)
+                                );
+                              }
+                              setFollower(
+                                follower.filter((m) => m._id !== row._id)
+                              );
+                              Swal.fire(
+                                "Deleted!",
+                                "Your file has been deleted.",
+                                "success"
+                              );
                             }
-                            setFollower(follower.filter((m)=>m._id !== row._id))
-                          Swal.fire(
-                            'Deleted!',
-                              'Your file has been deleted.',
-                              'success'
-                            )
-                          }
-                        })
-                  }}><DeleteIcon/></Button></TableCell>
+                          });
+                        }}
+                      >
+                        <DeleteIcon />
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow></TableRow>
+           {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+       
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                colSpan={3}
+                count={follower.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "rows per page",
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
             </TableFooter>
           </Table>
         </TableContainer>
@@ -167,7 +345,7 @@ export default function FolloInstagramAdmin() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={stylemodal}>
-          <form className="Form__item" onSubmit={formik.handleSubmit}>
+        {load?(<div>Loading</div>):(  <form className="Form__item" onSubmit={formik.handleSubmit}>
             <TextField
               type="text"
               margin="dense"
@@ -178,9 +356,7 @@ export default function FolloInstagramAdmin() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.url}
-              error={
-                formik.errors.url && formik.touched.url ? true : false
-              }
+              error={formik.errors.url && formik.touched.url ? true : false}
               name="url"
               label={
                 formik.errors.url && formik.touched.url ? (
@@ -201,9 +377,7 @@ export default function FolloInstagramAdmin() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.count}
-              error={
-                formik.errors.count && formik.touched.count ? true : false
-              }
+              error={formik.errors.count && formik.touched.count ? true : false}
               name="count"
               label={
                 formik.errors.count && formik.touched.count ? (
@@ -213,8 +387,6 @@ export default function FolloInstagramAdmin() {
                 )
               }
             />
-
-         
 
             <Button
               variant="outlined"
@@ -245,7 +417,7 @@ export default function FolloInstagramAdmin() {
             >
               X
             </Button>
-          </form>
+          </form>)}
         </Box>
       </Modal>
     </>

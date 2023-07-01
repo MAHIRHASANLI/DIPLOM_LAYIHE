@@ -4,16 +4,22 @@ import axios from "axios";
 import { Button, Fab, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { validationFollower } from "../followinstagram.validation";
 import {
   GetAllFollowInstagram,
   PostFollowInstagram,
 } from "../../../../api/followinginstagram.requests";
+import { validationFollower } from "./follower.follower.validation";
+import { useEffect } from "react";
 
 const AddFollower = () => {
   const navigate = useNavigate();
   const [follower, setFollower] = React.useState([]);
-  React.useEffect(() => {
+
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+
+  useEffect(() => {
     GetAllFollowInstagram().then((res) => {
       setFollower(res);
     });

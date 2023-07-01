@@ -7,13 +7,17 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useGlobalTeam } from "../../../../../global";
 import { PostTeam } from "../../../../../api/ourteam.requests";
 import { validationourTeam } from "../validation.ourteam";
+import { useEffect } from "react";
 
 const AddTeam = () => {
   const navigate = useNavigate();
   const [globalTeam, setGlobalTeam] = useGlobalTeam();
-  // const [image,setImage] = useState([])
   const [loading, setLoading] = useState(false);
- 
+
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+  //Formik
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -44,7 +48,7 @@ const AddTeam = () => {
           linkedn: values.linkedn,
           facebook: values.facebook,
         };
-        PostTeam(newObj);
+        await PostTeam(newObj);
         setGlobalTeam([...globalTeam, newObj]);
         setLoading(false);
         navigate("/admin/team");

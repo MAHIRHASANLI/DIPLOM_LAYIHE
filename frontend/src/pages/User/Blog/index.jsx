@@ -1,14 +1,20 @@
-import React from 'react'
-import HomeGlobalSection from './homesection'
-import BlogUser from './blog'
+import React from "react";
+import HomeGlobalSection from "./homesection";
+import BlogUser from "./blog";
+import { Helmet } from "react-helmet";
 
 const Blog = () => {
   return (
-    <>
-    <HomeGlobalSection/>
-    <BlogUser/>
-    </>
-  )
-}
+    <div className="application">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Blog</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
+      <HomeGlobalSection />
+      <BlogUser />
+    </div>
+  );
+};
 
-export default Blog
+export default Blog;

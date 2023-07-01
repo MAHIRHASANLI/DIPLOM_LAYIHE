@@ -21,7 +21,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import Modal from "@mui/material/Modal";
 import { validationHomeAboutIMG } from "../validation.home.about";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 ///modall.Style//
 const stylemodal = {
@@ -36,17 +36,20 @@ const stylemodal = {
   p: 4,
 };
 const AboutAdmin = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [globalImage, setGlobalImage] = useState([]);
-  const [detail, setDetail]= useState({})
+  const [id, setId] = useState({});
 
- //GET ALL///
- useEffect(()=>{
-  GetAllHomeAbout().then((res)=>{
-    setGlobalImage(res);
-    // setDetail(globalImage.find((m)=>m._id))
-  })
-},[])
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+  //GET ALL///
+  useEffect(() => {
+    GetAllHomeAbout().then((res) => {
+      setGlobalImage(res);
+    });
+  }, [loading]);
   ///MODAL///
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -58,7 +61,7 @@ const AboutAdmin = () => {
       url: "",
     },
     validationSchema: validationHomeAboutIMG,
-    onSubmit: async (values, actions) => {
+    onSubmit: async (values) => {
       setLoading(true);
       const formData = new FormData();
       try {
@@ -67,27 +70,19 @@ const AboutAdmin = () => {
         const res = await axios.post(
           "https://api.cloudinary.com/v1_1/dbb6ug7f5/image/upload",
           formData
-          );
-          console.log(res.data.secure_url);
-          console.log(detail);
+        );
         const newObj = {
           url: res.data.secure_url,
         };
-      //   console.log(newObj);
-        PutHomeAbout(detail, newObj);
-      setGlobalImage([newObj]);
+       await PutHomeAbout(id, newObj);
+        setGlobalImage([...globalImage,newObj]);
         setLoading(false);
         handleconnected();
-      //   actions.resetForm();
       } catch (error) {
         console.log(error);
       }
     },
   });
-///Get by id
-useEffect(()=>{
-
-},[])
   return (
     <>
       <div className={style.Table}>
@@ -129,16 +124,16 @@ useEffect(()=>{
                       <Button
                         variant="outlined"
                         color="primary"
-                        onClick={()=>{
-                          setDetail(row._id)
-                          handleOpen()
+                        onClick={() => {
+                          setId(row._id);
+                          handleOpen();
                         }}
                       >
                         <CreateIcon />
                       </Button>
                     </TableCell>
                   </TableRow>
-                ))} 
+                ))}
             </TableBody>
             <TableFooter>
               <TableRow></TableRow>
@@ -156,7 +151,6 @@ useEffect(()=>{
       >
         <Box sx={stylemodal}>
           <form className="Form__item" onSubmit={formik.handleSubmit}>
-           
             <label className="file_img" htmlFor="upload-photo">
               <input
                 style={{ display: "none" }}
@@ -172,7 +166,7 @@ useEffect(()=>{
                 component="span"
                 aria-label="add"
                 variant="extended"
-                style={{ margin: "10px auto"}}
+                style={{ margin: "10px auto" }}
               >
                 {formik.errors.url && formik.touched.url ? (
                   <span style={{ color: "red", fontSize: "14px" }}>
@@ -180,7 +174,6 @@ useEffect(()=>{
                   </span>
                 ) : (
                   <span style={{ color: "white", fontSize: "14px" }}>
-                    {" "}
                     + Update photo
                   </span>
                 )}
@@ -200,8 +193,7 @@ useEffect(()=>{
                 formik.errors.url && formik.touched.url ? "error" : "success"
               }
             >
-              {/* &nbsp;&nbsp;&nbsp; */}
-              {loading ? <div>Loading...</div> : "Edit Image"}
+              {loading ? "Loading..." : "Edit Image"}
             </Button>
             <Button
               onClick={handleconnected}

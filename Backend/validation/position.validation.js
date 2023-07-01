@@ -11,7 +11,7 @@ const PositionSchema = Joi.object({
     url: Joi.string().uri()
     .label("Intro Video")
     .required(),
-    img: Joi.string()
+    img: Joi.string().uri()
     .required()
 })
 module.exports = PositionSchema;

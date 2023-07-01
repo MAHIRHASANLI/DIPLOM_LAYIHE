@@ -1,9 +1,9 @@
+import LoginRoot from "../pages/Login/LoginRoot";
 import AboutAdmin from "../pages/Admin/AboutAdmin/home.about.image/home";
 import ChooseAdmin from "../pages/Admin/AboutAdmin/ChooseAdmin/home";
 import AdminRoot from "../pages/Admin/AdminRoot";
 import BlogAdmin from "../pages/Admin/BlogAdmin/home";
 import ContactAdmin from "../pages/Admin/ContactAdmin/home";
-import Dashboard from "../pages/Admin/Deshboard";
 import GaleryAdmin from "../pages/Admin/GaleryAdmin/home";
  import About from "../pages/User/About";
 import Blog from "../pages/User/Blog";
@@ -27,6 +27,10 @@ import AddBlog from "../pages/Admin/BlogAdmin/add";
 import AdGallery from "../pages/Admin/GaleryAdmin/add";
 import FolloInstagramAdmin from "../pages/Admin/followerinstagram/home";
 import AddFollower from "../pages/Admin/followerinstagram/add";
+import RegisterAdmin from "../pages/Admin/Dashboard";
+import AdminLogin from "../pages/Login/LoginAdmin";
+import LoginUser from "../pages/Login/Users/UsersLogin";
+import Faworites from "../pages/User/Faworites";
 
 export const ROUTES = [
     {
@@ -52,6 +56,10 @@ export const ROUTES = [
             {
                 path: 'contact',
                 element: <Contact />
+            },
+            {
+                path: 'fawori',
+                element: <Faworites/>
             }
         ]
     },
@@ -61,7 +69,7 @@ export const ROUTES = [
         children: [
             {
                 path: '',
-                element: <Dashboard />
+                element: <RegisterAdmin />
             },
             {
                 path: 'home',
@@ -146,6 +154,20 @@ export const ROUTES = [
             {
                 path: 'adfollower',
                 element: <AddFollower/>
+            }
+        ]
+    },
+    {
+        path:"/login",
+        element:<LoginRoot/>,
+        children:[
+            {
+                path:"",
+                element:<AdminLogin/>
+            },
+            {
+                path:"user",
+                element:<LoginUser/>
             }
         ]
     }

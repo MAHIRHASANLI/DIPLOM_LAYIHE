@@ -18,8 +18,6 @@
             margin-bottom:20px;
             z-index: 9;
             background-color:rgb(238,238,238);      
-            position: sticky;
-            top:0;
         }
         .Table_companent .companent_left{
             display:flex;
@@ -83,8 +81,6 @@
                 margin-bottom:7px;
                 z-index: 9;
                 background-color:rgb(238,238,238);      
-                position: sticky;
-                top:0;
             }
             .Table_companent .companent_left{
                 display:flex;

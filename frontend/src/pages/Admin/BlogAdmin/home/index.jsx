@@ -17,12 +17,13 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { TableHead } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MoreIcon from "@mui/icons-material/More";
 import CreateIcon from "@mui/icons-material/Create";
 import { useGlobalBlog } from "../../../../global";
 import { GetAllBlog } from "../../../../api/blog.requests";
 import FilterListIcon from '@mui/icons-material/FilterList';
+import { useEffect } from "react";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -94,7 +95,13 @@ TablePaginationActions.propTypes = {
 };
 
 const BlogAdmin = () => {
-  const [globalBlog, setGlobalBlog] = useGlobalBlog()
+  const navigate = useNavigate();
+  const [globalBlog, setGlobalBlog] = useGlobalBlog();
+
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+
       function handleChange(e){
         GetAllBlog(e.target.value).then((res)=>{
           setGlobalBlog(res)

@@ -1,86 +1,144 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Moon+Dance&family=Oswald:wght@200;300;400;500;600;700&family=Oxygen:wght@300;400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Satisfy&display=swap'); */
-.link .active{
-  color:black
+.link .active {
+  color: black;
 }
 
-.Navbar{
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-}
-@media screen and (min-width: 800px) {
-    .Link{
-        margin:0 auto;
-        width: 100%;
-        display:flex;
-        align-items:center;
-        justify-content:space-between
-    }
-    .link:active{
-      color:black
-    }
-    .link{
-        text-decoration:none;
-        color:white;
-        font-size:17px;
-        transition:.3s linear;
-        font-family: "Poppins", sans-serif;
-        text-transform: capitalize; 
-        font-weight: 500;
-        padding: 0 20px;
-        position: relative;
-        display: block;
-        
-    }
-    .link:hover{
-      color:rgb(252,96,96);
-    }
-    .icons{
-        color:white;
-    }
+@media screen and (min-width: 700px) {
+  .navbar {
+    width: 100%;
+    height: 70px;
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    position: sticky;
+    top: 0;
   }
-  @media screen and (max-width: 800px) {
-    .Link{
-        display:none;
-    }
-    .icons{
-display:none;   
- }
+  .navbar_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-
-  .home{
- 
+  .Link {
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-  
-  .home_dropdown{
+  .link:active {
+    color: black;
+  }
+  .link {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: 0.3s linear;
+    font-family: "Poppins", sans-serif;
+    text-transform: capitalize;
+    font-weight: 500;
+    padding: 0 5px;
+    position: relative;
+    display: block;
+  }
+  .home_dropdown {
     display: none;
     position: absolute;
-    top:20px;
-    left:-30px;
-    background-color:rgba(0,0,0,0.5);
-    background-color:white;
+    top: 20px;
+    left: -30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-color: white;
     width: 140px;
     height: 0px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     padding: 12px 22px;
-    border-radius:15px;
+    border-radius: 15px;
     z-index: 999;
-    color:black;
-    transition:4s ;
+    color: black;
+    transition: 4s;
   }
-  .home_dropdown a{
-    font-size:14px;
+  .home_dropdown a {
+    font-size: 14px;
     font-family: "Poppins", sans-serif;
     display: block;
-    padding:1px 0 1px ;
-    color:white;
-    color:black;
+    padding: 1px 0 1px;
+    color: white;
+    color: black;
   }
-  .link:hover .home_dropdown{
+  .link:hover .home_dropdown {
     display: block;
-    color:black;
-    top:20px;
-    left:-20px;
+    color: black;
+    top: 20px;
+    left: -20px;
     width: 120px;
     height: 120px;
   }
-  
- 
+  .link:hover {
+    color: rgb(252, 96, 96);
+  }
+  .icons {
+    color: white;
+  }
+  .hamburger {
+    display: none;
+  }
+}
+@media screen and (max-width: 700px) {
+  .navbar {
+    width: 100%;
+    height: 70px;
+    padding-top: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    position: sticky;
+    top: 0;
+  }
+  .navbar_item {
+    display: none;
+  }
+  .icons {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+    cursor: pointer;
+  }
+}
+
+.hamburger_menu {
+  position: relative;
+  transition: all 0.6s linear;
+}
+.hamburger_dropdown {
+  display: none;
+  position: absolute;
+  top: 20px;
+  left: -30px;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-color: white;
+  width: 140px;
+  height: 0px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 22px;
+  border-radius: 15px;
+  z-index: 999;
+  color: black;
+  transition: all 0.2s linear;
+}
+
+.hamburger_dropdown a {
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  display: block;
+  padding: 1px 0 1px;
+  color: rgb(252, 96, 96);
+}
+.hamburger_menu:hover .hamburger_dropdown {
+  display: block;
+  color: black;
+  top: 20px;
+  left: -20px;
+  width: 120px;
+  height: 120px;
+}

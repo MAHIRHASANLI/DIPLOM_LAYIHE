@@ -3,14 +3,11 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import style from "./index.module.css";
 import { useGlobalPassion } from "../../../../global";
-import IframeModal from "./modal";
+import { useState } from "react";
 
 const PassionUser = () => {
   const [globalPassion] = useGlobalPassion();
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [file, setFile] = useState(null);
 
   return (
     <div className={style.Passion}>
@@ -26,18 +23,16 @@ const PassionUser = () => {
                       <p className={style.passion_title}>{item.title}</p>
                       <p className={style.passion_title}>{item.title}</p>
 
-                      <a href="" className={style.button}>
-                        Contact Us
-                      </a>
+                      <a className={style.button}>Contact Us</a>
                     </div>
                   </Grid>
                   <Grid item xs={12} sm={12} md={6} lg={6}>
                     <div className={style.iframe_img}>
-                        <i
-                        onClick={handleOpen}
-                          style={{ margin: "auto" }}
-                          className="fa-solid fa-play"
-                        ></i>
+                      <i
+                        onClick={() => setFile(item)}
+                        style={{ margin: "auto" }}
+                        className="fa-solid fa-play"
+                      ></i>
                       <img
                         style={{ width: "100%", height: "100%" }}
                         className="w-full rounded"
@@ -51,7 +46,11 @@ const PassionUser = () => {
             })}
         </Box>
       </div>
-      <IframeModal open={open} handleOpen={handleOpen} setOpen={setOpen} handleClose={handleClose} />
+
+      <div className={style.popup_media}  style={{ display: file ? "block" : "none" }}>
+        <span onClick={() => setFile(null)}>&times;</span>
+        {<video src={file?.url} muted autoPlay controls></video>}
+      </div>
     </div>
   );
 };

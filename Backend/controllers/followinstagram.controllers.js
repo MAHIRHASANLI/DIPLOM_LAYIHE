@@ -5,6 +5,10 @@ const FollowInstagramController = {
         const GetAllFollowing = await FollowModel.find();
             res.status(200).send(GetAllFollowing)
     },
+    GetById: async (req, res) => {
+        const GetByIdFollowing = await FollowModel.findById(req.params.id);
+            res.status(200).send(GetByIdFollowing)
+    },
     PostById: async (req, res) => {
         const NewFooterObject = new FollowModel({
             url: req.body.url,

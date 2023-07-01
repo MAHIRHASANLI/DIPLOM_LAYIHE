@@ -8,6 +8,14 @@ export const GetAllFollowInstagram = async()=>{
     })
     return GlobalData;
 }
+export const GetByIdFollowInstagram = async(id)=>{
+    let GlobalData;
+    await axios.get(`${BASE_URL}/follower/${id}`).then((res)=>{
+        GlobalData = res.data;
+    })
+    return GlobalData;
+}
+
 export const PostFollowInstagram = (payload)=>{
     axios.post(`${BASE_URL}/follower`,payload)
 }

@@ -9,12 +9,18 @@ import TableRow from "@mui/material/TableRow";
 import MoreIcon from "@mui/icons-material/More";
 import Paper from "@mui/material/Paper";
 import { TableHead } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreateIcon from "@mui/icons-material/Create";
 import { useGlobalPassion } from "../../../../../global";
+import { useEffect } from "react";
 
 export default function Passion() {
+  const navigate = useNavigate();
   const [globalPassion] = useGlobalPassion();
+
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
 
   return (
     <div className={style.Table}>

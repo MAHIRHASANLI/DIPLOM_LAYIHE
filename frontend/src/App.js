@@ -1,10 +1,12 @@
 import './App.css';
-import { GlobalBlogProvider, GlobalChooseProvider, GlobalDataProvider,  GlobalPassionProvider, GlobalTeamProvider } from './global';
+import { GlobalBlogProvider, GlobalChooseProvider, GlobalDataProvider,  GlobalPassionProvider, GlobalTeamProvider, UserContextProvider } from './global';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import { ROUTES } from './router/router';
 const routes = createBrowserRouter(ROUTES)
 function App() {
   return (
+    <UserContextProvider>
     <GlobalBlogProvider>
       <GlobalTeamProvider>
         <GlobalChooseProvider>
@@ -16,6 +18,7 @@ function App() {
         </GlobalChooseProvider>
       </GlobalTeamProvider>
     </GlobalBlogProvider>
+    </UserContextProvider>
   );
 }
 

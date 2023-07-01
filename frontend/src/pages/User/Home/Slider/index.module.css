@@ -78,6 +78,7 @@
     text-transform: capitalize;
     background-color: transparent;
     border: 2px solid #fc6060;
+    cursor: pointer;
   }
   .button:hover {
     background-color: rgb(252, 96, 96);

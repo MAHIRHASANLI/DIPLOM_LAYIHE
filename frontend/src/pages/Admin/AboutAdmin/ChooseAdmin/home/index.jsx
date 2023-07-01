@@ -17,12 +17,13 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { TableHead } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MoreIcon from "@mui/icons-material/More";
 import CreateIcon from "@mui/icons-material/Create";
 import { GetAllChoose } from '../../../../../api/choose.requests';
 import { useGlobalChoose } from "../../../../../global";
 import FilterListIcon from '@mui/icons-material/FilterList';
+import { useEffect } from "react";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -94,7 +95,11 @@ TablePaginationActions.propTypes = {
 };
 
 const ChooseAdmin = () => {
+  const navigate = useNavigate();
       const  [globalChoose, setGlobalChoose]=useGlobalChoose()
+      useEffect(() => {
+        if (!localStorage.getItem("admintoken")) navigate("/login");
+      }, [navigate]);
       function handleChange(e){
         GetAllChoose(e.target.value).then((res)=>{
           setGlobalChoose(res)

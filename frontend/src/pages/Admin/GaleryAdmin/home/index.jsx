@@ -16,16 +16,16 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { Button, TableHead, TextField } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Button, TableHead } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import DeleteIcon from "@mui/icons-material/Delete";
+import FilterListIcon from "@mui/icons-material/FilterList";
 ///MODAL//
 // import Typography from '@mui/material/Typography';
 import { DeleteGallery, GetAllGallery } from "../../../../api/gallery.requests";
-
-
+import { useState } from "react";
+import { useEffect } from "react";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -97,20 +97,27 @@ TablePaginationActions.propTypes = {
 };
 
 export default function GaleryAdmin() {
-    const [gallery, setGallery] = React.useState([])
-  React.useEffect(()=>{
-    GetAllGallery().then((res)=>{
-      setGallery(res)
-    })
-  },[])
-  function handleChange(e){
-    GetAllGallery(e.target.value).then((res)=>{
-      setGallery(res)
-    })
-}
-  function sortedChange(){
-   
-    setGallery([...gallery.sort((a,b)=> a.category.localeCompare(b.category))])
+  const navigate = useNavigate();
+  const [gallery, setGallery] = useState([]);
+
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) navigate("/login");
+  }, [navigate]);
+
+  useEffect(() => {
+    GetAllGallery().then((res) => {
+      setGallery(res);
+    });
+  }, []);
+  function handleChange(e) {
+    GetAllGallery(e.target.value).then((res) => {
+      setGallery(res);
+    });
+  }
+  function sortedChange() {
+    setGallery([
+      ...gallery.sort((a, b) => a.category.localeCompare(b.category)),
+    ]);
   }
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -128,134 +135,127 @@ export default function GaleryAdmin() {
     setPage(0);
   };
 
-
-///formik//
-// function handleSubmit(values,actions){
-//   console.log(values);
-// }
-  // const formik = useFormik({
-  //   initialValues: {
-  //     url: "",
-  //     catecory:""
-  //   },
-  //   validationSchema: validationGallery,
-  //   onSubmit: handleSubmit,
-  // });
   return (
-       <div className={style.Table}>
-        {/* table uzeri companent */}
-        <div className={style.Table_companent}>
-           <div className={style.companent_left}>
-            <button onClick={sortedChange} className={style.companent_left__item}>
-            <FilterListIcon style={{color:"blue"}}/>
-            </button>
-           <Link to="/admin/adgallery">
-              <div className={style.companent_left__item}>
-              <strong  className={style.count}>count: [ {gallery.length} ] +</strong>
-              </div>
+    <div className={style.Table}>
+      {/* table uzeri companent */}
+      <div className={style.Table_companent}>
+        <div className={style.companent_left}>
+          <button onClick={sortedChange} className={style.companent_left__item}>
+            <FilterListIcon style={{ color: "blue" }} />
+          </button>
+          <Link to="/admin/adgallery">
+            <div className={style.companent_left__item}>
+              <strong className={style.count}>
+                count: [ {gallery.length} ] +
+              </strong>
+            </div>
           </Link>
-           </div>
-          <h2 className={style.namePage}>Gallery Data</h2>   
+        </div>
+        <h2 className={style.namePage}>Gallery Data</h2>
 
-          <input
+        <input
           type="text"
           className={style.inputsearch}
-          onChange={(e)=>handleChange(e)}
+          onChange={(e) => handleChange(e)}
           name="name"
           placeholder="   search "
           variant="outlined"
           form="outlined-basic"
         />
-        </div>
-
-        {/* table */}
-        <TableContainer component={Paper}>
-          <Table sx={{ width: "100%" }} aria-label="custom pagination table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Image</TableCell>
-                <TableCell>Category</TableCell>
-                <TableCell>Delete</TableCell>
-
-                </TableRow>
-            </TableHead>
-            <TableBody>
-              {(rowsPerPage > 0
-                ? gallery.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : gallery
-              ).map((row) => (
-                <TableRow key={row._id}>
-                  <TableCell>
-                    <img className={style.image} src={row.url} alt="" />
-                  </TableCell>
-                  
-                  <TableCell><span style={{ fontSize: "14px" }}>{row.category}</span></TableCell>
-
-                  <TableCell style={{ fontSize: "14px" }}><Button
-                  variant="outlined"
-                  color="error"
-                  onClick={(_id)=>{
-                        Swal.fire({
-                          title: 'Are you sure?',
-                          text: "You won't be able to revert this!",
-                          icon: 'warning',
-                          showCancelButton: true,
-                          confirmButtonColor: '#3085d6',
-                          cancelButtonColor: '#d33',
-                          confirmButtonText: 'Yes, delete it!'
-                        }).then((result) => {
-                          if (result.isConfirmed) {
-                            if(row){
-                              DeleteGallery(row._id)
-                              setGallery(gallery.filter((m)=>m._id !== row._id))
-                            }
-                            setGallery(gallery.filter((m)=>m._id !== row._id))
-                          Swal.fire(
-                            'Deleted!',
-                              'Your file has been deleted.',
-                              'success'
-                            )
-                          }
-                        })
-                  }}><DeleteIcon/></Button></TableCell>
-                  
-                </TableRow>
-              ))}
-
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  colSpan={3}
-                  count={gallery.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "rows per page",
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
-
       </div>
-      
-     
+
+      {/* table */}
+      <TableContainer component={Paper}>
+        <Table sx={{ width: "100%" }} aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Image</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell>Delete</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {(rowsPerPage > 0
+              ? gallery.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : gallery
+            ).map((row) => (
+              <TableRow key={row._id}>
+                <TableCell>
+                  <img className={style.image} src={row.url} alt="" />
+                </TableCell>
+
+                <TableCell>
+                  <span style={{ fontSize: "14px" }}>{row.category}</span>
+                </TableCell>
+
+                <TableCell style={{ fontSize: "14px" }}>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={(_id) => {
+                      Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          if (row) {
+                            DeleteGallery(row._id);
+                            setGallery(
+                              gallery.filter((m) => m._id !== row._id)
+                            );
+                          }
+                          setGallery(gallery.filter((m) => m._id !== row._id));
+                          Swal.fire(
+                            "Deleted!",
+                            "Your file has been deleted.",
+                            "success"
+                          );
+                        }
+                      });
+                    }}
+                  >
+                    <DeleteIcon />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                colSpan={3}
+                count={gallery.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "rows per page",
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }
