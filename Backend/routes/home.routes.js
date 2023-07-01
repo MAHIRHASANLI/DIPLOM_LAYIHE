@@ -9,8 +9,4 @@ home_router.get('/:id', HomeController.GetById);
 
 home_router.put('/:id',HomePostMiddleware, HomeController.PutById);
 
-// home_router.post('/', HomePostMiddleware,HomeController.PostById);
-
-// home_router.delete('/:id', HomeController.DeleteById);
-
 module.exports = home_router;

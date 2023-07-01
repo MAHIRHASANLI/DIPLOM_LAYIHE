@@ -1,1 +1,1 @@
-export const BASE_URL = "http://localhost:7171/api"
+export const BASE_URL = "https://photographer-api.onrender.com/api"

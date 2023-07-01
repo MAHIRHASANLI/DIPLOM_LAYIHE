@@ -9,7 +9,5 @@ logo_router.post('/',LogoFooterPostMiddleware, LogoFooterController.PostById);
 
 logo_router.put('/:id',LogoFooterPostMiddleware, LogoFooterController.PutById);
 
-// logo_router.delete('/:id', LogoFooterController.DeleteById);
-
 
 module.exports = logo_router;
