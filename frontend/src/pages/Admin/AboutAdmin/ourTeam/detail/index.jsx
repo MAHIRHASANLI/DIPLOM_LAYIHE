@@ -128,7 +128,7 @@ const DetailOurTeam = () => {
       formik.values.facebook = res.facebook;
       setLoading(false);
     });
-  }, [id,formik]);
+  }, [id]);
   /////Kecidler///
   function nextClick() {
     const slider = document.getElementById("slider");

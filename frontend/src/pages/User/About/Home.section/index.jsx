@@ -36,12 +36,7 @@ const HomeGlobalSection = () => {
       {homeImg &&
         homeImg.map((item) => {
           return (
-            <img
-              key={item._id}
-              className={style.HomeImg_item}
-              src={item.url}
-              alt="#"
-            />
+           <div className={style.HomeImg_item}  style={{backgroundImage:`url(${item.url})`}}></div>
           );
         })}
     </div>

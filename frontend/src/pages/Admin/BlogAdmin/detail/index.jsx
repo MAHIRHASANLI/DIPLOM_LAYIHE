@@ -116,7 +116,7 @@ const DetailBlog = () => {
       formik.values.url = res.url;
       setLoading(false);
     });
-  }, [id,formik]);
+  }, [id]);
 
   ///Kecidler
   function nextClick() {

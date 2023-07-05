@@ -125,7 +125,7 @@ const DetailPassion = () => {
       formik.values.img = res.img;
       setLoading(false);
     });
-  }, [id,formik]);
+  }, [id]);
   //////Kecidler/////
   function nextClick() {
     const slider = document.getElementById("slider");

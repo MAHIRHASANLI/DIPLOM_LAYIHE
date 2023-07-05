@@ -24,7 +24,7 @@ const FooterUser = () => {
                   <Grid item xs={12} sm={7} md={8} lg={9}>
                     <p>
                       {item.count}
-                     &nbsp; <span style={{ color: "red" }}>
+                     <span style={{ color: "red" }}>
                         Colorlib
                       </span>
                     </p>

@@ -118,7 +118,7 @@ const DetailTeam = () => {
       formik.values.email = res.email;
       setLoading(false);
     });
-  }, [id,formik]);
+  }, [id]);
 
   ////Kecidler
   function nextClick() {

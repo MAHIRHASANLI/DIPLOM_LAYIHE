@@ -89,7 +89,7 @@ const DetailChoose = () => {
       formik.values.url = res.url;
       setLoading(false);
     });
-  }, [id,formik]);
+  }, [id]);
   // /Keciler
   function nextClick() {
     const slider = document.getElementById("slider");
