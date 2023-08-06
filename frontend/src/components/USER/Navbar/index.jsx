@@ -74,7 +74,7 @@ const Navbar = () => {
           <NavLink
             className={style.hamburger_menu}
             style={{ color: "black" }}
-            to="/gallery"
+            to="/galery"
           >
             - Gallery
           </NavLink>
@@ -136,13 +136,17 @@ const Navbar = () => {
         {user ? (
           <li title="< Faworites" className={style.username}>
             <NavLink to="/fawori">
-              <span>{user?.username}&nbsp;&nbsp;<AccountCircleIcon style={{color:"rgb(252,96,96)"}}/></span> 
+              <span>
+                {user?.username}&nbsp;&nbsp;
+                <AccountCircleIcon style={{ color: "rgb(252,96,96)" }} />
+              </span>
             </NavLink>
           </li>
         ) : (
           <NavLink to="/login/user">
             <li title="< Log In" className={style.username}>
-              Log in&nbsp;&nbsp; <SensorOccupiedIcon style={{color:"rgb(252,96,96)"}}/>
+              Log in&nbsp;&nbsp;{" "}
+              <SensorOccupiedIcon style={{ color: "rgb(252,96,96)" }} />
             </li>
           </NavLink>
         )}

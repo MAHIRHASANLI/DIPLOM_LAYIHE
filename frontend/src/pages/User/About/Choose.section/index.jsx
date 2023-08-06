@@ -16,9 +16,29 @@ const ChooseUser = () => {
   const [globalChoose] = useGlobalChoose();
   return (
     <div className={style.DivSwiper}>
-      <h1 className={style.Swiper_title} data-aos="fade-up">Why Choose Us</h1>
+      <h1 className={style.Swiper_title} data-aos="fade-up">
+        Why Choose Us
+      </h1>
       {/* centeredSlides={true} */}
       <Swiper
+        breakpoints={{
+          // when window width is >= 480px
+          // when window width is >= 640px
+          0: {
+            width: 0,
+            slidesPerView: 1,
+          },
+          540: {
+            width: 640,
+            slidesPerView: 1,
+          },
+          // when window width is >= 640px
+          // when window width is >= 768px
+          768: {
+            width: 768,
+            slidesPerView: 2,
+          },
+        }}
         slidesPerView={3}
         spaceBetween={70}
         grabCursor={true}

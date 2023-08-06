@@ -15,7 +15,7 @@ export const GlobalDataProvider = ({ children }) => {
         GetAllSlider().then((res) => {
             setGlobalSlider(res)
         })
-    }, [load])
+    }, [load])  
     return (
         <GlobalData.Provider value={[globalSlider, setGlobalSlider, load, setLoad]}>
             {children}

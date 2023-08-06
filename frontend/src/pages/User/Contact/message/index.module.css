@@ -1,93 +1,191 @@
-.message {
-  width: 100%;
-  background-color: white;
-  padding: 50px 30px 80px;
+@media screen and (min-width: 700px) {
+  .message {
+    width: 100%;
+    background-color: white;
+    padding: 50px 30px 80px;
+  }
+
+  .message_item {
+    width: 60%;
+    padding: 20px 30px;
+    border: 1px solid rgb(240, 237, 233);
+  }
+
+  .comment {
+    margin-bottom: 15px;
+    width: 100%;
+    clear: both;
+    color: #707070;
+  }
+
+  .comment textarea {
+    width: 100%;
+    height: 180px;
+    border: 1px solid #f0ede9;
+    background: #f0ede9;
+    padding: 2%;
+    line-height: 25px;
+    font-family: inherit;
+    color: #a4a4a4;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s linear;
+  }
+
+  .comment textarea:hover {
+    border: 1px solid rgb(252, 96, 96);
+    background: white;
+  }
+
+  .comment input {
+    width: 100%;
+    border: 1px solid #f0ede9;
+    background: #f0ede9;
+    height: 42px;
+    box-sizing: border-box;
+    padding: 9px 11px;
+    font-size: 14px;
+    color: #a4a4a4;
+    font-family: inherit;
+    transition: all 0.2s linear;
+  }
+
+  .comment input:hover {
+    border: 1px solid rgb(252, 96, 96);
+    background: white;
+  }
+
+  .comment button {
+    line-height: 1;
+    background-color: rgb(252, 96, 96);
+    text-transform: uppercase;
+    padding: 12px 15px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    border: none;
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    font-weight: 400;
+    font-size: 18px;
+  }
+  .comment button:hover {
+    background-color: rgba(6, 147, 227, 0.9);
+  }
+
+  .login_message {
+    margin-top: 20px;
+  }
+  .login_message p {
+    display: inline;
+    font-family: inherit;
+    font-size: 16px;
+  }
+  .login_message button {
+    background-color: rgba(6, 147, 227, 0.9);
+    border: none;
+    color: white;
+    padding: 5px 7px;
+    transition: all 0.2s linear;
+  }
+  .login_message button:hover {
+    background-color: rgb(252, 96, 96);
+  }
 }
 
-.message_item {
-  width: 60%;
-  padding: 20px 30px;
-  border: 1px solid rgb(240, 237, 233);
-}
+@media screen and (max-width: 700px) {
+  .message {
+    width: 100%;
+    background-color: white;
+    padding: 50px 30px 80px;
+  }
 
-.comment {
-  margin-bottom: 15px;
-  width: 100%;
-  clear: both;
-  color: #707070;
-}
+  .message_item {
+    width: 100%;
+    padding: 20px 30px;
+    border: 1px solid rgb(240, 237, 233);
+  }
 
-.comment textarea {
-  width: 100%;
-  height: 180px;
-  border: 1px solid #f0ede9;
-  background: #f0ede9;
-  padding: 2%;
-  line-height: 25px;
-  font-family: inherit;
-  color: #a4a4a4;
-  font-size: 14px;
-  font-family: inherit;
-  transition: all 0.2s linear;
-}
+  .comment {
+    margin-bottom: 15px;
+    width: 100%;
+    clear: both;
+    color: #707070;
+  }
 
-.comment textarea:hover {
-  border: 1px solid rgb(252, 96, 96);
-  background: white;
-}
+  .comment textarea {
+    width: 100%;
+    height: 130px;
+    border: 1px solid #f0ede9;
+    background: #f0ede9;
+    padding: 2%;
+    line-height: 25px;
+    font-family: inherit;
+    color: #a4a4a4;
+    font-size: 12px;
+    font-family: inherit;
+    transition: all 0.2s linear;
+  }
 
-.comment input {
-  width: 100%;
-  border: 1px solid #f0ede9;
-  background: #f0ede9;
-  height: 42px;
-  box-sizing: border-box;
-  padding: 9px 11px;
-  font-size: 14px;
-  color: #a4a4a4;
-  font-family: inherit;
-  transition: all 0.2s linear;
-}
+  .comment textarea:hover {
+    border: 1px solid rgb(252, 96, 96);
+    background: white;
+  }
 
-.comment input:hover {
-  border: 1px solid rgb(252, 96, 96);
-  background: white;
-}
+  .comment input {
+    width: 100%;
+    border: 1px solid #f0ede9;
+    background: #f0ede9;
+    height: 30px;
+    box-sizing: border-box;
+    padding: 9px 11px;
+    font-size: 12px;
+    color: #a4a4a4;
+    font-family: inherit;
+    transition: all 0.2s linear;
+  }
 
-.comment button {
-  line-height: 1;
-  background-color: rgb(252, 96, 96);
-  text-transform: uppercase;
-  padding: 12px 15px;
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-block;
-  border: none;
-  -webkit-transition: all 0.2s linear;
-  transition: all 0.2s linear;
-  font-weight: 400;
-  font-size: 18px;
-}
-.comment button:hover {
-  background-color: rgba(6, 147, 227, 0.9);
-}
+  .comment input:hover {
+    border: 1px solid rgb(252, 96, 96);
+    background: white;
+  }
 
-.login_message {
-  margin-top: 20px;
-}
-.login_message p {
-  display: inline;
-  font-family: inherit;
-  font-size: 16px;
-}
-.login_message button {
-  background-color: rgba(6, 147, 227, 0.9);
-  border: none;
-  color: white;
-  padding: 5px 7px;
-  transition: all 0.2s linear;
-}
-.login_message button:hover {
-  background-color: rgb(252, 96, 96);
+  .comment button {
+    line-height: 1;
+    background-color: rgb(252, 96, 96);
+    text-transform: uppercase;
+    padding: 12px 10px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    border: none;
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    font-weight: 400;
+    font-size: 16px;
+  }
+  .comment button:hover {
+    background-color: rgba(6, 147, 227, 0.9);
+  }
+
+  .login_message {
+    margin-top: 20px;
+  }
+  .login_message p {
+    display: inline;
+    font-family: inherit;
+    font-size: 16px;
+  }
+  .login_message button {
+    background-color: rgba(6, 147, 227, 0.9);
+    border: none;
+    color: white;
+    padding: 5px 7px;
+    transition: all 0.2s linear;
+  }
+  .login_message button:hover {
+    background-color: rgb(252, 96, 96);
+  }
 }

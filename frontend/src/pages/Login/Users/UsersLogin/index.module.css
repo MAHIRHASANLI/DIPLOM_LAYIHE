@@ -22,26 +22,26 @@
   }
   .login_item {
     z-index: 99999;
-    margin: 0;
+    width: 50%;
+    margin: 0 auto;
     padding: 0;
   }
-  .login .btn{
-    border:none;
+  .login .btn {
+    border: none;
     position: absolute;
-    top:40px;
-    right:40px;
-    padding:10px 15px;
+    top: 40px;
+    right: 40px;
+    padding: 10px 15px;
     background-color: rgba(252, 96, 96, 0.9);
     transition: 0.5s all ease;
     cursor: pointer;
     font-size: 16px;
-    color:white;
+    color: white;
   }
-  
-  .login .btn:hover{
-    color:white;
-    background-color: rgb(30,157,229);
-  
+
+  .login .btn:hover {
+    color: white;
+    background-color: rgb(30, 157, 229);
   }
 }
 
@@ -70,24 +70,23 @@
   .login_item {
     z-index: 99999;
     margin: 0;
-    padding: 0;
+    padding-top: 30px;
   }
-  .login .btn{
-    border:none;
+  .login .btn {
+    border: none;
     position: absolute;
-    top:10px;
-    right:10px;
-    padding:7px 12px;
+    top: 10px;
+    right: 10px;
+    padding: 7px 12px;
     background-color: rgba(252, 96, 96, 0.9);
     transition: 0.5s all ease;
     cursor: pointer;
     font-size: 14px;
-    color:white;
+    color: white;
   }
-  
-  .login .btn:hover{
-    color:white;
-    background-color: rgb(30,157,229);
-  
+
+  .login .btn:hover {
+    color: white;
+    background-color: rgb(30, 157, 229);
   }
 }

@@ -92,7 +92,7 @@ function LoginUser() {
         <NavLink to="/">Go Back</NavLink>
       </button>
       <div className={style.login_item}>
-        <MDBContainer className="p-3 my-0 d-flex flex-column w-50">
+        <MDBContainer className="p-3 my-0 d-flex flex-column w-100">
           <MDBTabs
             pills
             justify
@@ -120,7 +120,9 @@ function LoginUser() {
             <MDBTabsPane show={justifyActive === "tab1"}>
               <form onSubmit={formik.handleSubmit}>
                 <div className="text-center mb-1">
-                  <p style={{color:"white"}}>Please enter your Surname and your Password</p>
+                  <p style={{ color: "white" }}>
+                    Please enter your Surname and your Password
+                  </p>
                 </div>
 
                 <MDBInput
@@ -188,9 +190,7 @@ function LoginUser() {
                 ) : (
                   ""
                 )}
-                <div className="d-flex justify-content-center mx-9 mb-9">
-                 
-                </div>
+                <div className="d-flex justify-content-center mx-9 mb-9"></div>
                 <Button
                   type="submit"
                   variant="contained"

@@ -92,7 +92,7 @@ function Navbar() {
           </NavLink>
         </li>
         <li style={{ display: "block", margin: "50px 30px 0" }}>
-          <NavLink style={{ color: "rgb(252,96,96)" }} to="/admin/footer">
+          <NavLink style={{ color: "rgb(252,96,96)" }} to="/">
             <ArrowBackIosIcon /> User
           </NavLink>
         </li>
