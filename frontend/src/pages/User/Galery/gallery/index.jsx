@@ -38,44 +38,19 @@ const GalleryUser = () => {
   return (
     <div className={style.gallery_user}>
       <div className={style.btns}>
-        <button
-          id="aa"
-          onClick={(e) => handleClick(e)}
-          className="btn gallery"
-          data-aos="fade-up"
-        >
+        <button id="aa" onClick={(e) => handleClick(e)} className="btn gallery">
           All
         </button>
-        <button
-          data-aos="fade-up"
-          onClick={(e) => handleClick(e)}
-          value="human"
-          className="btn"
-        >
+        <button onClick={(e) => handleClick(e)} value="human" className="btn">
           Human
         </button>
-        <button
-          data-aos="fade-up"
-          onClick={(e) => handleClick(e)}
-          value="nature"
-          className="btn"
-        >
+        <button onClick={(e) => handleClick(e)} value="nature" className="btn">
           Nature
         </button>
-        <button
-          data-aos="fade-up"
-          onClick={(e) => handleClick(e)}
-          value="country"
-          className="btn"
-        >
+        <button onClick={(e) => handleClick(e)} value="country" className="btn">
           Country
         </button>
-        <button
-          data-aos="fade-up"
-          onClick={(e) => handleClick(e)}
-          value="video"
-          className="btn"
-        >
+        <button onClick={(e) => handleClick(e)} value="video" className="btn">
           Video
         </button>
       </div>
@@ -85,7 +60,13 @@ const GalleryUser = () => {
           {gallery &&
             gallery.map((file) => {
               return (
-                <div className={style.media} key={file._id} data-aos="fade-up">
+                <div
+                  className={style.media}
+                  key={file._id}
+                  data-aos="fade-down"
+                  data-aos-easing="linear"
+                  data-aos-duration="700"
+                >
                   <i
                     onClick={() => {
                       if (user) {
@@ -139,7 +120,9 @@ const GalleryUser = () => {
         </div>
       </div>
 
-      <button type="button" className={style.btn_2}>View More</button>
+      <button type="button" className={style.btn_2}>
+        View More
+      </button>
     </div>
   );
 };

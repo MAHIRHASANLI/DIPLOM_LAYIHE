@@ -6,6 +6,10 @@
   font-size: 16px;
   box-sizing: border-box;
 }
+span,
+strong {
+  display: inline;
+}
 body {
   height: 200vh;
   margin: 0;
@@ -24,7 +28,7 @@ nav {
   margin: 0 auto;
 }
 .navbar_nav .active {
-  color: rgb(256,256,256,0.7);
+  color: rgb(256, 256, 256, 0.7);
   position: relative;
 }
 .navbar_nav .active::after {
@@ -180,20 +184,20 @@ body {
 
 /* //////// */
 
-.btn.gallery {
-  transition: width 1s ease;
-}
-
-.btn.gallery::after {
+.btn::after {
   content: "";
   position: absolute;
   background-color: rgb(252, 96, 96);
   bottom: -5px;
   left: 0;
-  width: 100%;
+  width: 0%;
   height: 2px;
   z-index: 9;
-  transition: width 4s ease;
+  transition: all 0.4s ease;
+}
+
+.btn.gallery::after {
+  width: 100%;
 }
 
 .rounded {
@@ -208,20 +212,21 @@ body {
 .mahir {
   display: none;
 }
-.flex-column{
-  background-color:rgba(255,255,255,0.3);
-  border-radius:12px;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+.flex-column {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
-.loading{
-  z-index:99999; 
+.loading {
+  z-index: 99999;
   position: fixed;
-  top:50%;
-  left:50%; 
-  transform:translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.active{
-  color:rgb(252,96,96)
+.active {
+  color: rgb(252, 96, 96);
 }

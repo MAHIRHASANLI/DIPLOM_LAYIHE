@@ -15,7 +15,7 @@ export const GlobalDataProvider = ({ children }) => {
         GetAllSlider().then((res) => {
             setGlobalSlider(res)
         })
-    }, [load])  
+    }, [])
     return (
         <GlobalData.Provider value={[globalSlider, setGlobalSlider, load, setLoad]}>
             {children}
@@ -84,14 +84,14 @@ export const useGlobalTeam = () => useContext(GlobalTeam);
 const GlobalBlog = createContext()
 export const GlobalBlogProvider = ({ children }) => {
     const [globalBlog, setGlobalBlog] = useState([]);
-  const [load, setLoad] = useState(false);
+    const [load, setLoad] = useState(false);
     useEffect(() => {
         GetAllBlog().then((res) => {
             setGlobalBlog(res)
         })
     }, [load])
     return (
-        <GlobalBlog.Provider value={[globalBlog, setGlobalBlog,load, setLoad]}>
+        <GlobalBlog.Provider value={[globalBlog, setGlobalBlog, load, setLoad]}>
             {children}
         </GlobalBlog.Provider>
     )
@@ -102,26 +102,26 @@ export const useGlobalBlog = () => useContext(GlobalBlog);
 ///users
 const UserContext = createContext();
 
-export const UserContextProvider = ({children})=>{
-    const[user,setUser] = useState(null);
+export const UserContextProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
     const [usersAll, setUsersAll] = useState([]);
 
-   useEffect(()=>{
-    if(localStorage.getItem('user')){
-        setUser(JSON.parse(localStorage.getItem('user')))
-    }
-   }, [])
+    useEffect(() => {
+        if (localStorage.getItem('user')) {
+            setUser(JSON.parse(localStorage.getItem('user')))
+        }
+    }, [])
 
-   useEffect(() => {
-    getUsers(localStorage.getItem('token')).then((res) => {
-      setUsersAll(res.data);
-    });
-  }, []);
-    return(
-        <UserContext.Provider value={[user,setUser,usersAll, setUsersAll]}>
+    useEffect(() => {
+        getUsers(localStorage.getItem('token')).then((res) => {
+            setUsersAll(res.data);
+        });
+    }, []);
+    return (
+        <UserContext.Provider value={[user, setUser, usersAll, setUsersAll]}>
             {children}
         </UserContext.Provider>
     )
 }
 
-export const useUserContext = ()=> useContext(UserContext);
+export const useUserContext = () => useContext(UserContext);

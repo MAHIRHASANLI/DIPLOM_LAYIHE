@@ -116,8 +116,8 @@
   transition: 0.6s all ease;
 }
 
-.media_container .media:hover img{
-  transform:scale(1.2)
+.media_container .media:hover img {
+  transform: scale(1.2);
 }
 
 .media_container .media:hover::after,
@@ -161,17 +161,17 @@
   user-select: none;
 }
 
-.container .media_container .media i{
-  color:rgb(252,96,96);
-  position:absolute;
-  top:10px;
-  right:10px;
+.container .media_container .media i {
+  color: rgb(252, 96, 96);
+  position: absolute;
+  top: 10px;
+  right: 10px;
   z-index: 999;
   transition: 0.4s all ease;
   cursor: pointer;
 }
-.container .media_container .media i:hover{
-  transform:scale(1.2);
+.container .media_container .media i:hover {
+  transform: scale(1.2);
 }
 .container .media_container .media span {
   bottom: 0;
@@ -182,9 +182,9 @@
   display: inline-block;
   width: 52px;
   height: 52px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(252, 96, 96, 0.9);
   transform: translateX(-50%);
   transition: 0.5s all ease;
@@ -196,7 +196,7 @@
   font-size: 30px;
   color: #ffffff;
   border-radius: 50%;
-  padding:0;
+  padding: 0;
 }
 
 .container .media_container .media:hover span {
@@ -210,7 +210,7 @@
 .media_container .media span:hover {
   background-color: black;
 }
-.btn_2{
+.btn_2 {
   position: relative;
   z-index: 1;
   min-width: 160px;
