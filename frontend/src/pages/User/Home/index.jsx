@@ -11,8 +11,8 @@ import Navbar from "../../../components/USER/Navbar";
 import { useGlobalData } from "../../../global";
 
 const Home = () => {
-  const [loadingData] = useGlobalData();
-
+  const [a,b,c,d,loading ] = useGlobalData();
+  console.log(a,b,c,d);
   return (
     <div className="application">
       <Helmet>
@@ -20,8 +20,10 @@ const Home = () => {
         <title>Home</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
-      {loadingData ? (
-        <div className="loading"><FadingBalls key="key" /></div>
+      {loading ? (
+        <div className="loading">
+          <FadingBalls key="key" />
+        </div>
       ) : (
         <>
           <Navbar />
