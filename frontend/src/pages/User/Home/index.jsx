@@ -5,19 +5,14 @@ import { Helmet } from "react-helmet";
 import BackToTopButton from "./BackToTopButton";
 // Worse way
 import { FadingBalls } from "react-cssfx-loading";
-import { useState } from "react";
-import { useEffect } from "react";
 import FollowerUser from "../FollowerInstagram";
 import FooterUser from "../../../components/USER/Footer";
 import Navbar from "../../../components/USER/Navbar";
+import { useGlobalData } from "../../../global";
 
 const Home = () => {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 700);
-  }, []);
+  const [loadingData] = useGlobalData();
+
   return (
     <div className="application">
       <Helmet>
@@ -25,7 +20,7 @@ const Home = () => {
         <title>Home</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
-      {loading ? (
+      {loadingData ? (
         <div className="loading"><FadingBalls key="key" /></div>
       ) : (
         <>

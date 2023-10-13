@@ -1,4 +1,4 @@
-const PositionSchema = require("../validation/position.validation");
+ const PositionSchema = require("../validation/position.validation");
 
 const PositionPostMiddleware = (req, res, next) => {
     const { error } = PositionSchema.validate(req.body);

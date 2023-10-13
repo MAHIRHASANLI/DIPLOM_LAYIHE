@@ -244,7 +244,7 @@ const DetailPassion = () => {
                           formik.errors.about && formik.touched.about
                             ? true
                             : false
-                        }
+                        }            
                         name="about"
                         label={
                           formik.errors.about && formik.touched.about ? (

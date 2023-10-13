@@ -11,13 +11,16 @@ const GlobalData = createContext()
 export const GlobalDataProvider = ({ children }) => {
     const [globalSlider, setGlobalSlider] = useState([])
     const [load, setLoad] = useState(false);
+    const [loadingData, setLoadingData] = useState(true);
+    
     useEffect(() => {
         GetAllSlider().then((res) => {
             setGlobalSlider(res)
+            setLoadingData(false)
         })
     }, [])
     return (
-        <GlobalData.Provider value={[globalSlider, setGlobalSlider, load, setLoad]}>
+        <GlobalData.Provider value={[globalSlider, setGlobalSlider, load, setLoad,loadingData]}>
             {children}
         </GlobalData.Provider>
     )
