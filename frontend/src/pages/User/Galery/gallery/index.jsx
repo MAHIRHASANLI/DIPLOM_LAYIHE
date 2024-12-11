@@ -63,9 +63,6 @@ const GalleryUser = () => {
                 <div
                   className={style.media}
                   key={file._id}
-                  data-aos="fade-down"
-                  data-aos-easing="linear"
-                  data-aos-duration="700"
                 >
                   <i
                     onClick={() => {
